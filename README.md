@@ -107,7 +107,7 @@ ServerDash is a modern, feature-rich infrastructure monitoring platform that pro
    ```
    
    The script will:
-   - ✅ Copy environment template to `.env.local`
+   - ✅ Copy environment template to `.env`
    - 🔐 Generate a secure JWT secret automatically
    - 🐳 Check Docker availability
    - 🚀 Start all services
@@ -125,7 +125,7 @@ ServerDash is a modern, feature-rich infrastructure monitoring platform that pro
    ./start.sh
    ```
    
-   This ensures environment variables are properly loaded from `.env.local`.
+   This ensures environment variables are properly loaded from `.env`.
 
 ### Manual Setup (Alternative)
 
@@ -140,13 +140,13 @@ If you prefer manual configuration:
 2. **Configure environment variables**
    ```bash
    # Copy environment template
-   cp environment.template .env.local
+   cp environment.template .env
    
    # Generate a secure JWT secret
    openssl rand -base64 64
    
-   # Edit .env.local with your secure values
-   nano .env.local
+   # Edit .env with your secure values
+   nano .env
    ```
    
    **⚠️ Important**: Replace `JWT_SECRET` with the generated secure string and update database credentials.
@@ -158,7 +158,7 @@ If you prefer manual configuration:
    ./start.sh
    
    # Method 2: Manual start with environment loading
-   export $(cat .env.local | grep -v '^#' | xargs) && docker-compose up -d
+   export $(cat .env | grep -v '^#' | xargs) && docker-compose up -d
    ```
 
 4. **Access the dashboard**
@@ -199,7 +199,7 @@ If you prefer manual configuration:
 
 ## 📋 Environment Variables
 
-Copy `environment.template` to `.env.local` and customize the following key variables:
+Copy `environment.template` to `.env` and customize the following key variables:
 
 ```bash
 # Database Configuration
@@ -221,10 +221,6 @@ DB_EXTERNAL_PORT=5434
 UPTIME_CHECK_INTERVAL=60
 SERVER_CHECK_INTERVAL=30
 NETWORK_CHECK_INTERVAL=45
-
-# Default Admin Credentials (Optional - for initial setup)
-DEFAULT_ADMIN_EMAIL="admin@example.com"
-DEFAULT_ADMIN_PASSWORD="admin"
 ```
 
 **🔒 Security Note**: Always generate a new JWT secret with `openssl rand -base64 64` and use strong database passwords in production. Change the default admin credentials immediately after first login.

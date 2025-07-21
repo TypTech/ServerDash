@@ -22,7 +22,7 @@ services:
       - DEFAULT_ADMIN_EMAIL=${DEFAULT_ADMIN_EMAIL:-}
       - DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD:-}
     env_file:
-      - .env.local
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -39,7 +39,7 @@ services:
       - NETWORK_CHECK_INTERVAL=${NETWORK_CHECK_INTERVAL:-45}
       - DEBUG_MODE=${DEBUG_MODE:-false}
     env_file:
-      - .env.local
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -60,7 +60,7 @@ services:
       - NOTIFICATIONS_ENABLED=${NOTIFICATIONS_ENABLED:-true}
       - DEBUG_MODE=${DEBUG_MODE:-false}
     env_file:
-      - .env.local
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -75,7 +75,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     env_file:
-      - .env.local
+      - .env
     ports:
       # Expose DB port for external access (useful for development)
       - "${DB_EXTERNAL_PORT:-5434}:5432"
