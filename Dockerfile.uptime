@@ -1,21 +1,31 @@
-FROM node:18-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files for dependencies
-COPY package.json package-lock.json ./
+# Copy package files
+COPY package.json package-lock.json* ./
+COPY ./prisma ./prisma
 
-# Install only production dependencies
-RUN npm ci --only=production
+# Install dependencies and generate Prisma client
+RUN npm install && npx prisma generate
 
 # Copy the uptime monitor script
 COPY standalone_uptime_monitor.js ./
 
-# Install additional system tools for monitoring
-RUN apk add --no-cache iputils curl
+# Production stage
+FROM node:20-alpine AS production
 
-# Expose any necessary ports (if needed)
-# EXPOSE 8080
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Copy built assets and dependencies
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/standalone_uptime_monitor.js ./
+
+# Install runtime dependencies and system tools
+RUN apk add --no-cache openssl iputils curl
 
 # Run the uptime monitor
 CMD ["node", "standalone_uptime_monitor.js"] 
