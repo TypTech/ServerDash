@@ -9,8 +9,8 @@ services:
     ports:
       - "${WEB_EXTERNAL_PORT:-3000}:3000"
     environment:
-      - JWT_SECRET=${JWT_SECRET}
-      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET:-CHANGE_THIS_TO_A_SECURE_RANDOM_STRING_GENERATE_WITH_OPENSSL}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:ServerDash2024!@db:5432/serverdash}
       - NODE_ENV=${NODE_ENV:-production}
       - PORT=3000
       - NOTIFICATIONS_ENABLED=${NOTIFICATIONS_ENABLED:-true}
@@ -21,8 +21,9 @@ services:
       - ENABLE_SECURITY_HEADERS=${ENABLE_SECURITY_HEADERS:-true}
       - DEFAULT_ADMIN_EMAIL=${DEFAULT_ADMIN_EMAIL:-}
       - DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD:-}
-    env_file:
-      - .env
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
+      - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
       db:
         condition: service_healthy
@@ -34,12 +35,13 @@ services:
       context: ./agent
       dockerfile: Dockerfile.local
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:ServerDash2024!@db:5432/serverdash}
       - SERVER_CHECK_INTERVAL=${SERVER_CHECK_INTERVAL:-30}
       - NETWORK_CHECK_INTERVAL=${NETWORK_CHECK_INTERVAL:-45}
       - DEBUG_MODE=${DEBUG_MODE:-false}
-    env_file:
-      - .env
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
+      - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
       db:
         condition: service_healthy
@@ -55,12 +57,13 @@ services:
       - ./package-lock.json:/app/package-lock.json:ro
     command: sh -c "npm ci --only=production && node standalone_uptime_monitor.js"
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:ServerDash2024!@db:5432/serverdash}
       - UPTIME_CHECK_INTERVAL=${UPTIME_CHECK_INTERVAL:-60}
       - NOTIFICATIONS_ENABLED=${NOTIFICATIONS_ENABLED:-true}
       - DEBUG_MODE=${DEBUG_MODE:-false}
-    env_file:
-      - .env
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
+      - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
       db:
         condition: service_healthy
@@ -72,10 +75,8 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
       - POSTGRES_DB=${POSTGRES_DB:-serverdash}
-    env_file:
-      - .env
     ports:
       # Expose DB port for external access (useful for development)
       - "${DB_EXTERNAL_PORT:-5434}:5432"
