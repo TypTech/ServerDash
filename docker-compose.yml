@@ -25,8 +25,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
       - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     restart: unless-stopped
 
   agent:
@@ -43,8 +42,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
       - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     restart: unless-stopped
 
   uptime:
@@ -61,8 +59,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ServerDash2024!}
       - POSTGRES_DB=${POSTGRES_DB:-serverdash}
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     restart: unless-stopped
 
   db:
