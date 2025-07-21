@@ -821,7 +821,7 @@ export default function NetworkDevices() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Rack Mountable</Label>
-                  <p className="text-xs text-muted-foreground">Can be mounted in a standard 19" rack</p>
+                  <p className="text-xs text-muted-foreground">Can be mounted in a standard 19&quot; rack</p>
                 </div>
                 <Switch checked={rackMountable} onCheckedChange={setRackMountable} />
               </div>
@@ -1353,7 +1353,7 @@ export default function NetworkDevices() {
                                     <AlertDialogHeader>
                                       <AlertDialogTitle>Delete Network Device</AlertDialogTitle>
                                       <AlertDialogDescription>
-                                        Are you sure you want to delete "{device.name}"? This action cannot be undone.
+                                        Are you sure you want to delete &quot;{device.name}&quot;? This action cannot be undone.
                                       </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
