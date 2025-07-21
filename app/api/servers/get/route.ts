@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
         // If serverId is provided, only fetch that specific server
         const hostsQuery = serverId 
             ? { id: serverId }
-            : { hostServer: 0 };
+            : { OR: [{ hostServer: 0 }, { hostServer: null }] };
         
         let hosts;
         if (!serverId) {
