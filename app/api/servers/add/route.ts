@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { authenticateRequest, logSecurityEvent } from "@/lib/auth-middleware";
 import { 
     validateString, 
     validateIPAddress, 
@@ -93,20 +92,6 @@ function validateServerInput(data: any): ValidationResult {
 
 export async function POST(request: NextRequest) {
     try {
-        // Authenticate the request
-        const authResult = await authenticateRequest(request);
-        if (!authResult.isValid) {
-            logSecurityEvent('unauthorized_access', { 
-                endpoint: '/api/servers/add',
-                error: authResult.error 
-            }, request);
-            
-            return NextResponse.json(
-                { error: 'Unauthorized' }, 
-                { status: authResult.statusCode || 401 }
-            );
-        }
-
         const requestBody = await request.json();
         
         // Validate and sanitize input
