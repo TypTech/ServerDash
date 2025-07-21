@@ -347,7 +347,7 @@ This project is proprietary software. All rights reserved.
 ---
 
 <div align="center">
-  <p> Built with ❤️ for infrastructure monitoring (and so much Coffee☕☕☕)</p>
+  <p> Built with ❤️ (and so much Coffee☕☕☕) for infrastructure monitoring</p>
   <p>
     <a href="#serverdash">Back to top</a>
   </p>
