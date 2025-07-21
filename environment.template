@@ -1,0 +1,80 @@
+# =============================================================================
+# ServerDash Environment Configuration Template
+# Copy this file to .env.local and customize for your environment
+# =============================================================================
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+# PostgreSQL connection string
+# For production: Use a secure password and enable SSL
+DATABASE_URL="postgresql://postgres:ServerDash2024!@db:5432/serverdash"
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+# JWT Secret - CRITICAL: Generate with: openssl rand -base64 64
+# NEVER use the default in production!
+JWT_SECRET="CHANGE_THIS_TO_A_SECURE_RANDOM_STRING_GENERATE_WITH_OPENSSL"
+
+# =============================================================================
+# APPLICATION CONFIGURATION
+# =============================================================================
+# Application environment
+NODE_ENV="production"
+
+# Application port (default: 3000)
+PORT=3000
+
+# =============================================================================
+# DATABASE CREDENTIALS (used by Docker Compose)
+# =============================================================================
+# PostgreSQL database credentials
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=ServerDash2024!
+POSTGRES_DB=serverdash
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+# Monitoring intervals (in seconds)
+UPTIME_CHECK_INTERVAL=60
+SERVER_CHECK_INTERVAL=30
+NETWORK_CHECK_INTERVAL=45
+
+# =============================================================================
+# NOTIFICATION SETTINGS
+# =============================================================================
+# Enable/disable notification types
+NOTIFICATIONS_ENABLED=true
+EMAIL_NOTIFICATIONS=true
+WEBHOOK_NOTIFICATIONS=true
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+# Set to true for development mode with additional logging
+DEBUG_MODE=false
+
+# Enable/disable certain features for development
+ENABLE_REGISTRATION=false
+
+# =============================================================================
+# DOCKER CONFIGURATION
+# =============================================================================
+# Docker image tags (use 'latest' for production, 'dev' for development)
+WEB_IMAGE_TAG=latest
+AGENT_IMAGE_TAG=latest
+
+# External port mappings
+WEB_EXTERNAL_PORT=3000
+DB_EXTERNAL_PORT=5434
+
+# =============================================================================
+# SECURITY HEADERS & CORS
+# =============================================================================
+# Allowed origins for CORS (comma-separated)
+ALLOWED_ORIGINS="http://localhost:3000,https://yourdomain.com"
+
+# Security headers
+ENABLE_SECURITY_HEADERS=true 

@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  web:
+    # Build locally for custom deployment
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    ports:
+      - "${WEB_EXTERNAL_PORT:-3000}:3000"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=3000
+      - NOTIFICATIONS_ENABLED=${NOTIFICATIONS_ENABLED:-true}
+      - EMAIL_NOTIFICATIONS=${EMAIL_NOTIFICATIONS:-true}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+      - ENABLE_REGISTRATION=${ENABLE_REGISTRATION:-false}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000}
+      - ENABLE_SECURITY_HEADERS=${ENABLE_SECURITY_HEADERS:-true}
+      - DEFAULT_ADMIN_EMAIL=${DEFAULT_ADMIN_EMAIL:-}
+      - DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD:-}
+    env_file:
+      - .env.local
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  agent:
+    # Build locally since registry image is not available
+    build:
+      context: ./agent
+      dockerfile: Dockerfile.local
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SERVER_CHECK_INTERVAL=${SERVER_CHECK_INTERVAL:-30}
+      - NETWORK_CHECK_INTERVAL=${NETWORK_CHECK_INTERVAL:-45}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+    env_file:
+      - .env.local
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  uptime:
+    # Standalone uptime monitoring service using Node.js script
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./standalone_uptime_monitor.js:/app/standalone_uptime_monitor.js:ro
+      - ./package.json:/app/package.json:ro
+      - ./package-lock.json:/app/package-lock.json:ro
+    command: sh -c "npm ci --only=production && node standalone_uptime_monitor.js"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - UPTIME_CHECK_INTERVAL=${UPTIME_CHECK_INTERVAL:-60}
+      - NOTIFICATIONS_ENABLED=${NOTIFICATIONS_ENABLED:-true}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+    env_file:
+      - .env.local
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    container_name: serverdash-uptime
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-serverdash}
+    env_file:
+      - .env.local
+    ports:
+      # Expose DB port for external access (useful for development)
+      - "${DB_EXTERNAL_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  postgres_data:
