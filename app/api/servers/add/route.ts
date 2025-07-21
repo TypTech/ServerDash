@@ -84,7 +84,7 @@ function validateServerInput(data: any): ValidationResult {
         host: (value) => validateBoolean(value, 'Host'),
         monitoring: (value) => validateBoolean(value, 'Monitoring'),
         hostServer: (value) => validateInteger(value, {
-            required: true,
+            required: false,
             min: 0,
             fieldName: 'Host server ID'
         })
@@ -121,8 +121,14 @@ export async function POST(request: NextRequest) {
         // Use sanitized data from validation
         const sanitizedData = validation.sanitized as AddRequest;
         
+        // Convert hostServer = 0 to null for database storage
+        const dbData = {
+            ...sanitizedData,
+            hostServer: sanitizedData.hostServer === 0 ? null : sanitizedData.hostServer
+        };
+        
         const server = await prisma.server.create({
-            data: sanitizedData
+            data: dbData
         });
 
         return NextResponse.json({ 
