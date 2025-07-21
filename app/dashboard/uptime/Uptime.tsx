@@ -75,6 +75,28 @@ interface UptimeData {
   }[];
 }
 
+interface NetworkDeviceUptimeData {
+  deviceName: string;
+  deviceId: number;
+  deviceType: string;
+  uptimeSummary: {
+    timestamp: string;
+    missing: boolean;
+    online: boolean | null;
+  }[];
+}
+
+interface ServerUptimeData {
+  serverName: string;
+  serverId: number;
+  serverType: string;
+  uptimeSummary: {
+    timestamp: string;
+    missing: boolean;
+    online: boolean | null;
+  }[];
+}
+
 interface PaginationData {
   currentPage: number;
   totalPages: number;
@@ -84,13 +106,27 @@ interface PaginationData {
 export default function Uptime() {
   const t = useTranslations();
   const [data, setData] = useState<UptimeData[]>([]);
+  const [networkData, setNetworkData] = useState<NetworkDeviceUptimeData[]>([]);
+  const [serverData, setServerData] = useState<ServerUptimeData[]>([]);
   const [timespan, setTimespan] = useState<1 | 2 | 3 | 4>(1);
   const [pagination, setPagination] = useState<PaginationData>({
     currentPage: 1,
     totalPages: 1,
     totalItems: 0
   });
+  const [networkPagination, setNetworkPagination] = useState<PaginationData>({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0
+  });
+  const [serverPagination, setServerPagination] = useState<PaginationData>({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0
+  });
   const [isLoading, setIsLoading] = useState(false);
+  const [isNetworkLoading, setIsNetworkLoading] = useState(false);
+  const [isServerLoading, setIsServerLoading] = useState(false);
   
   const savedItemsPerPage = Cookies.get("itemsPerPage-uptime");
   const defaultItemsPerPage = 5;
@@ -127,6 +163,60 @@ export default function Uptime() {
     }
   };
 
+  const getNetworkData = async (selectedTimespan: number, page: number, itemsPerPage: number) => {
+    setIsNetworkLoading(true);
+    try {
+      const response = await axios.post<{
+        data: NetworkDeviceUptimeData[];
+        pagination: PaginationData;
+      }>("/api/network-devices/uptime", { 
+        timespan: selectedTimespan,
+        page,
+        itemsPerPage
+      });
+      
+      setNetworkData(response.data.data);
+      setNetworkPagination(response.data.pagination);
+    } catch (error) {
+      console.error("Network devices uptime error:", error);
+      setNetworkData([]);
+      setNetworkPagination({
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0
+      });
+    } finally {
+      setIsNetworkLoading(false);
+    }
+  };
+
+  const getServerData = async (selectedTimespan: number, page: number, itemsPerPage: number) => {
+    setIsServerLoading(true);
+    try {
+      const response = await axios.post<{
+        data: ServerUptimeData[];
+        pagination: PaginationData;
+      }>("/api/servers/uptime", { 
+        timespan: selectedTimespan,
+        page,
+        itemsPerPage
+      });
+      
+      setServerData(response.data.data);
+      setServerPagination(response.data.pagination);
+    } catch (error) {
+      console.error("Servers uptime error:", error);
+      setServerData([]);
+      setServerPagination({
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0
+      });
+    } finally {
+      setIsServerLoading(false);
+    }
+  };
+
   const handlePrevious = () => {
     const newPage = Math.max(1, pagination.currentPage - 1);
     setPagination(prev => ({...prev, currentPage: newPage}));
@@ -137,6 +227,30 @@ export default function Uptime() {
     const newPage = Math.min(pagination.totalPages, pagination.currentPage + 1);
     setPagination(prev => ({...prev, currentPage: newPage}));
     getData(timespan, newPage, itemsPerPage);
+  };
+
+  const handleNetworkPrevious = () => {
+    const newPage = Math.max(1, networkPagination.currentPage - 1);
+    setNetworkPagination(prev => ({...prev, currentPage: newPage}));
+    getNetworkData(timespan, newPage, itemsPerPage);
+  };
+
+  const handleNetworkNext = () => {
+    const newPage = Math.min(networkPagination.totalPages, networkPagination.currentPage + 1);
+    setNetworkPagination(prev => ({...prev, currentPage: newPage}));
+    getNetworkData(timespan, newPage, itemsPerPage);
+  };
+
+  const handleServerPrevious = () => {
+    const newPage = Math.max(1, serverPagination.currentPage - 1);
+    setServerPagination(prev => ({...prev, currentPage: newPage}));
+    getServerData(timespan, newPage, itemsPerPage);
+  };
+
+  const handleServerNext = () => {
+    const newPage = Math.min(serverPagination.totalPages, serverPagination.currentPage + 1);
+    setServerPagination(prev => ({...prev, currentPage: newPage}));
+    getServerData(timespan, newPage, itemsPerPage);
   };
 
   const handleItemsPerPageChange = (value: string) => {
@@ -156,6 +270,8 @@ export default function Uptime() {
       
       setItemsPerPage(validatedValue);
       setPagination(prev => ({...prev, currentPage: 1}));
+      setNetworkPagination(prev => ({...prev, currentPage: 1}));
+      setServerPagination(prev => ({...prev, currentPage: 1}));
       Cookies.set("itemsPerPage-uptime", String(validatedValue), {
         expires: 365,
         path: "/",
@@ -163,11 +279,15 @@ export default function Uptime() {
       });
       
       getData(timespan, 1, validatedValue);
+      getNetworkData(timespan, 1, validatedValue);
+      getServerData(timespan, 1, validatedValue);
     }, 300);
   };
 
   useEffect(() => {
     getData(timespan, 1, itemsPerPage);
+    getNetworkData(timespan, 1, itemsPerPage);
+    getServerData(timespan, 1, itemsPerPage);
   }, [timespan]);
 
   return (
@@ -262,12 +382,14 @@ export default function Uptime() {
                               const validatedValue = Math.min(Math.max(value, 1), 100);
                               setItemsPerPage(validatedValue);
                               setPagination(prev => ({...prev, currentPage: 1}));
+                              setNetworkPagination(prev => ({...prev, currentPage: 1}));
                               Cookies.set("itemsPerPage-uptime", String(validatedValue), {
                                 expires: 365,
                                 path: "/",
                                 sameSite: "strict",
                               });
                               getData(timespan, 1, validatedValue);
+                              getNetworkData(timespan, 1, validatedValue);
                               document.body.click();
                             }
                           }
@@ -284,8 +406,9 @@ export default function Uptime() {
                 onValueChange={(v) => {
                   setTimespan(Number(v) as 1 | 2 | 3 | 4);
                   setPagination(prev => ({...prev, currentPage: 1}));
+                  setNetworkPagination(prev => ({...prev, currentPage: 1}));
                 }}
-                disabled={isLoading}
+                disabled={isLoading || isNetworkLoading}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={t('Uptime.TimeRange.Select')} />
@@ -300,9 +423,13 @@ export default function Uptime() {
             </div>
           </div>
 
+          {/* Applications Section */}
           <div className="pt-4 space-y-4">
+            <h2 className="text-xl font-semibold text-foreground/80">Applications</h2>
             {isLoading ? (
               <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+            ) : data.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">No applications found</div>
             ) : (
               data.map((app) => {
                 const reversedSummary = [...app.uptimeSummary].reverse();
@@ -383,10 +510,150 @@ export default function Uptime() {
             )}
           </div>
 
+          {/* Network Devices Sections by Type */}
+          {isNetworkLoading ? (
+            <div className="pt-8 space-y-4">
+              <h2 className="text-xl font-semibold text-foreground/80">Network Devices</h2>
+              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+            </div>
+          ) : networkData.length === 0 ? (
+            <div className="pt-8 space-y-4">
+              <h2 className="text-xl font-semibold text-foreground/80">Network Devices</h2>
+              <div className="text-center py-8 text-muted-foreground">No network devices found</div>
+            </div>
+          ) : (
+            // Group devices by type and create sections
+            (() => {
+              const devicesByType = networkData.reduce((acc, device) => {
+                const type = device.deviceType;
+                if (!acc[type]) {
+                  acc[type] = [];
+                }
+                acc[type].push(device);
+                return acc;
+              }, {} as Record<string, typeof networkData>);
+
+              const getTypeDisplayName = (type: string) => {
+                const typeNames: Record<string, string> = {
+                  'switch': 'Network Switches',
+                  'access-point': 'Access Points',
+                  'router': 'Routers',
+                  'firewall': 'Firewalls',
+                  'repeater': 'Repeaters',
+                  'other': 'Other Network Devices'
+                };
+                return typeNames[type] || `${type.charAt(0).toUpperCase() + type.slice(1)} Devices`;
+              };
+
+              const getTypeIcon = (type: string) => {
+                const typeIcons: Record<string, string> = {
+                  'switch': '🔀',
+                  'access-point': '📶',
+                  'router': '🌐',
+                  'firewall': '🛡️',
+                  'repeater': '📡',
+                  'other': '🔧'
+                };
+                return typeIcons[type] || '🔧';
+              };
+
+              return Object.entries(devicesByType).map(([deviceType, devices]) => (
+                <div key={deviceType} className="pt-8 space-y-4">
+                  <h2 className="text-xl font-semibold text-foreground/80 flex items-center gap-2">
+                    <span>{getTypeIcon(deviceType)}</span>
+                    {getTypeDisplayName(deviceType)}
+                    <span className="text-sm text-muted-foreground font-normal">({devices.length})</span>
+                  </h2>
+                  {devices.map((device) => {
+                    const reversedSummary = [...device.uptimeSummary].reverse();
+                    const startTime = reversedSummary[0]?.timestamp;
+                    const endTime = reversedSummary[reversedSummary.length - 1]?.timestamp;
+
+                    return (
+                      <Card key={device.deviceId}>
+                        <CardHeader>
+                          <div className="flex flex-col gap-4">
+                            <div className="flex justify-between items-center">
+                              <span className="text-lg font-semibold">{device.deviceName}</span>
+                              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                {device.deviceType.toUpperCase()}
+                              </span>
+                            </div>
+                            
+                            <div className="flex flex-col gap-2">
+                              <div className="flex justify-between text-sm text-muted-foreground">
+                                <span>{startTime ? timeFormats[timespan](startTime) : ""}</span>
+                                <span>{endTime ? timeFormats[timespan](endTime) : ""}</span>
+                              </div>
+                              
+                              <Tooltip.Provider>
+                                <div 
+                                  className="grid gap-0.5 w-full pb-2"
+                                  style={{ 
+                                    gridTemplateColumns: `repeat(auto-fit, minmax(${minBoxWidths[timespan]}px, 1fr))`
+                                  }}
+                                >
+                                  {reversedSummary.map((entry) => (
+                                    <Tooltip.Root key={entry.timestamp}>
+                                      <Tooltip.Trigger asChild>
+                                        <div
+                                          className={`h-8 w-full rounded-sm border transition-colors ${
+                                            entry.missing
+                                              ? "bg-gray-300 border-gray-400"
+                                              : entry.online
+                                              ? "bg-green-500 border-green-600"
+                                              : "bg-red-500 border-red-600"
+                                          }`}
+                                        />
+                                      </Tooltip.Trigger>
+                                      <Tooltip.Portal>
+                                        <Tooltip.Content
+                                          className="rounded bg-gray-900 px-2 py-1 text-white text-xs shadow-lg"
+                                          side="top"
+                                        >
+                                          <div className="flex flex-col gap-1">
+                                            <p className="font-medium">
+                                              {new Date(entry.timestamp).toLocaleString([], {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: timespan > 2 ? 'numeric' : undefined,
+                                                hour: '2-digit',
+                                                minute: timespan === 1 ? '2-digit' : undefined,
+                                                hour12: false
+                                              })}
+                                            </p>
+                                            <p>
+                                              {entry.missing
+                                                ? t('Uptime.Status.NoData')
+                                                : entry.online
+                                                ? t('Uptime.Status.Online')
+                                                : t('Uptime.Status.Offline')}
+                                            </p>
+                                          </div>
+                                          <Tooltip.Arrow className="fill-gray-900" />
+                                        </Tooltip.Content>
+                                      </Tooltip.Portal>
+                                    </Tooltip.Root>
+                                  ))}
+                                </div>
+                              </Tooltip.Provider>
+                            </div>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ));
+            })()
+          )}
+
+          {/* Applications Pagination */}
           {pagination.totalItems > 0 && !isLoading && (
             <div className="pt-4 pb-4">
               <div className="flex justify-between items-center mb-2">
                 <div className="text-sm text-muted-foreground">
+                  <span className="font-medium">Applications: </span>
                   {pagination.totalItems > 0 
                     ? t('Uptime.Pagination.Showing', { 
                         start: ((pagination.currentPage - 1) * itemsPerPage) + 1, 
@@ -418,6 +685,223 @@ export default function Uptime() {
                       aria-disabled={pagination.currentPage === pagination.totalPages || isLoading}
                       className={
                         pagination.currentPage === pagination.totalPages || isLoading 
+                          ? "opacity-50 cursor-not-allowed" 
+                          : "hover:cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+
+          {/* Servers Sections by Type */}
+          {isServerLoading ? (
+            <div className="pt-8 space-y-4">
+              <h2 className="text-xl font-semibold text-foreground/80">Servers</h2>
+              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+            </div>
+          ) : serverData.length === 0 ? (
+            <div className="pt-8 space-y-4">
+              <h2 className="text-xl font-semibold text-foreground/80">Servers</h2>
+              <div className="text-center py-8 text-muted-foreground">No servers found</div>
+            </div>
+          ) : (
+            // Group servers by type and create sections
+            (() => {
+              const serversByType = serverData.reduce((acc, server) => {
+                const type = server.serverType;
+                if (!acc[type]) {
+                  acc[type] = [];
+                }
+                acc[type].push(server);
+                return acc;
+              }, {} as Record<string, typeof serverData>);
+
+              const getTypeIcon = (type: string) => {
+                const typeIcons: Record<string, string> = {
+                  'Physical Host': '🖥️',
+                  'Virtual Machine': '💻',
+                  'Server': '🌐'
+                };
+                return typeIcons[type] || '🖥️';
+              };
+
+              return Object.entries(serversByType).map(([serverType, servers]) => (
+                <div key={serverType} className="pt-8 space-y-4">
+                  <h2 className="text-xl font-semibold text-foreground/80 flex items-center gap-2">
+                    <span>{getTypeIcon(serverType)}</span>
+                    {serverType}
+                    <span className="text-sm text-muted-foreground font-normal">({servers.length})</span>
+                  </h2>
+                  {servers.map((server) => {
+                    const reversedSummary = [...server.uptimeSummary].reverse();
+                    const startTime = reversedSummary[0]?.timestamp;
+                    const endTime = reversedSummary[reversedSummary.length - 1]?.timestamp;
+
+                    return (
+                      <Card key={server.serverId}>
+                        <CardHeader>
+                          <div className="flex flex-col gap-4">
+                            <div className="flex justify-between items-center">
+                              <span className="text-lg font-semibold">{server.serverName}</span>
+                              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                {server.serverType.toUpperCase()}
+                              </span>
+                            </div>
+                            
+                            <div className="flex flex-col gap-2">
+                              <div className="flex justify-between text-sm text-muted-foreground">
+                                <span>{startTime ? timeFormats[timespan](startTime) : ""}</span>
+                                <span>{endTime ? timeFormats[timespan](endTime) : ""}</span>
+                              </div>
+                              
+                              <Tooltip.Provider>
+                                <div 
+                                  className="grid gap-0.5 w-full pb-2"
+                                  style={{ 
+                                    gridTemplateColumns: `repeat(auto-fit, minmax(${minBoxWidths[timespan]}px, 1fr))`
+                                  }}
+                                >
+                                  {reversedSummary.map((entry) => (
+                                    <Tooltip.Root key={entry.timestamp}>
+                                      <Tooltip.Trigger asChild>
+                                        <div
+                                          className={`h-8 w-full rounded-sm border transition-colors ${
+                                            entry.missing
+                                              ? "bg-gray-300 border-gray-400"
+                                              : entry.online
+                                              ? "bg-green-500 border-green-600"
+                                              : "bg-red-500 border-red-600"
+                                          }`}
+                                        />
+                                      </Tooltip.Trigger>
+                                      <Tooltip.Portal>
+                                        <Tooltip.Content
+                                          className="rounded bg-gray-900 px-2 py-1 text-white text-xs shadow-lg"
+                                          side="top"
+                                        >
+                                          <div className="flex flex-col gap-1">
+                                            <p className="font-medium">
+                                              {new Date(entry.timestamp).toLocaleString([], {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: timespan > 2 ? 'numeric' : undefined,
+                                                hour: '2-digit',
+                                                minute: timespan === 1 ? '2-digit' : undefined,
+                                                hour12: false
+                                              })}
+                                            </p>
+                                            <p>
+                                              {entry.missing
+                                                ? t('Uptime.Status.NoData')
+                                                : entry.online
+                                                ? t('Uptime.Status.Online')
+                                                : t('Uptime.Status.Offline')}
+                                            </p>
+                                          </div>
+                                          <Tooltip.Arrow className="fill-gray-900" />
+                                        </Tooltip.Content>
+                                      </Tooltip.Portal>
+                                    </Tooltip.Root>
+                                  ))}
+                                </div>
+                              </Tooltip.Provider>
+                            </div>
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ));
+            })()
+          )}
+
+          {/* Network Devices Pagination */}
+          {networkPagination.totalItems > 0 && !isNetworkLoading && (
+            <div className="pt-4 pb-4">
+              <div className="flex justify-between items-center mb-2">
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium">Network Devices: </span>
+                  {networkPagination.totalItems > 0 
+                    ? t('Uptime.Pagination.Showing', { 
+                        start: ((networkPagination.currentPage - 1) * itemsPerPage) + 1, 
+                        end: Math.min(networkPagination.currentPage * itemsPerPage, networkPagination.totalItems), 
+                        total: networkPagination.totalItems 
+                      })
+                    : t('Uptime.Messages.NoItems')}
+                </div>
+              </div>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={handleNetworkPrevious}
+                      aria-disabled={networkPagination.currentPage === 1 || isNetworkLoading}
+                      className={
+                        networkPagination.currentPage === 1 || isNetworkLoading 
+                          ? "opacity-50 cursor-not-allowed" 
+                          : "hover:cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink isActive>{networkPagination.currentPage}</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={handleNetworkNext}
+                      aria-disabled={networkPagination.currentPage === networkPagination.totalPages || isNetworkLoading}
+                      className={
+                        networkPagination.currentPage === networkPagination.totalPages || isNetworkLoading 
+                          ? "opacity-50 cursor-not-allowed" 
+                          : "hover:cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+
+          {/* Servers Pagination */}
+          {serverPagination.totalItems > 0 && !isServerLoading && (
+            <div className="pt-4 pb-4">
+              <div className="flex justify-between items-center mb-2">
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium">Servers: </span>
+                  {serverPagination.totalItems > 0 
+                    ? t('Uptime.Pagination.Showing', { 
+                        start: ((serverPagination.currentPage - 1) * itemsPerPage) + 1, 
+                        end: Math.min(serverPagination.currentPage * itemsPerPage, serverPagination.totalItems), 
+                        total: serverPagination.totalItems 
+                      })
+                    : t('Uptime.Messages.NoItems')}
+                </div>
+              </div>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={handleServerPrevious}
+                      aria-disabled={serverPagination.currentPage === 1 || isServerLoading}
+                      className={
+                        serverPagination.currentPage === 1 || isServerLoading 
+                          ? "opacity-50 cursor-not-allowed" 
+                          : "hover:cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink isActive>{serverPagination.currentPage}</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={handleServerNext}
+                      aria-disabled={serverPagination.currentPage === serverPagination.totalPages || isServerLoading}
+                      className={
+                        serverPagination.currentPage === serverPagination.totalPages || isServerLoading 
                           ? "opacity-50 cursor-not-allowed" 
                           : "hover:cursor-pointer"
                       }

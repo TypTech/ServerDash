@@ -70,9 +70,9 @@
       "Dashboard": "Dashboard",
       "My Infrastructure": "My Infrastructure",
       "Servers": "Servers",
-      "Applications": "Applications",
+      "NetworkDevices": "Network Devices",
       "Uptime": "Uptime",
-      "Network": "Network",
+      "Infrastructure": "Infrastructure",
       "Settings": "Settings",
       "Logout": "Logout"
     },
@@ -93,18 +93,19 @@
         "Description": "Physical and virtual servers overview",
         "PhysicalServers": "Physical Servers",
         "VirtualServers": "Virtual Servers",
-        "ManageServers": "Manage Servers"
+        "ManageServers": "Manage Servers",
+        "ManageInfrastructure": "Manage Infrastructure"
       },
-      "Applications": {
-        "Title": "Applications",
-        "Description": "Manage your deployed applications",
-        "OnlineApplications": "Running Applications",
-        "ViewAllApplications": "View all applications"
+      "VirtualMachines": {
+        "Title": "Virtual Machines",
+        "Description": "Manage your deployed virtual machines",
+        "OnlineVirtualMachines": "Running Virtual Machines",
+        "ViewAllVirtualMachines": "View all virtual machines"
       },
       "Uptime": {
         "Title": "Uptime",
         "Description": "Monitor your service availability",
-        "OnlineApplications": "Online Applications",
+        "OnlineVirtualMachines": "Online Virtual Machines",
         "ViewUptimeMetrics": "View uptime metrics"
       },
       "Network": {
@@ -114,10 +115,57 @@
         "ViewNetworkDetails": "View network details"
       }
     },
+    "NetworkDevices": {
+      "Title": "Network Devices",
+      "YourDevices": "Your Network Devices",
+      "MyInfrastructure": "My Infrastructure",
+      "Tabs": {
+        "All": "All Devices",
+        "Switch": "Switches",
+        "AccessPoint": "Access Points",
+        "Repeater": "Repeaters",
+        "Router": "Routers",
+        "Firewall": "Firewalls",
+        "Other": "Other"
+      },
+      "Add": {
+        "Title": "Add Network Device",
+        "DeviceName": "Device Name",
+        "DeviceType": "Device Type",
+        "Brand": "Brand",
+        "Model": "Model",
+        "Location": "Location",
+        "Description": "Description",
+        "IPAddress": "IP Address",
+        "MACAddress": "MAC Address",
+        "ManagementURL": "Management URL",
+        "PortCount": "Port Count",
+        "PowerConsumption": "Power Consumption (W)",
+        "WirelessStandard": "Wireless Standard",
+        "Frequency": "Frequency",
+        "FirmwareVersion": "Firmware Version"
+      },
+      "Messages": {
+        "AddSuccess": "Network device added successfully",
+        "EditSuccess": "Network device updated successfully",
+        "DeleteSuccess": "Network device deleted successfully",
+        "GetError": "Failed to fetch network devices",
+        "EditError": "Failed to update network device",
+        "DeleteError": "Failed to delete network device"
+      },
+      "Search": {
+        "Placeholder": "Search network devices..."
+      }
+    },
     "Servers": {
       "Title": "Servers",
       "MyInfrastructure": "My Infrastructure",
       "YourServers": "Your Servers",
+      "Tabs": {
+        "All": "All Servers",
+        "Physical": "Physical Servers",
+        "Virtual": "Virtual Machines"
+      },
       "AddServer": {
         "Title": "Add a server",
         "General": {
@@ -200,28 +248,36 @@
       },
       "Search": {
         "Placeholder": "Type to search..."
+      },
+      "Setup": {
+        "Title": "Add New Infrastructure",
+        "Description": "Choose what type of infrastructure you want to add",
+        "PhysicalServer": "Physical Server",
+        "PhysicalDescription": "Add a dedicated physical server",
+        "VirtualMachine": "Virtual Machine",
+        "VirtualMachineDescription": "Add a new virtual machine or service"
       }
     },
-    "Applications": {
-      "Title": "Your Applications",
-      "Breadcrumb": {
-        "MyInfrastructure": "My Infrastructure",
-        "Applications": "Applications"
-      },
+          "VirtualMachines": {
+        "Title": "Your Virtual Machines",
+        "Breadcrumb": {
+          "MyInfrastructure": "My Infrastructure",
+          "VirtualMachines": "Virtual Machines"
+        },
       "Views": {
         "ChangeView": "Change view",
         "ListView": "List View",
         "GridView": "Grid View",
         "CompactView": "Compact View"
       },
-      "Add": {
-        "Title": "Add an application",
-        "Name": "Name",
-        "NamePlaceholder": "e.g. Portainer",
-        "Server": "Server",
-        "SelectServer": "Select server",
-        "Description": "Description",
-        "DescriptionPlaceholder": "Application description",
+              "Add": {
+          "Title": "Add a virtual machine",
+          "Name": "Name",
+          "NamePlaceholder": "e.g. Portainer",
+          "Server": "Server",
+          "SelectServer": "Select server",
+          "Description": "Description",
+          "DescriptionPlaceholder": "Virtual machine description",
         "IconURL": "Icon URL",
         "IconURLPlaceholder": "https://example.com/icon.png",
         "PublicURL": "Public URL",
@@ -233,10 +289,10 @@
         "UptimeCheckURL": "Uptime Check URL",
         "UptimeCheckURLPlaceholder": "https://example.com/status"
       },
-      "Edit": {
-        "Title": "Edit Application",
-        "SaveButton": "Save Changes"
-      },
+              "Edit": {
+          "Title": "Edit Virtual Machine",
+          "SaveButton": "Save Changes"
+        },
       "Card": {
         "Server": "Server",
         "NoServer": "No server",
@@ -245,20 +301,20 @@
         "Icon": "Icon",
         "Image": "Image"
       },
-      "Messages": {
-        "AddServerFirst": "You must first add a server.",
-        "AddSuccess": "Application added successfully",
-        "EditSuccess": "Application edited successfully",
-        "DeleteSuccess": "Application deleted successfully",
-        "GetError": "Failed to get applications",
-        "EditError": "Failed to edit application",
-        "DeleteError": "Failed to delete application",
-        "NumberValidation": "Please enter a number between 1 and 100"
-      },
-      "Pagination": {
-        "Showing": "Showing {start}-{end} of {total} applications",
-        "NoApplications": "No applications found"
-      },
+              "Messages": {
+          "AddServerFirst": "You must first add a server.",
+          "AddSuccess": "Virtual machine added successfully",
+          "EditSuccess": "Virtual machine edited successfully",
+          "DeleteSuccess": "Virtual machine deleted successfully",
+          "GetError": "Failed to get virtual machines",
+          "EditError": "Failed to edit virtual machine",
+          "DeleteError": "Failed to delete virtual machine",
+          "NumberValidation": "Please enter a number between 1 and 100"
+        },
+              "Pagination": {
+          "Showing": "Showing {start}-{end} of {total} virtual machines",
+          "NoVirtualMachines": "No virtual machines found"
+        },
       "Search": {
         "Placeholder": "Type to search..."
       }
@@ -399,7 +455,7 @@
         "CustomizeText": {
           "Display": "Customize Notification Text",
           "Title": "Customize Notification Text",
-          "Application": "Notification Text for Applications",
+          "VirtualMachine": "Notification Text for Virtual Machines",
           "Server": "Notification Text for Servers",
           "Placeholders": {
             "Title": "You can use the following placeholders in the text:",
@@ -408,11 +464,11 @@
               "Name": "!name - The name of the server",
               "Status": "!status - The current status of the server (online/offline)"
             },
-            "Application": {
-              "Title": "Application related:",
-              "Name": "!name - The name of the application",
-              "Url": "!url - The URL where the application is hosted",
-              "Status": "!status - The current status of the application (online/offline)"
+            "VirtualMachine": {
+              "Title": "Virtual Machine related:",
+                              "Name": "!name - The name of the virtual machine",
+                "Url": "!url - The URL where the virtual machine is hosted",
+                "Status": "!status - The current status of the virtual machine (online/offline)"
             }
           }
         },

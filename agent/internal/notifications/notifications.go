@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/corecontrol/agent/internal/models"
+	"github.com/serverdash/agent/internal/models"
 
 	"gopkg.in/gomail.v2"
 )

@@ -81,6 +81,32 @@ func GetServers(db *sql.DB) ([]models.Server, error) {
 	return servers, nil
 }
 
+// GetNetworkDevices fetches all network devices with monitoring enabled
+func GetNetworkDevices(db *sql.DB) ([]models.NetworkDevice, error) {
+	rows, err := db.Query(
+		`SELECT id, name, type, ip, "monitoringURL", monitoring, online 
+         FROM network_device WHERE monitoring = true`,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("error fetching network devices: %v", err)
+	}
+	defer rows.Close()
+
+	var devices []models.NetworkDevice
+	for rows.Next() {
+		var device models.NetworkDevice
+		if err := rows.Scan(
+			&device.ID, &device.Name, &device.Type, &device.IP, &device.MonitoringURL,
+			&device.Monitoring, &device.Online,
+		); err != nil {
+			fmt.Printf("Error scanning network device row: %v\n", err)
+			continue
+		}
+		devices = append(devices, device)
+	}
+	return devices, nil
+}
+
 // LoadNotifications loads all enabled notifications
 func LoadNotifications(db *sql.DB) ([]models.Notification, error) {
 	rows, err := db.Query(

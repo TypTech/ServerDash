@@ -15,8 +15,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+
 import { useTranslations } from "next-intl"
 
 interface StatsResponse {
@@ -53,176 +52,188 @@ export default function Dashboard() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-border bg-card/50 backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-6">
+            <SidebarTrigger className="-ml-1 hover:bg-muted transition-all duration-200" />
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbPage>/</BreadcrumbPage>
+                  <BreadcrumbPage className="text-muted-foreground">/</BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Title')}</BreadcrumbPage>
+                  <BreadcrumbPage className="font-medium">{t('Title')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
         </header>
-        <div className="p-6">
-          <h1 className="text-3xl font-bold tracking-tight mb-6">{t('Title')}</h1>
+        <div className="p-8 subtle-grid">
+          <div className="relative mb-12">
+            <h1 className="title-large clean-gradient mb-4">{t('Title')}</h1>
+            <p className="subtitle max-w-2xl">
+              Monitor your infrastructure with modern, clean design and real-time insights
+            </p>
+          </div>
 
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-            <Card className="overflow-hidden border-t-4 border-t-rose-500 shadow-lg transition-all hover:shadow-xl hover:border-t-rose-600">
-              <CardHeader className="py-3 pb-1">
-                <div className="flex items-center justify-between">
+            <div className="modern-card">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
                   <div>
-                    <CardTitle className="text-2xl font-semibold">{t('Servers.Title')}</CardTitle>
-                    <CardDescription className="mt-1">{t('Servers.Description')}</CardDescription>
+                    <h3 className="text-xl font-semibold">{t('Servers.Title')}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{t('Servers.Description')}</p>
                   </div>
-                  <Server className="h-8 w-8 text-rose-500 p-1.5 rounded-lg" />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-muted">
+                    <Server className="h-6 w-6 text-foreground" />
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-1 pb-2 min-h-[120px]">
-                <div className="grid grid-cols-2 gap-4">
+                
+                <div className="grid grid-cols-3 gap-3 mb-6">
                   {/* Physical Servers */}
-                  <div className="flex items-center space-x-4 border border-gray-background p-4 rounded-lg">
-                    <div className="bg-rose-100 p-2 rounded-full">
-                      <Server className="h-6 w-6 text-rose-600" />
-                    </div>
-                    <div>
-                      <div className="text-3xl font-bold">{serverCountNoVMs}</div>
-                      <p className="text-sm text-muted-foreground">{t('Servers.PhysicalServers')}</p>
+                  <div className="metric-card">
+                    <div className="flex flex-col items-center text-center space-y-2">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-foreground">
+                        <Server className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold">{serverCountNoVMs}</div>
+                        <p className="text-xs text-muted-foreground">{t('Servers.PhysicalServers')}</p>
+                      </div>
                     </div>
                   </div>
 
                   {/* Virtual Machines */}
-                  <div className="flex items-center space-x-4 border border-gray-background p-4 rounded-lg">
-                    <div className="bg-violet-100 p-2 rounded-full">
-                      <Network className="h-6 w-6 text-violet-600" />
+                  <div className="metric-card">
+                    <div className="flex flex-col items-center text-center space-y-2">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary text-secondary-foreground">
+                        <Network className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold">{serverCountOnlyVMs}</div>
+                        <p className="text-xs text-muted-foreground">{t('Servers.VirtualServers')}</p>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-3xl font-bold">{serverCountOnlyVMs}</div>
-                      <p className="text-sm text-muted-foreground">{t('Servers.VirtualServers')}</p>
+                  </div>
+
+                  {/* Applications */}
+                  <div className="metric-card">
+                    <div className="flex flex-col items-center text-center space-y-2">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted text-foreground">
+                        <Layers className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold">{applicationCount}</div>
+                        <p className="text-xs text-muted-foreground">{t('VirtualMachines.Title')}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/10 py-2 px-4">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="w-full font-semibold transition-colors border border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <Link href="/dashboard/servers" className="flex items-center justify-between">
-                    <span>{t('Servers.ManageServers')}</span>
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
+                
+                <Link href="/dashboard/servers" className="minimal-button w-full flex items-center justify-center space-x-2">
+                  <span>{t('Servers.ManageInfrastructure')}</span>
+                  <div className="status-dot"></div>
+                </Link>
+              </div>
+            </div>
 
-            <Card className="overflow-hidden border-t-4 border-t-amber-500 shadow-lg transition-all hover:shadow-xl hover:border-t-amber-600">
-              <CardHeader className="py-3 pb-1">
-                <div className="flex items-center justify-between">
+            <div className="modern-card">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
                   <div>
-                    <CardTitle className="text-2xl font-semibold">{t('Applications.Title')}</CardTitle>
-                    <CardDescription className="mt-1">{t('Applications.Description')}</CardDescription>
+                                    <h3 className="text-xl font-semibold">{t('VirtualMachines.Title')}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{t('VirtualMachines.Description')}</p>
                   </div>
-                  <Layers className="h-8 w-8 text-amber-500 p-1.5 rounded-lg" />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-muted">
+                    <Layers className="h-6 w-6 text-foreground" />
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-1 pb-2 min-h-[120px]">
-                <div className="text-4xl font-bold">{applicationCount}</div>
-                <p className="text-sm text-muted-foreground mt-2">{t('Applications.OnlineApplications')}</p>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/10 py-2 px-4">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="w-full font-semibold transition-colors border border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <Link href="/dashboard/applications" className="flex items-center justify-between">
-                    <span>{t('Applications.ViewAllApplications')}</span>
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
+                
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold mb-3">{applicationCount}</div>
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <div className="status-dot"></div>
+                    <p className="text-sm text-muted-foreground">{t('VirtualMachines.OnlineVirtualMachines')}</p>
+                  </div>
+                  
+                  <div className="metric-card">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Active Services</span>
+                      <span className="text-lg font-semibold">{onlineApplicationsCount}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <Link href="/dashboard/applications" className="minimal-button w-full flex items-center justify-center space-x-2">
+                  <span>{t('VirtualMachines.ViewAllVirtualMachines')}</span>
+                  <div className="status-dot"></div>
+                </Link>
+              </div>
+            </div>
 
-            <Card className="overflow-hidden border-t-4 border-t-emerald-500 shadow-lg transition-all hover:shadow-xl hover:border-t-emerald-600">
-              <CardHeader className="py-3 pb-1">
-                <div className="flex items-center justify-between">
+            <div className="modern-card">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
                   <div>
-                    <CardTitle className="text-2xl font-semibold">{t('Uptime.Title')}</CardTitle>
-                    <CardDescription className="mt-1">{t('Uptime.Description')}</CardDescription>
+                    <h3 className="text-xl font-semibold">{t('Uptime.Title')}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{t('Uptime.Description')}</p>
                   </div>
-                  <Activity className="h-8 w-8 text-emerald-500 p-1.5 rounded-lg" />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-muted">
+                    <Activity className="h-6 w-6 text-foreground" />
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-1 pb-2 min-h-[120px]">
-                <div className="flex flex-col">
-                  <div className="text-4xl font-bold flex items-center justify-between">
-                    <span>
+                
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-3xl font-bold">
                       {onlineApplicationsCount}/{applicationCount}
                     </span>
-                    <div className="flex items-center bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md text-lg font-semibold">
+                    <div className="flex items-center bg-muted px-3 py-1 rounded-lg text-sm font-semibold">
                       {applicationCount > 0 ? Math.round((onlineApplicationsCount / applicationCount) * 100) : 0}%
                     </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mt-3">
+                  <div className="progress-modern">
                     <div
-                      className="bg-emerald-500 h-2.5 rounded-full"
+                      className="progress-fill"
                       style={{
                         width: `${applicationCount > 0 ? Math.round((onlineApplicationsCount / applicationCount) * 100) : 0}%`,
                       }}
                     ></div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">{t('Uptime.OnlineApplications')}</p>
+                  <p className="text-sm text-muted-foreground mt-2">{t('Uptime.OnlineVirtualMachines')}</p>
                 </div>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/10 py-2 px-4">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="w-full font-semibold transition-colors border border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <Link href="/dashboard/uptime" className="flex items-center justify-between">
-                    <span>{t('Uptime.ViewUptimeMetrics')}</span>
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
+                
+                <Link href="/dashboard/uptime" className="minimal-button w-full flex items-center justify-center space-x-2">
+                  <span>{t('Uptime.ViewUptimeMetrics')}</span>
+                  <div className="status-dot"></div>
+                </Link>
+              </div>
+            </div>
 
-            <Card className="overflow-hidden border-t-4 border-t-sky-500 shadow-lg transition-all hover:shadow-xl hover:border-t-sky-600">
-              <CardHeader className="py-3 pb-1">
-                <div className="flex items-center justify-between">
+            <div className="modern-card">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
                   <div>
-                    <CardTitle className="text-2xl font-semibold">{t('Network.Title')}</CardTitle>
-                    <CardDescription className="mt-1">{t('Network.Description')}</CardDescription>
+                    <h3 className="text-xl font-semibold">{t('Network.Title')}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{t('Network.Description')}</p>
                   </div>
-                  <Network className="h-8 w-8 text-sky-500 p-1.5 rounded-lg" />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-muted">
+                    <Network className="h-6 w-6 text-foreground" />
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-1 pb-2 min-h-[120px]">
-                <div className="text-4xl font-bold">{serverCountNoVMs + serverCountOnlyVMs + applicationCount}</div>
-                <p className="text-sm text-muted-foreground mt-2">{t('Network.ActiveConnections')}</p>
-              </CardContent>
-              <CardFooter className="border-t bg-muted/10 py-2 px-4">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="w-full font-semibold transition-colors border border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground"
-                  asChild
-                >
-                  <Link href="/dashboard/network" className="flex items-center justify-between">
-                    <span>{t('Network.ViewNetworkDetails')}</span>
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
+                
+                <div className="mb-6">
+                  <div className="text-3xl font-bold mb-2">{serverCountNoVMs + serverCountOnlyVMs + applicationCount}</div>
+                  <p className="text-sm text-muted-foreground">{t('Network.ActiveConnections')}</p>
+                </div>
+                
+                <Link href="/dashboard/infrastructure" className="minimal-button w-full flex items-center justify-center space-x-2">
+                  <span>{t('Network.ViewNetworkDetails')}</span>
+                  <div className="status-dot"></div>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </SidebarInset>

@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/corecontrol/agent/internal/models"
-	"github.com/corecontrol/agent/internal/notifications"
+	"github.com/serverdash/agent/internal/models"
+	"github.com/serverdash/agent/internal/notifications"
 )
 
 // MonitorApplications checks and updates the status of all applications

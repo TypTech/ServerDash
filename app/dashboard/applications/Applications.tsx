@@ -362,11 +362,11 @@ export default function Dashboard() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Applications.Breadcrumb.MyInfrastructure')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('VirtualMachines.Breadcrumb.MyInfrastructure')}</BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Applications.Breadcrumb.Applications')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('VirtualMachines.Breadcrumb.VirtualMachines')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -375,7 +375,7 @@ export default function Dashboard() {
         <Toaster />
         <div className="p-6">
           <div className="flex justify-between items-center">
-            <span className="text-3xl font-bold">{t('Applications.Title')}</span>
+            <span className="text-3xl font-bold">{t('VirtualMachines.Title')}</span>
             <div className="flex gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

@@ -1,4 +1,4 @@
-# Build the Go Agent for CoreControl
+# Build the Go Agent for ServerDash
 FROM golang:1.21-alpine AS build
 
 # Set the working directory

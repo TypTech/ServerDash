@@ -4,7 +4,6 @@ import type * as React from "react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import {
-  AppWindow,
   Settings,
   LayoutDashboardIcon,
   Briefcase,
@@ -68,9 +67,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           url: "/dashboard/servers",
         },
         {
-          title: t('Applications'),
-          icon: AppWindow,
-          url: "/dashboard/applications",
+          title: t('NetworkDevices'),
+          icon: Network,
+          url: "/dashboard/network-devices",
         },
         {
           title: t('Uptime'),
@@ -78,16 +77,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           url: "/dashboard/uptime",
         },
         {
-          title: t('Network'),
+          title: t('Infrastructure'),
           icon: Network,
-          url: "/dashboard/network",
+          url: "/dashboard/infrastructure",
         },
       ],
-    },
-    {
-      title: t('Settings'),
-      icon: Settings,
-      url: "/dashboard/settings",
     },
   ],
 }
@@ -118,12 +112,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="gap-3">
-              <a href="https://github.com/crocofied/corecontrol" target="_blank" rel="noreferrer noopener" className="transition-all hover:opacity-80">
+              <a href="https://github.com/serverdash/serverdash" target="_blank" rel="noreferrer noopener" className="transition-all hover:opacity-80">
                 <div className="flex items-center justify-center rounded-lg overflow-hidden bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm">
-                  <Image src="/logo.png" width={48} height={48} alt="CoreControl Logo" className="object-cover" />
+                  <Image src="/logo.png" width={48} height={48} alt="ServerDash Logo" className="object-cover" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold text-base">CoreControl</span>
+                  <span className="font-semibold text-base">ServerDash</span>
                   <span className="text-xs text-sidebar-foreground/70">v{packageJson.version}</span>
                 </div>
               </a>
@@ -146,27 +140,100 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
                           className={cn(
-                            "font-medium transition-all",
+                            "font-medium transition-all duration-200 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground group p-3",
                             (hasActiveChild(item.items) || isActive(item.url)) &&
-                              "text-sidebar-accent-foreground bg-sidebar-accent/50",
+                              "text-sidebar-accent-foreground bg-sidebar-accent/50 shadow-sm",
                           )}
                         >
-                          {item.icon && <item.icon className="h-4 w-4" />}
-                          <span>{item.title}</span>
-                          <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                          <div className="flex items-center w-full">
+                            <div className={cn(
+                              "flex items-center justify-center w-8 h-8 rounded-lg mr-3 transition-all duration-200",
+                              (hasActiveChild(item.items) || isActive(item.url))
+                                ? "bg-primary text-primary-foreground shadow-sm" 
+                                : "bg-sidebar-accent/20 text-sidebar-foreground/70 group-hover:bg-sidebar-accent/40 group-hover:text-sidebar-foreground"
+                            )}>
+                              {item.icon && <item.icon className="h-4 w-4" />}
+                            </div>
+                            <span className="text-sm flex-1">{item.title}</span>
+                            <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                          </div>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           {item.items.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild isActive={isActive(subItem.url)} className="transition-all">
-                                <Link href={subItem.url} className="flex items-center">
-                                  {subItem.icon && <subItem.icon className="h-3.5 w-3.5 mr-2" />}
-                                  <span>{subItem.title}</span>
-                                </Link>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
+                            subItem.items?.length ? (
+                              <Collapsible key={subItem.title} defaultOpen={hasActiveChild(subItem.items)} className="group/subcollapsible">
+                                <SidebarMenuSubItem>
+                                  <CollapsibleTrigger asChild>
+                                    <SidebarMenuSubButton 
+                                      className={cn(
+                                        "transition-all duration-200 hover:bg-sidebar-accent/30 group ml-4",
+                                        (hasActiveChild(subItem.items) || isActive(subItem.url)) && "bg-sidebar-accent/30"
+                                      )}
+                                    >
+                                      <div className="flex items-center w-full py-2">
+                                        <div className={cn(
+                                          "flex items-center justify-center w-6 h-6 rounded-md mr-3 transition-all duration-200",
+                                          (hasActiveChild(subItem.items) || isActive(subItem.url))
+                                            ? "bg-primary text-primary-foreground shadow-sm" 
+                                            : "bg-sidebar-accent/15 text-sidebar-foreground/60 group-hover:bg-sidebar-accent/30 group-hover:text-sidebar-foreground"
+                                        )}>
+                                          {subItem.icon && <subItem.icon className="h-3 w-3" />}
+                                        </div>
+                                        <span className="text-xs flex-1">{subItem.title}</span>
+                                        <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]/subcollapsible:rotate-180" />
+                                      </div>
+                                    </SidebarMenuSubButton>
+                                  </CollapsibleTrigger>
+                                  <CollapsibleContent>
+                                    <div className="ml-6 mt-1">
+                                      {subItem.items.map((subSubItem) => (
+                                        <div key={subSubItem.title} className="mb-1">
+                                          <Link 
+                                            href={subSubItem.url} 
+                                            className={cn(
+                                              "flex items-center py-2 px-3 rounded-md text-xs transition-all duration-200 hover:bg-sidebar-accent/20",
+                                              isActive(subSubItem.url) && "bg-sidebar-accent/30 text-sidebar-accent-foreground"
+                                            )}
+                                          >
+                                            <div className={cn(
+                                              "flex items-center justify-center w-5 h-5 rounded mr-2 transition-all duration-200",
+                                              isActive(subSubItem.url)
+                                                ? "bg-primary text-primary-foreground shadow-sm" 
+                                                : "bg-sidebar-accent/10 text-sidebar-foreground/50"
+                                            )}>
+                                              {subSubItem.icon && <subSubItem.icon className="h-2.5 w-2.5" />}
+                                            </div>
+                                            <span>{subSubItem.title}</span>
+                                          </Link>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </CollapsibleContent>
+                                </SidebarMenuSubItem>
+                              </Collapsible>
+                            ) : (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton 
+                                  asChild 
+                                  isActive={isActive(subItem.url)} 
+                                  className="transition-all duration-200 hover:bg-sidebar-accent/30 group ml-4"
+                                >
+                                  <Link href={subItem.url} className="flex items-center py-2">
+                                    <div className={cn(
+                                      "flex items-center justify-center w-6 h-6 rounded-md mr-3 transition-all duration-200",
+                                      isActive(subItem.url)
+                                        ? "bg-primary text-primary-foreground shadow-sm" 
+                                        : "bg-sidebar-accent/15 text-sidebar-foreground/60 group-hover:bg-sidebar-accent/30 group-hover:text-sidebar-foreground"
+                                    )}>
+                                      {subItem.icon && <subItem.icon className="h-3 w-3" />}
+                                    </div>
+                                    <span className="text-xs">{subItem.title}</span>
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            )
                           ))}
                         </SidebarMenuSub>
                       </CollapsibleContent>
@@ -177,13 +244,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarMenuButton
                       asChild
                       className={cn(
-                        "font-medium transition-all",
-                        isActive(item.url) && "text-sidebar-accent-foreground bg-sidebar-accent/50",
+                        "font-medium transition-all duration-200 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground group p-3",
+                        isActive(item.url) && "text-sidebar-accent-foreground bg-sidebar-accent/50 shadow-sm",
                       )}
                     >
-                      <Link href={item.url}>
-                        {item.icon && <item.icon className="h-4 w-4" />}
-                        <span>{item.title}</span>
+                      <Link href={item.url} className="flex items-center">
+                        <div className={cn(
+                          "flex items-center justify-center w-8 h-8 rounded-lg mr-3 transition-all duration-200",
+                          isActive(item.url)
+                            ? "bg-primary text-primary-foreground shadow-sm" 
+                            : "bg-sidebar-accent/20 text-sidebar-foreground/70 group-hover:bg-sidebar-accent/40 group-hover:text-sidebar-foreground"
+                        )}>
+                          {item.icon && <item.icon className="h-4 w-4" />}
+                        </div>
+                        <span className="text-sm">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -193,14 +267,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarFooter className="border-t border-sidebar-border/30 pt-4 mt-auto">
+        <SidebarFooter className="border-t border-sidebar-border/30 pt-4 mt-auto space-y-2">
+          {/* Settings Button */}
           <Button
-            variant="outline"
-            className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10 border-none shadow-none"
+            variant="ghost"
+            asChild
+            className={cn(
+              "w-full justify-start font-medium transition-all duration-200 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground group",
+              isActive("/dashboard/settings") && "bg-sidebar-accent/50 text-sidebar-accent-foreground shadow-sm"
+            )}
+          >
+            <Link href="/dashboard/settings" className="flex items-center">
+              <div className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-lg mr-3 transition-all duration-200",
+                              isActive("/dashboard/settings") 
+                ? "bg-primary text-primary-foreground shadow-sm" 
+                : "bg-sidebar-accent/20 text-sidebar-foreground/70 group-hover:bg-sidebar-accent/40 group-hover:text-sidebar-foreground"
+              )}>
+                <Settings className="h-4 w-4" />
+              </div>
+              <span className="text-sm">{t('Settings')}</span>
+            </Link>
+          </Button>
+
+          {/* Divider */}
+          <div className="h-px bg-sidebar-border/30 mx-2" />
+
+          {/* Logout Button */}
+          <Button
+            variant="ghost"
+            className="w-full justify-start font-medium text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-200 group"
             onClick={logout}
           >
-            <LogOut className="h-4 w-4 mr-2" />
-            {t('Logout')}
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg mr-3 bg-destructive/10 text-destructive group-hover:bg-destructive/20 transition-all duration-200">
+              <LogOut className="h-4 w-4" />
+            </div>
+            <span className="text-sm">{t('Logout')}</span>
           </Button>
         </SidebarFooter>
       </SidebarContent>

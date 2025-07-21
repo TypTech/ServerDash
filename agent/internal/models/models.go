@@ -26,6 +26,16 @@ type Server struct {
 	Uptime        sql.NullString
 }
 
+type NetworkDevice struct {
+	ID            int
+	Name          string
+	Type          string
+	IP            sql.NullString
+	MonitoringURL sql.NullString
+	Monitoring    bool
+	Online        bool
+}
+
 type CPUResponse struct {
 	Total float64 `json:"total"`
 }
