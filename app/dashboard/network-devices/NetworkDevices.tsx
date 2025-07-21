@@ -33,6 +33,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 interface NetworkDevice {
   id: number;
@@ -61,7 +62,43 @@ export default function NetworkDevices() {
     model: "",
     ip: "",
     location: "",
-    description: ""
+    description: "",
+    // Switch specific
+    ports: "",
+    poeSupport: "",
+    poeWattage: "",
+    managedType: "",
+    vlanSupport: false,
+    stackable: false,
+    // Access Point specific
+    wifiStandard: "",
+    frequency: "",
+    maxClients: "",
+    antennaType: "",
+    powerOutput: "",
+    beamforming: false,
+    // Router specific
+    wanPorts: "",
+    lanPorts: "",
+    routingProtocols: "",
+    vpnSupport: false,
+    firewallBuiltin: false,
+    bandwidth: "",
+    // Firewall specific
+    throughput: "",
+    maxConnections: "",
+    vpnTunnels: "",
+    securityFeatures: "",
+    highAvailability: false,
+    intrusionPrevention: false,
+    // Repeater specific
+    signalBoost: "",
+    coverageArea: "",
+    dualBand: false,
+    // Other device specific
+    deviceFunction: "",
+    powerConsumption: "",
+    rackMountable: false
   });
 
   const fetchDevices = async () => {
@@ -135,10 +172,455 @@ export default function NetworkDevices() {
       model: "",
       ip: "",
       location: "",
-      description: ""
+      description: "",
+      // Switch specific
+      ports: "",
+      poeSupport: "",
+      poeWattage: "",
+      managedType: "",
+      vlanSupport: false,
+      stackable: false,
+      // Access Point specific
+      wifiStandard: "",
+      frequency: "",
+      maxClients: "",
+      antennaType: "",
+      powerOutput: "",
+      beamforming: false,
+      // Router specific
+      wanPorts: "",
+      lanPorts: "",
+      routingProtocols: "",
+      vpnSupport: false,
+      firewallBuiltin: false,
+      bandwidth: "",
+      // Firewall specific
+      throughput: "",
+      maxConnections: "",
+      vpnTunnels: "",
+      securityFeatures: "",
+      highAvailability: false,
+      intrusionPrevention: false,
+      // Repeater specific
+      signalBoost: "",
+      coverageArea: "",
+      dualBand: false,
+      // Other device specific
+      deviceFunction: "",
+      powerConsumption: "",
+      rackMountable: false
     });
     setSelectedDeviceType(null);
     setIsAddDialogOpen(false);
+  };
+
+  const renderDeviceSpecificFields = () => {
+    if (!selectedDeviceType) return null;
+
+    switch (selectedDeviceType) {
+      case "switch":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              🔀 Switch Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Number of Ports *</Label>
+                <Select 
+                  value={formData.ports} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, ports: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select port count" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="8">8 Ports</SelectItem>
+                    <SelectItem value="16">16 Ports</SelectItem>
+                    <SelectItem value="24">24 Ports</SelectItem>
+                    <SelectItem value="48">48 Ports</SelectItem>
+                    <SelectItem value="custom">Custom</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>PoE Support</Label>
+                <Select 
+                  value={formData.poeSupport} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, poeSupport: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="PoE type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">No PoE</SelectItem>
+                    <SelectItem value="poe">PoE (15.4W)</SelectItem>
+                    <SelectItem value="poe+">PoE+ (30W)</SelectItem>
+                    <SelectItem value="poe++">PoE++ (60W)</SelectItem>
+                    <SelectItem value="uhpoe">UHPoE (90W)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Total PoE Wattage</Label>
+                <Input
+                  placeholder="e.g., 370W"
+                  value={formData.poeWattage}
+                  onChange={(e) => setFormData(prev => ({ ...prev, poeWattage: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Management Type</Label>
+                <Select 
+                  value={formData.managedType} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, managedType: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Management type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="unmanaged">Unmanaged</SelectItem>
+                    <SelectItem value="smart">Smart Managed</SelectItem>
+                    <SelectItem value="fully-managed">Fully Managed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>VLAN Support</Label>
+                  <p className="text-xs text-muted-foreground">Virtual LAN configuration support</p>
+                </div>
+                <Switch 
+                  checked={formData.vlanSupport}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, vlanSupport: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Stackable</Label>
+                  <p className="text-xs text-muted-foreground">Can be stacked with other switches</p>
+                </div>
+                <Switch 
+                  checked={formData.stackable}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, stackable: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "access-point":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              📶 Access Point Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>WiFi Standard *</Label>
+                <Select 
+                  value={formData.wifiStandard} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, wifiStandard: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="WiFi standard" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="wifi4">WiFi 4 (802.11n)</SelectItem>
+                    <SelectItem value="wifi5">WiFi 5 (802.11ac)</SelectItem>
+                    <SelectItem value="wifi6">WiFi 6 (802.11ax)</SelectItem>
+                    <SelectItem value="wifi6e">WiFi 6E</SelectItem>
+                    <SelectItem value="wifi7">WiFi 7 (802.11be)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Frequency Bands</Label>
+                <Select 
+                  value={formData.frequency} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, frequency: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Frequency bands" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2.4ghz">2.4 GHz only</SelectItem>
+                    <SelectItem value="5ghz">5 GHz only</SelectItem>
+                    <SelectItem value="dual-band">Dual Band (2.4/5 GHz)</SelectItem>
+                    <SelectItem value="tri-band">Tri Band (2.4/5/6 GHz)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Max Concurrent Clients</Label>
+                <Input
+                  placeholder="e.g., 200"
+                  value={formData.maxClients}
+                  onChange={(e) => setFormData(prev => ({ ...prev, maxClients: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Antenna Type</Label>
+                <Select 
+                  value={formData.antennaType} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, antennaType: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Antenna type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="internal">Internal Antennas</SelectItem>
+                    <SelectItem value="external">External Antennas</SelectItem>
+                    <SelectItem value="omni">Omnidirectional</SelectItem>
+                    <SelectItem value="directional">Directional</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid w-full items-center gap-1.5">
+              <Label>Power Output</Label>
+              <Input
+                placeholder="e.g., 30 dBm"
+                value={formData.powerOutput}
+                onChange={(e) => setFormData(prev => ({ ...prev, powerOutput: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Beamforming</Label>
+                  <p className="text-xs text-muted-foreground">Advanced antenna technology for better coverage</p>
+                </div>
+                <Switch 
+                  checked={formData.beamforming}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, beamforming: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "router":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              🌐 Router Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>WAN Ports</Label>
+                <Input
+                  placeholder="e.g., 1"
+                  value={formData.wanPorts}
+                  onChange={(e) => setFormData(prev => ({ ...prev, wanPorts: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>LAN Ports</Label>
+                <Input
+                  placeholder="e.g., 4"
+                  value={formData.lanPorts}
+                  onChange={(e) => setFormData(prev => ({ ...prev, lanPorts: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Bandwidth Capacity</Label>
+                <Input
+                  placeholder="e.g., 1 Gbps"
+                  value={formData.bandwidth}
+                  onChange={(e) => setFormData(prev => ({ ...prev, bandwidth: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Routing Protocols</Label>
+                <Input
+                  placeholder="e.g., OSPF, BGP, RIP"
+                  value={formData.routingProtocols}
+                  onChange={(e) => setFormData(prev => ({ ...prev, routingProtocols: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>VPN Support</Label>
+                  <p className="text-xs text-muted-foreground">Virtual Private Network capabilities</p>
+                </div>
+                <Switch 
+                  checked={formData.vpnSupport}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, vpnSupport: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Built-in Firewall</Label>
+                  <p className="text-xs text-muted-foreground">Integrated firewall functionality</p>
+                </div>
+                <Switch 
+                  checked={formData.firewallBuiltin}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, firewallBuiltin: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "firewall":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              🛡️ Firewall Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Throughput *</Label>
+                <Input
+                  placeholder="e.g., 10 Gbps"
+                  value={formData.throughput}
+                  onChange={(e) => setFormData(prev => ({ ...prev, throughput: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Max Concurrent Connections</Label>
+                <Input
+                  placeholder="e.g., 1,000,000"
+                  value={formData.maxConnections}
+                  onChange={(e) => setFormData(prev => ({ ...prev, maxConnections: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>VPN Tunnels</Label>
+                <Input
+                  placeholder="e.g., 100"
+                  value={formData.vpnTunnels}
+                  onChange={(e) => setFormData(prev => ({ ...prev, vpnTunnels: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Security Features</Label>
+                <Input
+                  placeholder="e.g., DPI, IPS, Anti-malware"
+                  value={formData.securityFeatures}
+                  onChange={(e) => setFormData(prev => ({ ...prev, securityFeatures: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>High Availability</Label>
+                  <p className="text-xs text-muted-foreground">Failover and redundancy support</p>
+                </div>
+                <Switch 
+                  checked={formData.highAvailability}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, highAvailability: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Intrusion Prevention</Label>
+                  <p className="text-xs text-muted-foreground">IPS/IDS capabilities</p>
+                </div>
+                <Switch 
+                  checked={formData.intrusionPrevention}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, intrusionPrevention: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "repeater":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              📡 Repeater Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Signal Boost</Label>
+                <Input
+                  placeholder="e.g., 30 dBm"
+                  value={formData.signalBoost}
+                  onChange={(e) => setFormData(prev => ({ ...prev, signalBoost: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Coverage Area</Label>
+                <Input
+                  placeholder="e.g., 300 meters"
+                  value={formData.coverageArea}
+                  onChange={(e) => setFormData(prev => ({ ...prev, coverageArea: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Dual Band Support</Label>
+                  <p className="text-xs text-muted-foreground">2.4 GHz and 5 GHz frequency bands</p>
+                </div>
+                <Switch 
+                  checked={formData.dualBand}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, dualBand: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "other":
+        return (
+          <div className="space-y-4 border-t pt-4">
+            <h4 className="font-semibold text-sm flex items-center gap-2">
+              🔧 Device Configuration
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Device Function</Label>
+                <Input
+                  placeholder="e.g., Load Balancer, Media Converter"
+                  value={formData.deviceFunction}
+                  onChange={(e) => setFormData(prev => ({ ...prev, deviceFunction: e.target.value }))}
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label>Power Consumption</Label>
+                <Input
+                  placeholder="e.g., 25W"
+                  value={formData.powerConsumption}
+                  onChange={(e) => setFormData(prev => ({ ...prev, powerConsumption: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label>Rack Mountable</Label>
+                  <p className="text-xs text-muted-foreground">Can be mounted in a standard 19" rack</p>
+                </div>
+                <Switch 
+                  checked={formData.rackMountable}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, rackMountable: checked }))}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   const handleSubmit = async () => {
@@ -238,7 +720,7 @@ export default function NetworkDevices() {
                   <Plus className="h-4 w-4" />
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="max-w-[90vw] w-[500px] max-h-[90vh] overflow-y-auto">
+              <AlertDialogContent className="max-w-[90vw] w-[800px] max-h-[90vh] overflow-y-auto">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Add New Network Device</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -342,6 +824,9 @@ export default function NetworkDevices() {
                         />
                       </div>
                     </div>
+                    
+                    {/* Device-specific configuration fields */}
+                    {renderDeviceSpecificFields()}
                   </div>
                 )}
 
