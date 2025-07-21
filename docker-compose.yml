@@ -49,13 +49,9 @@ services:
 
   uptime:
     # Standalone uptime monitoring service using Node.js script
-    image: node:18-alpine
-    working_dir: /app
-    volumes:
-      - ./standalone_uptime_monitor.js:/app/standalone_uptime_monitor.js:ro
-      - ./package.json:/app/package.json:ro
-      - ./package-lock.json:/app/package-lock.json:ro
-    command: sh -c "npm ci --only=production && node standalone_uptime_monitor.js"
+    build:
+      context: .
+      dockerfile: Dockerfile.uptime
     environment:
       - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:ServerDash2024!@db:5432/serverdash}
       - UPTIME_CHECK_INTERVAL=${UPTIME_CHECK_INTERVAL:-60}
@@ -68,7 +64,6 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
-    container_name: serverdash-uptime
 
   db:
     image: postgres:17

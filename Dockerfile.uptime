@@ -1,0 +1,21 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files for dependencies
+COPY package.json package-lock.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Copy the uptime monitor script
+COPY standalone_uptime_monitor.js ./
+
+# Install additional system tools for monitoring
+RUN apk add --no-cache iputils curl
+
+# Expose any necessary ports (if needed)
+# EXPOSE 8080
+
+# Run the uptime monitor
+CMD ["node", "standalone_uptime_monitor.js"] 

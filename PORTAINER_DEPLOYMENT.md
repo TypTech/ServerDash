@@ -12,16 +12,15 @@ Follow these steps to deploy ServerDash using Portainer:
 
 ### 2. Deploy the Stack
 
-Choose one of these deployment methods:
+**IMPORTANT:** Use the Repository method for proper deployment:
 
-#### Option A: Upload Repository (Recommended)
+#### Repository Deployment (REQUIRED)
 1. Select **Repository** as the build method
 2. Enter the repository URL: `https://github.com/YourUsername/ServerDash`
 3. Set the compose file path to: `docker-compose.yml`
+4. Leave other repository settings as default
 
-#### Option B: Web Editor
-1. Select **Web editor**
-2. Copy and paste the contents of `docker-compose.yml` from this repository
+> ⚠️ **Note:** Do NOT use the "Web editor" method as it won't have access to the required build context and source files.
 
 ### 3. Configure Environment Variables (Optional)
 
@@ -60,12 +59,41 @@ In the **Environment variables** section, you can override any of these default 
 ### 5. Deploy
 
 1. Click **Deploy the stack**
-2. Wait for all services to start (this may take a few minutes for the first deployment)
+2. Wait for all services to build and start (this may take 5-10 minutes for the first deployment)
+3. Monitor the deployment in the **Containers** section
 
 ### 6. Access Your Application
 
 - **Web Interface:** `http://your-server-ip:3000` (or your configured port)
 - **Default Admin Access:** Will be created automatically on first startup
+
+## Local Development
+
+This same `docker-compose.yml` file also works for local development:
+
+```bash
+# Clone the repository
+git clone https://github.com/YourUsername/ServerDash
+cd ServerDash
+
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+## Deployment Architecture
+
+The deployment includes:
+
+- **Web Service:** Main Next.js application (builds from source)
+- **Agent Service:** Go-based monitoring agent (builds from source)
+- **Uptime Service:** Node.js uptime monitor (builds from source)
+- **Database Service:** PostgreSQL 17 (uses official image)
 
 ## Volume Management
 
@@ -77,16 +105,29 @@ To update ServerDash:
 
 1. Go to your stack in Portainer
 2. Click **Editor**
-3. Update the image tags or pull the latest `docker-compose.yml`
+3. Update the repository branch or commit if needed
 4. Click **Update the stack**
+5. Portainer will rebuild all services with the latest code
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Port conflicts:** Change `WEB_EXTERNAL_PORT` and `DB_EXTERNAL_PORT` if ports are already in use
-2. **Database connection issues:** Ensure the database container is healthy before other services start
-3. **Build failures:** Check Portainer logs for detailed error messages
+1. **Build failures:** 
+   - Ensure you're using the Repository deployment method
+   - Check that the repository URL is correct and accessible
+   - Verify the compose file path is `docker-compose.yml`
+
+2. **Port conflicts:** 
+   - Change `WEB_EXTERNAL_PORT` and `DB_EXTERNAL_PORT` if ports are already in use
+
+3. **Database connection issues:** 
+   - Ensure the database container is healthy before other services start
+   - Check database credentials match across all services
+
+4. **Container startup failures:**
+   - Allow sufficient time for builds (5-10 minutes)
+   - Check individual container logs for specific errors
 
 ### Logs
 
@@ -99,6 +140,14 @@ To view logs for any service:
 
 The PostgreSQL database includes health checks. Other services will wait for the database to be healthy before starting.
 
+## Build Times
+
+Expected build times for each service:
+- **Web Service:** 3-5 minutes (Node.js build with Next.js)
+- **Agent Service:** 1-2 minutes (Go compilation)
+- **Uptime Service:** 1-2 minutes (Node.js dependencies)
+- **Database Service:** 30 seconds (pre-built image)
+
 ## Security Best Practices
 
 1. **Always change the default JWT secret**
@@ -106,10 +155,22 @@ The PostgreSQL database includes health checks. Other services will wait for the
 3. **Configure proper firewall rules**
 4. **Regular backups of the postgres_data volume**
 5. **Keep the application updated**
+6. **Monitor container logs for suspicious activity**
+
+## Alternative Deployment (Web Editor)
+
+If you absolutely cannot use the Repository method, you can:
+
+1. Manually build and push images to a registry first
+2. Update the compose file to use your registry images instead of building
+3. Copy the compose file content to the web editor
+
+However, this is **not recommended** for most users.
 
 ## Support
 
 For issues and support:
 - Check the main README.md for general documentation
 - Review logs in Portainer for specific error messages
-- Ensure all environment variables are properly configured 
+- Ensure all environment variables are properly configured
+- Verify your repository URL and access permissions 
