@@ -43,3 +43,26 @@ next-env.d.ts
 # generated prisma client
 /lib/generated/
 /prisma/client/
+
+# backup files
+*.backup
+*.bak
+*.old
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# logs
+logs/
+*.log
+
+# temporary files
+tmp/
+temp/
