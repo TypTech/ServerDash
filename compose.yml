@@ -15,6 +15,20 @@ services:
       db:
         condition: service_healthy
 
+  uptime:
+    build:
+      context: ./uptime-service
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    container_name: serverdash-uptime
+
   db:
     image: postgres:17
     restart: always

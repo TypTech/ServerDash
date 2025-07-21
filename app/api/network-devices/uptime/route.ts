@@ -119,28 +119,23 @@ export async function POST(request: NextRequest) {
     const { timespan = 1, page = 1, itemsPerPage = 5 } = await request.json();
     const skip = (page - 1) * itemsPerPage;
 
-    // Get paginated and sorted network devices
+    // Get paginated and sorted network devices (same as working applications pattern)
     const [devices, totalCount] = await Promise.all([
       (prisma as any).network_device.findMany({
         skip,
         take: itemsPerPage,
-        orderBy: { name: 'asc' },
-        select: {
-          id: true,
-          name: true,
-          type: true,
-        },
+        orderBy: { name: 'asc' }
       }),
       (prisma as any).network_device.count()
     ]);
 
     const deviceIds = devices.map((device: any) => device.id);
     
-    // Get time range and intervals
+    // Get time range and intervals (same as working applications)
     const { start } = getTimeRange(timespan);
     const intervals = generateIntervals(timespan);
 
-    // Get uptime history for the filtered devices
+    // Get uptime history for the filtered devices (same pattern as applications)
     const uptimeHistory = await (prisma as any).network_device_history.findMany({
       where: {
         deviceId: { in: deviceIds },
@@ -149,7 +144,7 @@ export async function POST(request: NextRequest) {
       orderBy: { createdAt: "desc" }
     });
 
-    // Process data for each device
+    // Process data for each device (exact same logic as applications)
     const result = devices.map((device: any) => {
       const deviceChecks = uptimeHistory.filter((check: any) => check.deviceId === device.id);
       const checksMap = new Map<string, { failed: number; total: number }>();
@@ -176,7 +171,7 @@ export async function POST(request: NextRequest) {
       return {
         deviceName: device.name,
         deviceId: device.id,
-        deviceType: device.type,
+        deviceType: device.type || 'Network Device',
         uptimeSummary
       };
     });

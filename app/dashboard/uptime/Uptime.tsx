@@ -127,6 +127,8 @@ export default function Uptime() {
   const [isLoading, setIsLoading] = useState(false);
   const [isNetworkLoading, setIsNetworkLoading] = useState(false);
   const [isServerLoading, setIsServerLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [nextRefreshIn, setNextRefreshIn] = useState<number>(60);
   
   const savedItemsPerPage = Cookies.get("itemsPerPage-uptime");
   const defaultItemsPerPage = 5;
@@ -136,7 +138,7 @@ export default function Uptime() {
   const customInputRef = useRef<HTMLInputElement>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const getData = async (selectedTimespan: number, page: number, itemsPerPage: number) => {
+  const getData = async (selectedTimespan: number, page: number, itemsPerPage: number, updateTimestamp: boolean = true) => {
     setIsLoading(true);
     try {
       const response = await axios.post<{
@@ -150,6 +152,11 @@ export default function Uptime() {
       
       setData(response.data.data);
       setPagination(response.data.pagination);
+      
+      if (updateTimestamp) {
+        setLastUpdated(new Date());
+        setNextRefreshIn(60);
+      }
     } catch (error) {
       console.error("Error:", error);
       setData([]);
@@ -163,7 +170,7 @@ export default function Uptime() {
     }
   };
 
-  const getNetworkData = async (selectedTimespan: number, page: number, itemsPerPage: number) => {
+  const getNetworkData = async (selectedTimespan: number, page: number, itemsPerPage: number, updateTimestamp: boolean = true) => {
     setIsNetworkLoading(true);
     try {
       const response = await axios.post<{
@@ -190,7 +197,7 @@ export default function Uptime() {
     }
   };
 
-  const getServerData = async (selectedTimespan: number, page: number, itemsPerPage: number) => {
+  const getServerData = async (selectedTimespan: number, page: number, itemsPerPage: number, updateTimestamp: boolean = true) => {
     setIsServerLoading(true);
     try {
       const response = await axios.post<{
@@ -221,36 +228,42 @@ export default function Uptime() {
     const newPage = Math.max(1, pagination.currentPage - 1);
     setPagination(prev => ({...prev, currentPage: newPage}));
     getData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleNext = () => {
     const newPage = Math.min(pagination.totalPages, pagination.currentPage + 1);
     setPagination(prev => ({...prev, currentPage: newPage}));
     getData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleNetworkPrevious = () => {
     const newPage = Math.max(1, networkPagination.currentPage - 1);
     setNetworkPagination(prev => ({...prev, currentPage: newPage}));
     getNetworkData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleNetworkNext = () => {
     const newPage = Math.min(networkPagination.totalPages, networkPagination.currentPage + 1);
     setNetworkPagination(prev => ({...prev, currentPage: newPage}));
     getNetworkData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleServerPrevious = () => {
     const newPage = Math.max(1, serverPagination.currentPage - 1);
     setServerPagination(prev => ({...prev, currentPage: newPage}));
     getServerData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleServerNext = () => {
     const newPage = Math.min(serverPagination.totalPages, serverPagination.currentPage + 1);
     setServerPagination(prev => ({...prev, currentPage: newPage}));
     getServerData(timespan, newPage, itemsPerPage);
+    setNextRefreshIn(60); // Reset countdown on manual action
   };
 
   const handleItemsPerPageChange = (value: string) => {
@@ -281,14 +294,58 @@ export default function Uptime() {
       getData(timespan, 1, validatedValue);
       getNetworkData(timespan, 1, validatedValue);
       getServerData(timespan, 1, validatedValue);
+      setNextRefreshIn(60); // Reset countdown on manual action
     }, 300);
   };
 
+  // Auto-refresh functionality
   useEffect(() => {
-    getData(timespan, 1, itemsPerPage);
-    getNetworkData(timespan, 1, itemsPerPage);
-    getServerData(timespan, 1, itemsPerPage);
+    // Initial data load
+    getData(timespan, pagination.currentPage, itemsPerPage);
+    getNetworkData(timespan, networkPagination.currentPage, itemsPerPage);
+    getServerData(timespan, serverPagination.currentPage, itemsPerPage);
+
+    // Set up auto-refresh every 60 seconds (1 minute)
+    const refreshInterval = setInterval(() => {
+      getData(timespan, pagination.currentPage, itemsPerPage);
+      getNetworkData(timespan, networkPagination.currentPage, itemsPerPage);
+      getServerData(timespan, serverPagination.currentPage, itemsPerPage);
+    }, 60000); // 60 seconds
+
+    // Cleanup interval on component unmount or when timespan changes
+    return () => {
+      clearInterval(refreshInterval);
+    };
   }, [timespan]);
+
+  // Countdown timer effect
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      setNextRefreshIn((prev) => {
+        if (prev <= 1) {
+          return 60; // Reset to 60 when it reaches 0
+        }
+        return prev - 1;
+      });
+    }, 1000); // Update every second
+
+    return () => {
+      clearInterval(countdownInterval);
+    };
+  }, []);
+
+  // Separate effect for pagination changes (don't update timestamp for pagination)
+  useEffect(() => {
+    getData(timespan, pagination.currentPage, itemsPerPage, false);
+  }, [pagination.currentPage]);
+
+  useEffect(() => {
+    getNetworkData(timespan, networkPagination.currentPage, itemsPerPage, false);
+  }, [networkPagination.currentPage]);
+
+  useEffect(() => {
+    getServerData(timespan, serverPagination.currentPage, itemsPerPage, false);
+  }, [serverPagination.currentPage]);
 
   return (
     <SidebarProvider>
@@ -318,8 +375,47 @@ export default function Uptime() {
         <Toaster />
         <div className="p-6">
           <div className="flex justify-between items-center">
-            <span className="text-3xl font-bold">{t('Uptime.Title')}</span>
+            <div className="flex flex-col">
+              <span className="text-3xl font-bold">{t('Uptime.Title')}</span>
+              {lastUpdated && (
+                <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+                  <span>
+                    Last updated: {lastUpdated.toLocaleTimeString([], { 
+                      hour: '2-digit', 
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: false 
+                    })}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Next refresh in {nextRefreshIn}s
+                  </span>
+                </div>
+              )}
+            </div>
             <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  getData(timespan, pagination.currentPage, itemsPerPage);
+                  getNetworkData(timespan, networkPagination.currentPage, itemsPerPage);
+                  getServerData(timespan, serverPagination.currentPage, itemsPerPage);
+                  setNextRefreshIn(60);
+                }}
+                disabled={isLoading || isNetworkLoading || isServerLoading}
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Refresh data manually"
+              >
+                <svg 
+                  className={`w-4 h-4 ${(isLoading || isNetworkLoading || isServerLoading) ? 'animate-spin' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Refresh
+              </button>
               <Select
                 value={String(itemsPerPage)}
                 onValueChange={handleItemsPerPageChange}
@@ -387,10 +483,12 @@ export default function Uptime() {
                                 expires: 365,
                                 path: "/",
                                 sameSite: "strict",
-                              });
-                              getData(timespan, 1, validatedValue);
-                              getNetworkData(timespan, 1, validatedValue);
-                              document.body.click();
+                                                          });
+                            getData(timespan, 1, validatedValue);
+                            getNetworkData(timespan, 1, validatedValue);
+                            getServerData(timespan, 1, validatedValue);
+                            setNextRefreshIn(60); // Reset countdown on manual action
+                            document.body.click();
                             }
                           }
                         }}
@@ -407,8 +505,10 @@ export default function Uptime() {
                   setTimespan(Number(v) as 1 | 2 | 3 | 4);
                   setPagination(prev => ({...prev, currentPage: 1}));
                   setNetworkPagination(prev => ({...prev, currentPage: 1}));
+                  setServerPagination(prev => ({...prev, currentPage: 1}));
+                  setNextRefreshIn(60); // Reset countdown on manual action
                 }}
-                disabled={isLoading || isNetworkLoading}
+                disabled={isLoading || isNetworkLoading || isServerLoading}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={t('Uptime.TimeRange.Select')} />
