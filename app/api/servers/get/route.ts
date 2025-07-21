@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
         // If serverId is provided, only fetch that specific server
         const hostsQuery = serverId 
             ? { id: serverId }
-            : { OR: [{ hostServer: 0 }, { hostServer: null }] };
+            : { OR: [{ hostServer: null }, { hostServer: 0 }] };
         
         let hosts;
         if (!serverId) {
@@ -254,7 +254,7 @@ export async function POST(request: NextRequest) {
         let totalHosts = 0;
         if (!serverId) {
             totalHosts = await prisma.server.count({
-                where: { OR: [{ hostServer: 0 }, { hostServer: null }] }
+                where: { OR: [{ hostServer: null }, { hostServer: 0 }] }
             });
             maxPage = Math.ceil(totalHosts / ITEMS_PER_PAGE);
         }
