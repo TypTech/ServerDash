@@ -1678,28 +1678,30 @@ export default function Servers() {
                             </TooltipProvider>
                           )}
                           
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button 
-                                  variant="outline" 
-                                  size="icon" 
-                                  onClick={() => {
-                                    openEditDialog(server);
-                                    
-                                    // Open the dialog after setting the values
-                                    const dialogTriggerButton = document.getElementById(`edit-dialog-trigger-${server.id}`);
-                                    if (dialogTriggerButton) {
-                                      dialogTriggerButton.click();
-                                    }
-                                  }}
-                                >
-                                  <Pencil className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>{t('Servers.ServerCard.EditServer')}</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                          {!server.isVM && (
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button 
+                                    variant="outline" 
+                                    size="icon" 
+                                    onClick={() => {
+                                      openEditDialog(server);
+                                      
+                                      // Open the dialog after setting the values
+                                      const dialogTriggerButton = document.getElementById(`edit-dialog-trigger-${server.id}`);
+                                      if (dialogTriggerButton) {
+                                        dialogTriggerButton.click();
+                                      }
+                                    }}
+                                  >
+                                    <Pencil className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>{t('Servers.ServerCard.EditServer')}</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          )}
                           
                           {server.host && server.hostedVMs && server.hostedVMs.length > 0 && (
                             <TooltipProvider>
@@ -1754,7 +1756,7 @@ export default function Servers() {
                                                             onClick={() => deleteApplication(hostedVM.id)}
                                                           >
                                                             <Trash2 className="h-4 w-4" />
-                                                          </Button>
+                                                                                                                    </Button>
 
                                                           <AlertDialog>
                                                             <AlertDialogTrigger asChild>
@@ -1762,6 +1764,7 @@ export default function Servers() {
                                                                 size="icon"
                                                                 className="h-9 w-9"
                                                                 onClick={() => openEditDialog(hostedVM)}
+                                                                style={{ display: 'none' }}
                                                               >
                                                                 <Pencil className="h-4 w-4" />
                                                               </Button>
@@ -2055,34 +2058,7 @@ export default function Servers() {
                                                         </div>
                                                       </div>
 
-                                                      <div className="col-span-full mb-2">
-                                                        <h4 className="text-sm font-semibold">{t('Servers.ServerCard.HardwareInformation')}</h4>
-                                                      </div>
 
-                                                      <div className="flex items-center gap-2 text-foreground/80">
-                                                        <Cpu className="h-4 w-4 text-muted-foreground" />
-                                                        <span>
-                                                          <b>{t('Common.Server.CPU')}:</b> {hostedVM.cpu || "-"}
-                                                        </span>
-                                                      </div>
-                                                      <div className="flex items-center gap-2 text-foreground/80">
-                                                        <Microchip className="h-4 w-4 text-muted-foreground" />
-                                                        <span>
-                                                          <b>{t('Common.Server.GPU')}:</b> {hostedVM.gpu || "-"}
-                                                        </span>
-                                                      </div>
-                                                      <div className="flex items-center gap-2 text-foreground/80">
-                                                        <MemoryStick className="h-4 w-4 text-muted-foreground" />
-                                                        <span>
-                                                          <b>{t('Common.Server.RAM')}:</b> {hostedVM.ram || "-"}
-                                                        </span>
-                                                      </div>
-                                                      <div className="flex items-center gap-2 text-foreground/80">
-                                                        <HardDrive className="h-4 w-4 text-muted-foreground" />
-                                                        <span>
-                                                          <b>{t('Common.Server.Disk')}:</b> {hostedVM.disk || "-"}
-                                                        </span>
-                                                      </div>
 
                                                       {hostedVM.monitoring && (
                                                         <>

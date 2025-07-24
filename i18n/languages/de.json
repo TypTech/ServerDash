@@ -112,6 +112,7 @@
         "Title": "Netzwerk",
         "Description": "Netzwerkkonfiguration verwalten",
         "ActiveConnections": "Aktive Verbindungen",
+        "NetworkDevices": "Netzwerkgeräte",
         "ViewNetworkDetails": "Netzwerkdetails anzeigen"
       }
     },

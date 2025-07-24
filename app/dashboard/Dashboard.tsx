@@ -23,6 +23,8 @@ interface StatsResponse {
   serverCountOnlyVMs: number
   applicationCount: number
   onlineApplicationsCount: number
+  networkDeviceCount: number
+  onlineNetworkDeviceCount: number
 }
 
 export default function Dashboard() {
@@ -31,6 +33,8 @@ export default function Dashboard() {
   const [serverCountOnlyVMs, setServerCountOnlyVMs] = useState<number>(0)
   const [applicationCount, setApplicationCount] = useState<number>(0)
   const [onlineApplicationsCount, setOnlineApplicationsCount] = useState<number>(0)
+  const [networkDeviceCount, setNetworkDeviceCount] = useState<number>(0)
+  const [onlineNetworkDeviceCount, setOnlineNetworkDeviceCount] = useState<number>(0)
 
   const getStats = async () => {
     try {
@@ -39,6 +43,8 @@ export default function Dashboard() {
       setServerCountOnlyVMs(response.data.serverCountOnlyVMs)
       setApplicationCount(response.data.applicationCount)
       setOnlineApplicationsCount(response.data.onlineApplicationsCount)
+      setNetworkDeviceCount(response.data.networkDeviceCount)
+      setOnlineNetworkDeviceCount(response.data.onlineNetworkDeviceCount)
     } catch (error: any) {
       console.log("Axios error:", error.response?.data)
     }
@@ -211,11 +217,11 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="mb-6">
-                  <div className="text-3xl font-bold mb-2">{serverCountNoVMs + serverCountOnlyVMs + applicationCount}</div>
-                  <p className="text-sm text-muted-foreground">{t('Network.ActiveConnections')}</p>
+                  <div className="text-3xl font-bold mb-2">{networkDeviceCount}</div>
+                  <p className="text-sm text-muted-foreground">{t('Network.NetworkDevices')}</p>
                 </div>
                 
-                <Link href="/dashboard/infrastructure" className="minimal-button w-full flex items-center justify-center space-x-2">
+                <Link href="/dashboard/network-devices" className="minimal-button w-full flex items-center justify-center space-x-2">
                   <span>{t('Network.ViewNetworkDetails')}</span>
                   <div className="status-dot"></div>
                 </Link>

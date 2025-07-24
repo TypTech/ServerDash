@@ -112,6 +112,7 @@
         "Title": "Network",
         "Description": "Manage network configuration",
         "ActiveConnections": "Active Connections",
+        "NetworkDevices": "Network Devices",
         "ViewNetworkDetails": "View network details"
       }
     },
