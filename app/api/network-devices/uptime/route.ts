@@ -21,6 +21,16 @@ interface PaginationData {
 interface HistoryEntry {
   online: boolean;
   createdAt: Date;
+  deviceId: number;
+}
+
+interface NetworkDevice {
+  id: number;
+  name: string;
+  type: string;
+  online: boolean;
+  monitoring: boolean;
+  monitoringURL: string | null;
 }
 
 const getTimeRange = (timespan: number) => {
@@ -119,23 +129,31 @@ export async function POST(request: NextRequest) {
     const { timespan = 1, page = 1, itemsPerPage = 5 } = await request.json();
     const skip = (page - 1) * itemsPerPage;
 
-    // Get paginated and sorted network devices (same as working applications pattern)
+    // Get paginated and sorted network devices with your own service monitoring
     const [devices, totalCount] = await Promise.all([
       (prisma as any).network_device.findMany({
         skip,
         take: itemsPerPage,
-        orderBy: { name: 'asc' }
+        orderBy: { name: 'asc' },
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          online: true,
+          monitoring: true,
+          monitoringURL: true,
+        }
       }),
       (prisma as any).network_device.count()
     ]);
 
-    const deviceIds = devices.map((device: any) => device.id);
+    const deviceIds = devices.map((device: NetworkDevice) => device.id);
     
-    // Get time range and intervals (same as working applications)
+    // Get time range and intervals for your own service uptime
     const { start } = getTimeRange(timespan);
     const intervals = generateIntervals(timespan);
 
-    // Get uptime history for the filtered devices (same pattern as applications)
+    // Get uptime history for your own service monitoring
     const uptimeHistory = await (prisma as any).network_device_history.findMany({
       where: {
         deviceId: { in: deviceIds },
@@ -144,9 +162,9 @@ export async function POST(request: NextRequest) {
       orderBy: { createdAt: "desc" }
     });
 
-    // Process data for each device (exact same logic as applications)
-    const result = devices.map((device: any) => {
-      const deviceChecks = uptimeHistory.filter((check: any) => check.deviceId === device.id);
+    // Process data for each device using your own service uptime
+    const result = devices.map((device: NetworkDevice) => {
+      const deviceChecks = uptimeHistory.filter((check: HistoryEntry) => check.deviceId === device.id);
       const checksMap = new Map<string, { failed: number; total: number }>();
 
       for (const check of deviceChecks) {
@@ -172,7 +190,8 @@ export async function POST(request: NextRequest) {
         deviceName: device.name,
         deviceId: device.id,
         deviceType: device.type || 'Network Device',
-        uptimeSummary
+        uptimeSummary,
+        monitoringType: 'service' // Network devices use your own service uptime
       };
     });
 

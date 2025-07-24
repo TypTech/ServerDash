@@ -118,7 +118,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold text-base">ServerDash</span>
-                  <span className="text-xs text-sidebar-foreground/70">v{packageJson.version}</span>
+                  <span className="text-xs text-sidebar-foreground/70">Pre-Release v0.0.2</span>
                 </div>
               </a>
             </SidebarMenuButton>

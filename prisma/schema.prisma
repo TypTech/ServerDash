@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
 }
 
@@ -15,40 +9,40 @@ datasource db {
 }
 
 model application {
-  id            Int       @id @default(autoincrement())
-  serverId      Int       @default(1)
-  name          String
-  description   String?
-  icon          String
-  publicURL     String
-  localURL      String?
+  id             Int      @id @default(autoincrement())
+  serverId       Int      @default(1)
+  name           String
+  description    String?
+  icon           String
+  publicURL      String
+  localURL       String?
   uptimecheckUrl String?
-  createdAt     DateTime  @default(now())
+  createdAt      DateTime @default(now())
   online         Boolean  @default(true)
 }
 
 model uptime_history {
-  id            Int       @id @default(autoincrement())
-  applicationId Int       @default(1)
-  online        Boolean   @default(true)
-  createdAt     DateTime  @default(now())
+  id            Int      @id @default(autoincrement())
+  applicationId Int      @default(1)
+  online        Boolean  @default(true)
+  createdAt     DateTime @default(now())
 }
 
 model server_history {
-  id            Int       @id @default(autoincrement())
-  serverId      Int       @default(1)
-  online        Boolean   @default(true)
-  cpuUsage      String?
-  ramUsage      String?
-  diskUsage     String?
-  gpuUsage      String?
-  temp          String?
-  createdAt     DateTime  @default(now())
+  id        Int      @id @default(autoincrement())
+  serverId  Int      @default(1)
+  online    Boolean  @default(true)
+  cpuUsage  String?
+  ramUsage  String?
+  diskUsage String?
+  createdAt DateTime @default(now())
+  gpuUsage  String?
+  temp      String?
 }
 
 model server {
-  id            Int       @id @default(autoincrement())
-  host          Boolean   @default(false)
+  id            Int     @id @default(autoincrement())
+  host          Boolean @default(false)
   hostServer    Int?
   name          String
   icon          String?
@@ -59,96 +53,96 @@ model server {
   gpu           String?
   ram           String?
   disk          String?
-  monitoring    Boolean   @default(false)
+  monitoring    Boolean @default(false)
   monitoringURL String?
   cpuUsage      String?
   ramUsage      String?
   diskUsage     String?
-  online        Boolean   @default(true)
+  online        Boolean @default(true)
   uptime        String?
   gpuUsage      String?
   temp          String?
 }
 
 model network_device {
-  id                Int       @id @default(autoincrement())
-  name              String
-  type              String    // 'switch', 'access-point', 'repeater', 'router', 'firewall', 'other'
-  brand             String?
-  model             String?
-  icon              String?
-  ip                String?
-  macAddress        String?
-  location          String?
-  description       String?
-  portsCount        Int?
-  wirelessStandard  String?   // For wireless devices
-  frequency         String?   // 2.4GHz, 5GHz, 6GHz
-  powerConsumption  Int?
-  firmwareVersion   String?
-  managementURL     String?
-  monitoring        Boolean   @default(false)
-  monitoringURL     String?
-  online            Boolean   @default(true)
-  uptime            String?
-  responseTime      String?   // Response time in ms
-  lastChecked       DateTime?
-  packetLoss        String?   // Packet loss percentage
-  bandwidth         String?   // Current bandwidth usage
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id               Int       @id @default(autoincrement())
+  name             String
+  type             String
+  brand            String?
+  model            String?
+  icon             String?
+  ip               String?
+  macAddress       String?
+  location         String?
+  description      String?
+  portsCount       Int?
+  wirelessStandard String?
+  frequency        String?
+  powerConsumption Int?
+  firmwareVersion  String?
+  managementURL    String?
+  monitoring       Boolean   @default(false)
+  monitoringURL    String?
+  online           Boolean   @default(true)
+  uptime           String?
+  responseTime     String?
+  lastChecked      DateTime?
+  packetLoss       String?
+  bandwidth        String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model network_device_history {
-  id              Int       @id @default(autoincrement())
-  deviceId        Int       @default(1)
-  online          Boolean   @default(true)
-  responseTime    String?
-  packetLoss      String?
-  bandwidth       String?
-  createdAt       DateTime  @default(now())
+  id           Int      @id @default(autoincrement())
+  deviceId     Int      @default(1)
+  online       Boolean  @default(true)
+  responseTime String?
+  packetLoss   String?
+  bandwidth    String?
+  createdAt    DateTime @default(now())
 }
 
 model settings {
-  id            Int       @id @default(autoincrement())
-  uptime_checks          Boolean       @default(true)
-  notification_text_application       String?
-  notification_text_server       String?
-  notification_text_network_device    String?
+  id                               Int     @id @default(autoincrement())
+  uptime_checks                    Boolean @default(true)
+  notification_text_application    String?
+  notification_text_server         String?
+  notification_text_network_device String?
 }
 
 model user {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  password      String
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
 }
 
 model notification {
-  id            Int       @id @default(autoincrement())
-  name          String
-  enabled       Boolean   @default(true)
-  type          String
-  smtpHost     String?
-  smtpPort     Int?
-  smtpFrom     String?
-  smtpUser     String?
-  smtpPass     String?
-  smtpSecure   Boolean?
-  smtpTo       String?
+  id             Int      @id @default(autoincrement())
+  name           String
+  enabled        Boolean  @default(true)
+  type           String
+  smtpHost       String?
+  smtpPort       Int?
+  smtpFrom       String?
+  smtpUser       String?
+  smtpPass       String?
+  smtpSecure     Boolean?
+  smtpTo         String?
   telegramChatId String?
-  telegramToken String?
+  telegramToken  String?
   discordWebhook String?
-  gotifyUrl     String?
-  gotifyToken   String?
-  ntfyUrl       String?
-  ntfyToken     String?
-  pushoverUrl   String?
-  pushoverToken String?
-  pushoverUser  String?
-  echobellURL   String?
+  gotifyUrl      String?
+  gotifyToken    String?
+  ntfyUrl        String?
+  ntfyToken      String?
+  pushoverUrl    String?
+  pushoverToken  String?
+  pushoverUser   String?
+  echobellURL    String?
 }
 
 model test_notification {
-  id            Int       @id @default(autoincrement())
+  id             Int @id @default(autoincrement())
   notificationId Int
 }

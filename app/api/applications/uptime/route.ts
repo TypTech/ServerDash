@@ -6,6 +6,18 @@ interface RequestBody {
     page?: number;
     itemsPerPage?: number;
   }
+
+interface Application {
+  id: number;
+  name: string;
+  online: boolean;
+}
+
+interface UptimeCheck {
+  applicationId: number;
+  online: boolean;
+  createdAt: Date;
+}
   
 
 const getTimeRange = (timespan: number) => {
@@ -114,7 +126,7 @@ export async function POST(request: NextRequest) {
         prisma.application.count()
       ]);
   
-      const applicationIds = applications.map(app => app.id);
+      const applicationIds = applications.map((app: Application) => app.id);
       
       // Get time range and intervals
       const { start } = getTimeRange(timespan);
@@ -130,8 +142,8 @@ export async function POST(request: NextRequest) {
       });
   
       // Process data for each application
-      const result = applications.map(app => {
-        const appChecks = uptimeHistory.filter(check => check.applicationId === app.id);
+      const result = applications.map((app: Application) => {
+        const appChecks = uptimeHistory.filter((check: UptimeCheck) => check.applicationId === app.id);
         const checksMap = new Map<string, { failed: number; total: number }>();
   
         for (const check of appChecks) {
@@ -156,7 +168,8 @@ export async function POST(request: NextRequest) {
         return {
           appName: app.name,
           appId: app.id,
-          uptimeSummary
+          uptimeSummary,
+          monitoringType: 'service' // Applications use your own service uptime
         };
       });
   
