@@ -11,33 +11,48 @@ export async function POST(request: NextRequest) {
         const body: ValidateRequest = await request.json();
         const { token } = body;
 
-        // Ensure JWT_SECRET is defined
-        if (!process.env.JWT_SECRET) {
-            throw new Error('JWT_SECRET is not defined');
+        // Validate input
+        if (!token || typeof token !== 'string') {
+            return NextResponse.json({ error: 'Token is required' }, { status: 400 });
         }
 
-        // Get the account id
-        const user = await prisma.user.findFirst({
-            where: {},
-        });
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        // Ensure JWT_SECRET is defined
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET is not defined');
+            return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
         }
 
         // Verify JWT
-        const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload & { id: string };
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload & { account_secret: string };
 
-        if(!decoded.account_secret) {
-            return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
+        if (!decoded.account_secret) {
+            return NextResponse.json({ error: 'Invalid token structure' }, { status: 401 });
         }
 
-        if(decoded.account_secret !== user.id) {
-            return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
+        // Verify user exists in database
+        const user = await prisma.user.findUnique({
+            where: { id: decoded.account_secret },
+        });
+
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 401 });
         }
 
-
-        return NextResponse.json({ message: 'Valid token' });
+        return NextResponse.json({ 
+            message: 'Valid token',
+            userId: user.id,
+            email: user.email 
+        });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        // Handle specific JWT errors
+        if (error.name === 'TokenExpiredError') {
+            return NextResponse.json({ error: 'Token expired' }, { status: 401 });
+        }
+        if (error.name === 'JsonWebTokenError') {
+            return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+        }
+        
+        console.error('Token validation error:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

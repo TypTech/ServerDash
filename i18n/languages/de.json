@@ -319,6 +319,20 @@
         "Placeholder": "Suche..."
       }
     },
+    "Applications": {
+      "Add": {
+        "Description": "Beschreibung",
+        "DescriptionPlaceholder": "Anwendungsbeschreibung",
+        "IconURL": "Icon URL",
+        "IconURLPlaceholder": "https://example.com/icon.png",
+        "PublicURL": "Öffentliche URL",
+        "PublicURLPlaceholder": "https://example.com",
+        "LocalURL": "Lokale URL",
+        "LocalURLPlaceholder": "http://localhost:3000",
+        "CustomUptimeCheck": "Benutzerdefinierte Uptime-Check URL",
+        "CustomUptimeCheckTooltip": "Wenn aktiviert, ersetzt diese URL die öffentliche URL für Uptime-Monitoring-Checks"
+      }
+    },
     "Uptime": {
       "Title": "Uptime",
       "Breadcrumb": {

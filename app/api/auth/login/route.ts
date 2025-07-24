@@ -217,7 +217,11 @@ export async function POST(request: NextRequest) {
             clientIP: clientIP
         });
 
-        return NextResponse.json({ token });
+        return NextResponse.json({ 
+            token,
+            isInitialSetup: false,
+            message: "Login successful"
+        });
     } catch (error: any) {
         // Log error securely without exposing sensitive information
         console.error('Login endpoint error:', {

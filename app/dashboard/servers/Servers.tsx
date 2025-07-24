@@ -220,7 +220,34 @@ export default function Servers() {
 
   const add = async () => {
     try {
-      await axios.post("/api/servers/add", {
+      // Frontend validation
+      if (!name || name.trim().length === 0) {
+        toast.error("Server name is required");
+        return;
+      }
+
+      if (monitoring && (!ip || ip.trim().length === 0)) {
+        toast.error("IP address is required when monitoring is enabled");
+        return;
+      }
+
+      console.log("Adding server with data:", {
+        host,
+        hostServer,
+        name,
+        icon,
+        os,
+        ip,
+        url,
+        cpu,
+        gpu,
+        ram,
+        disk,
+        monitoring,
+        monitoringURL,
+      });
+
+      const response = await axios.post("/api/servers/add", {
         host,
         hostServer,
         name,
@@ -235,6 +262,9 @@ export default function Servers() {
         monitoring,
         monitoringURL,
       })
+
+      console.log("Server added successfully:", response.data);
+      
       setIsAddDialogOpen(false)
       setHost(false)
       setHostServer(0)
@@ -252,8 +282,18 @@ export default function Servers() {
       getServers()
       toast.success("Server added successfully");
     } catch (error: any) {
-      console.log(error.response.data)
-      toast.error("Failed to add server");
+      console.error("Failed to add server:", error);
+      if (error.response?.data?.error) {
+        if (error.response.data.details && Array.isArray(error.response.data.details)) {
+          toast.error(`Error: ${error.response.data.details.join(", ")}`);
+        } else {
+          toast.error(`Error: ${error.response.data.error}`);
+        }
+      } else if (error.message) {
+        toast.error(`Network error: ${error.message}`);
+      } else {
+        toast.error("Failed to add server - unknown error");
+      }
     }
   }
 
@@ -273,8 +313,12 @@ export default function Servers() {
         })
       ])
       
+      // Ensure we have arrays to work with
+      const serversList = Array.isArray(serversResponse.data.servers) ? serversResponse.data.servers : [];
+      const applicationsList = Array.isArray(applicationsResponse.data.applications) ? applicationsResponse.data.applications : [];
+      
       // Transform applications to look like servers for unified display
-      const transformedApplications = applicationsResponse.data.applications.map((app: any) => ({
+      const transformedApplications = applicationsList.map((app: any) => ({
         id: `app-${app.id}`, // Prefix with 'app-' to avoid ID conflicts
         name: app.name,
         description: app.description,
@@ -308,14 +352,17 @@ export default function Servers() {
       }))
       
       // Combine servers and applications
-      const combinedServers = [...serversResponse.data.servers, ...transformedApplications]
+      const combinedServers = [...serversList, ...transformedApplications]
       
       setServers(combinedServers)
-      setMaxPage(serversResponse.data.maxPage)
-      setTotalItems(serversResponse.data.totalItems + applicationsResponse.data.applications.length)
+      setMaxPage(serversResponse.data.maxPage || 1)
+      setTotalItems((serversResponse.data.totalItems || 0) + applicationsList.length)
       setLoading(false)
     } catch (error: any) {
-      console.log(error.response)
+      console.error("Failed to fetch servers:", error);
+      setServers([]); // Ensure servers is always an array
+      setMaxPage(1);
+      setTotalItems(0);
       toast.error("Failed to fetch servers");
       setLoading(false)
     }
@@ -558,8 +605,8 @@ export default function Servers() {
 
   const updateMonitoringData = async () => {
     try {
-      const response = await axios.get<MonitoringData[]>("/api/servers/monitoring");
-      const monitoringData = response.data;
+      const response = await axios.get<{servers: MonitoringData[]}>("/api/servers/monitoring");
+      const monitoringData = Array.isArray(response.data?.servers) ? response.data.servers : [];
 
       setServers(prevServers => 
         prevServers.map(server => {
@@ -1378,7 +1425,7 @@ export default function Servers() {
               {servers
                 .filter((server) => {
                   // Filter by host (only show top-level servers unless searching OR if it's a VM)
-                  const hostFilter = searchTerm ? true : (server.hostServer === 0 || server.isVM);
+                  const hostFilter = searchTerm ? true : (server.hostServer === 0 || server.hostServer === null || server.isVM);
                   
                   // Filter by tab selection
                   let tabFilter = true;

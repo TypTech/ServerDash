@@ -3,19 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
     try {
-        const serverCountNoVMs = await prisma.server.count({
-            where: {
-                hostServer: 0
-            }
-        });
-
-        const serverCountOnlyVMs = await prisma.server.count({
-            where: {
-                hostServer: {
-                    not: 0
-                }
-            }
-        });
+        // Get all servers and filter by hostServer field
+        const allServers = await prisma.server.findMany();
+        const serverCountNoVMs = allServers.filter(s => !s.hostServer || s.hostServer === 0).length;
+        const serverCountOnlyVMs = allServers.filter(s => s.hostServer && s.hostServer !== 0).length;
 
         const applicationCount = await prisma.application.count();
 
@@ -30,6 +21,13 @@ export async function POST(request: NextRequest) {
             onlineApplicationsCount
         });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error('Dashboard API error:', error);
+        return NextResponse.json({ 
+            error: error.message,
+            serverCountNoVMs: 0,
+            serverCountOnlyVMs: 0,
+            applicationCount: 0,
+            onlineApplicationsCount: 0
+        }, { status: 500 });
     }
 }
