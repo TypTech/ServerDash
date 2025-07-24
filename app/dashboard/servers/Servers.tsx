@@ -1503,38 +1503,42 @@ export default function Servers() {
                                   </div>
                                 )}
 
-                                <div className="col-span-full pt-2 pb-2">
-                                  <Separator />
-                                </div>
+                                {!server.isVM && (
+                                  <>
+                                    <div className="col-span-full pt-2 pb-2">
+                                      <Separator />
+                                    </div>
 
-                                <div className="col-span-full mb-2">
-                                  <h4 className="text-sm font-semibold">{t('Servers.ServerCard.HardwareInformation')}</h4>
-                                </div>
+                                    <div className="col-span-full mb-2">
+                                      <h4 className="text-sm font-semibold">{t('Servers.ServerCard.HardwareInformation')}</h4>
+                                    </div>
 
-                                <div className="flex items-center gap-2 text-foreground/80">
-                                  <Cpu className="h-4 w-4 text-muted-foreground" />
-                                  <span>
-                                    <b>{t('Common.Server.CPU')}:</b> {server.cpu || "-"}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 text-foreground/80">
-                                  <Microchip className="h-4 w-4 text-muted-foreground" />
-                                  <span>
-                                    <b>{t('Common.Server.GPU')}:</b> {server.gpu || "-"}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 text-foreground/80">
-                                  <MemoryStick className="h-4 w-4 text-muted-foreground" />
-                                  <span>
-                                    <b>{t('Common.Server.RAM')}:</b> {server.ram || "-"}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2 text-foreground/80">
-                                  <HardDrive className="h-4 w-4 text-muted-foreground" />
-                                  <span>
-                                    <b>{t('Common.Server.Disk')}:</b> {server.disk || "-"}
-                                  </span>
-                                </div>
+                                    <div className="flex items-center gap-2 text-foreground/80">
+                                      <Cpu className="h-4 w-4 text-muted-foreground" />
+                                      <span>
+                                        <b>{t('Common.Server.CPU')}:</b> {server.cpu || "-"}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-foreground/80">
+                                      <Microchip className="h-4 w-4 text-muted-foreground" />
+                                      <span>
+                                        <b>{t('Common.Server.GPU')}:</b> {server.gpu || "-"}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-foreground/80">
+                                      <MemoryStick className="h-4 w-4 text-muted-foreground" />
+                                      <span>
+                                        <b>{t('Common.Server.RAM')}:</b> {server.ram || "-"}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-foreground/80">
+                                      <HardDrive className="h-4 w-4 text-muted-foreground" />
+                                      <span>
+                                        <b>{t('Common.Server.Disk')}:</b> {server.disk || "-"}
+                                      </span>
+                                    </div>
+                                  </>
+                                )}
 
                                 {server.monitoring && server.hostServer === 0 && (
                                   <>

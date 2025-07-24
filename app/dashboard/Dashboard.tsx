@@ -90,7 +90,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-3 mb-6">
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   {/* Physical Servers */}
                   <div className="metric-card">
                     <div className="flex flex-col items-center text-center space-y-2">
@@ -100,19 +100,6 @@ export default function Dashboard() {
                       <div>
                         <div className="text-xl font-bold">{serverCountNoVMs}</div>
                         <p className="text-xs text-muted-foreground">{t('Servers.PhysicalServers')}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Virtual Machines */}
-                  <div className="metric-card">
-                    <div className="flex flex-col items-center text-center space-y-2">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary text-secondary-foreground">
-                        <Network className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="text-xl font-bold">{serverCountOnlyVMs}</div>
-                        <p className="text-xs text-muted-foreground">{t('Servers.VirtualServers')}</p>
                       </div>
                     </div>
                   </div>
