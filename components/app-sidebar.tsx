@@ -81,6 +81,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           icon: Network,
           url: "/dashboard/infrastructure",
         },
+        {
+          title: t('SystemMonitoring'),
+          icon: Activity,
+          url: "/dashboard/monitoring",
+        },
       ],
     },
   ],

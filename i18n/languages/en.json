@@ -73,6 +73,7 @@
       "NetworkDevices": "Network Devices",
       "Uptime": "Uptime",
       "Infrastructure": "Infrastructure",
+      "SystemMonitoring": "System Monitoring",
       "Settings": "Settings",
       "Logout": "Logout"
     },
@@ -114,6 +115,24 @@
         "ActiveConnections": "Active Connections",
         "NetworkDevices": "Network Devices",
         "ViewNetworkDetails": "View network details"
+      },
+      "GlancesMonitor": {
+        "Title": "System Monitor",
+        "Description": "Real-time system monitoring with Glances",
+        "NoServers": "No servers with Glances monitoring found",
+        "AddServers": "Add physical servers with Glances monitoring to see system metrics",
+        "LastUpdated": "Last updated",
+        "Online": "Online",
+        "Offline": "Offline",
+        "CPU": "CPU",
+        "RAM": "RAM",
+        "Disk": "Disk",
+        "GPU": "GPU",
+        "Temperature": "Temperature",
+        "Uptime": "Uptime",
+        "AverageUsage": "Average Usage",
+        "LoadingData": "Loading monitoring data...",
+        "ErrorLoadingData": "Failed to load monitoring data"
       }
     },
     "NetworkDevices": {

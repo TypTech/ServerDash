@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 import { useTranslations } from "next-intl"
+import { GlancesMonitorWidget } from "@/components/glances-monitor-widget"
 
 interface StatsResponse {
   serverCountNoVMs: number
@@ -84,6 +85,11 @@ export default function Dashboard() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+            {/* Glances System Monitor - Full Width */}
+            <div className="lg:col-span-2">
+              <GlancesMonitorWidget />
+            </div>
+
             <div className="modern-card">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">

@@ -73,6 +73,7 @@
       "NetworkDevices": "Netzwerkgeräte",
       "Uptime": "Uptime",
       "Infrastructure": "Infrastruktur",
+      "SystemMonitoring": "System-Überwachung",
       "Settings": "Einstellungen",
       "Logout": "Abmelden"
     },
@@ -114,6 +115,24 @@
         "ActiveConnections": "Aktive Verbindungen",
         "NetworkDevices": "Netzwerkgeräte",
         "ViewNetworkDetails": "Netzwerkdetails anzeigen"
+      },
+      "GlancesMonitor": {
+        "Title": "System Monitor",
+        "Description": "Echtzeit-Systemüberwachung mit Glances",
+        "NoServers": "Keine Server mit Glances-Überwachung gefunden",
+        "AddServers": "Fügen Sie physische Server mit Glances-Überwachung hinzu, um Systemmetriken zu sehen",
+        "LastUpdated": "Zuletzt aktualisiert",
+        "Online": "Online",
+        "Offline": "Offline",
+        "CPU": "CPU",
+        "RAM": "RAM",
+        "Disk": "Festplatte",
+        "GPU": "GPU",
+        "Temperature": "Temperatur",
+        "Uptime": "Betriebszeit",
+        "AverageUsage": "Durchschnittliche Nutzung",
+        "LoadingData": "Lade Überwachungsdaten...",
+        "ErrorLoadingData": "Fehler beim Laden der Überwachungsdaten"
       }
     },
     "NetworkDevices": {
