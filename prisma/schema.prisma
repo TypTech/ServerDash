@@ -146,3 +146,36 @@ model test_notification {
   id             Int @id @default(autoincrement())
   notificationId Int
 }
+
+model application {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  icon        String?
+  category    String   @default("other")
+  dockerImage String
+  ports       String?  // JSON string for port mappings
+  environment String?  // JSON string for environment variables  
+  volumes     String?  // JSON string for volume mappings
+  commands    String?  // JSON string for additional docker commands
+  deployed    Boolean  @default(false)
+  status      String   @default("stopped") // stopped, running, error
+  containerId String?
+  featured    Boolean  @default(false)
+  tags        String?  // Comma-separated tags
+  version     String   @default("latest")
+  author      String?
+  website     String?
+  documentation String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model application_history {
+  id            Int      @id @default(autoincrement())
+  applicationId Int
+  action        String   // deployed, stopped, updated, error
+  status        String?
+  message       String?
+  createdAt     DateTime @default(now())
+}

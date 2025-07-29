@@ -72,6 +72,7 @@
         "Servers": "Server",
         "VirtualMachines": "Virtuelle Maschinen",
         "NetworkDevices": "Netzwerkger\u00e4te",
+        "Applications": "Anwendungen",
         "Uptime": "Uptime",
         "Infrastructure": "Infrastruktur",
         "SystemMonitoring": "System-\u00dcberwachung",

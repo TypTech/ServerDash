@@ -13,6 +13,7 @@ import {
   LogOut,
   ChevronDown,
   MonitorSpeaker,
+  Package,
 } from "lucide-react"
 import {
   Sidebar,
@@ -76,6 +77,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           title: t('NetworkDevices'),
           icon: Network,
           url: "/dashboard/network-devices",
+        },
+        {
+          title: t('Applications'),
+          icon: Package,
+          url: "/dashboard/applications",
         },
         {
           title: t('Uptime'),
