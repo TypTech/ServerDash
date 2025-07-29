@@ -66,3 +66,15 @@ logs/
 # temporary files
 tmp/
 temp/
+
+# GitHub Releases
+GitHub-Releases/
+0.0.1.md
+0.0.2.md
+0.0.3.md
+0.0.4.md
+0.0.5.md
+0.0.6.md
+0.0.7.md
+0.0.8.md
+0.0.9.md
