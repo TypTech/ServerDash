@@ -147,7 +147,13 @@ async function deployWithConfig(config: DeploymentConfiguration) {
     // Add the image
     dockerCmd += ` ${application.dockerImage}:${application.version}`
 
-    return await executeDeployment(application, dockerCmd, containerName, applicationId)
+    // Prepare deployed ports mapping (hostPort:containerPort)
+    const deployedPorts: Record<string, string> = {}
+    config.ports.forEach((port: { hostPort: string; containerPort: string; protocol: string }) => {
+      deployedPorts[port.hostPort] = port.containerPort
+    })
+
+    return await executeDeployment(application, dockerCmd, containerName, applicationId, deployedPorts)
 
   } catch (deployError: any) {
     return await handleDeploymentError(applicationId, deployError)
@@ -245,20 +251,106 @@ async function deployWithDefaults(applicationId: number, customPorts?: Record<st
       dockerCmd += ` ${commands.args}`
     }
 
-    return await executeDeployment(application, dockerCmd, containerName, applicationId)
+    return await executeDeployment(application, dockerCmd, containerName, applicationId, undefined)
 
   } catch (deployError: any) {
     return await handleDeploymentError(applicationId, deployError)
   }
 }
 
-async function executeDeployment(application: any, dockerCmd: string, containerName: string, applicationId: number) {
+async function executeDeployment(application: any, dockerCmd: string, containerName: string, applicationId: number, deployedPorts?: Record<string, string>) {
   console.log(`Executing Docker command: ${dockerCmd}`)
+
+  // Clean up any existing container with the same name
+  try {
+    console.log(`Checking for existing container: ${containerName}`)
+    const { stdout: existingContainer } = await execAsync(`docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`)
+    
+    if (existingContainer.trim() === containerName) {
+      console.log(`Found existing container ${containerName}, removing it...`)
+      
+      // Stop the container if it's running
+      try {
+        await execAsync(`docker stop ${containerName}`)
+        console.log(`Stopped existing container: ${containerName}`)
+      } catch (stopError) {
+        console.log(`Container ${containerName} was not running or already stopped`)
+      }
+      
+      // Remove the container
+      await execAsync(`docker rm ${containerName}`)
+      console.log(`Removed existing container: ${containerName}`)
+    } else {
+      console.log(`No existing container found with name: ${containerName}`)
+    }
+  } catch (cleanupError) {
+    console.log(`Error during container cleanup: ${cleanupError}`)
+    // Continue with deployment even if cleanup fails
+  }
+
+  // Check for port conflicts and clean up
+  const portPattern = /-p (\d+):/g
+  let match
+  const usedPorts = []
+  
+  while ((match = portPattern.exec(dockerCmd)) !== null) {
+    usedPorts.push(match[1])
+  }
+  
+  if (usedPorts.length > 0) {
+    console.log(`Checking for port conflicts on ports: ${usedPorts.join(', ')}`)
+    
+    for (const port of usedPorts) {
+      try {
+        // Check if port is in use by any Docker container
+        const { stdout: containerUsingPort } = await execAsync(`docker ps --filter "publish=${port}" --format "{{.Names}}"`)
+        
+        if (containerUsingPort.trim()) {
+          const conflictingContainers = containerUsingPort.trim().split('\n')
+          for (const conflictContainer of conflictingContainers) {
+            if (conflictContainer && conflictContainer !== containerName) {
+              console.log(`Port ${port} is in use by container: ${conflictContainer}`)
+              console.log(`Stopping and removing conflicting container: ${conflictContainer}`)
+              
+              try {
+                await execAsync(`docker stop ${conflictContainer}`)
+                await execAsync(`docker rm ${conflictContainer}`)
+                console.log(`Successfully removed conflicting container: ${conflictContainer}`)
+              } catch (removeError) {
+                console.log(`Could not remove conflicting container ${conflictContainer}: ${removeError}`)
+              }
+            }
+          }
+        }
+        
+        // Also check for non-Docker processes using the port
+        try {
+          const { stdout: processOnPort } = await execAsync(`lsof -ti:${port}`)
+          if (processOnPort.trim()) {
+            console.log(`Port ${port} is in use by non-Docker process(es): ${processOnPort.trim()}`)
+            // Don't automatically kill non-Docker processes, just warn
+          }
+        } catch (lsofError) {
+          // lsof command not available or no process found, which is fine
+          console.log(`Port ${port} appears to be free`)
+        }
+        
+      } catch (portCheckError) {
+        console.log(`Error checking port ${port}: ${portCheckError}`)
+      }
+    }
+    
+    // Small delay to let Docker release ports
+    console.log('Waiting for Docker to release ports...')
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  }
 
   // Execute Docker command
   const { stdout, stderr } = await execAsync(dockerCmd)
   
   if (stderr && !stdout) {
+    console.log(`Docker command failed with stderr: ${stderr}`)
+    
     // Handle specific Docker errors
     if (stderr.includes('bind: address already in use')) {
       throw new Error('Port is already in use. Please stop the conflicting service or choose a different port.')
@@ -266,6 +358,10 @@ async function executeDeployment(application: any, dockerCmd: string, containerN
     if (stderr.includes('pull access denied') || stderr.includes('repository does not exist')) {
       throw new Error('Docker image not found or access denied. Please check the image name.')
     }
+    if (stderr.includes('container name') && stderr.includes('already in use')) {
+      throw new Error('Container name conflict detected. The cleanup process may have failed. Please try again.')
+    }
+    
     throw new Error(stderr)
   }
 
@@ -281,14 +377,20 @@ async function executeDeployment(application: any, dockerCmd: string, containerN
     throw new Error(`Container failed to start. Status: ${containerStatus}. Logs: ${logs}`)
   }
 
-  // Update application with deployment info
+  // Update application with deployment info (including deployed ports if provided)
+  const updateData: any = {
+    deployed: true,
+    status: 'running',
+    containerId: containerId
+  }
+  
+  if (deployedPorts) {
+    updateData.ports = JSON.stringify(deployedPorts)
+  }
+
   await (prisma as any).application.update({
     where: { id: applicationId },
-    data: {
-      deployed: true,
-      status: 'running',
-      containerId: containerId
-    }
+    data: updateData
   })
 
   // Log successful deployment

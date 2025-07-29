@@ -16,7 +16,38 @@ const webAccessConfig: Record<string, {
   'nextcloud': { defaultPort: '80', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'admin123' } },
   'traefik': { defaultPort: '8080', path: '/', protocol: 'http' },
   'prometheus': { defaultPort: '9090', path: '/', protocol: 'http' },
-  'elasticsearch': { defaultPort: '9200', path: '/', protocol: 'http' }
+  'elasticsearch': { defaultPort: '9200', path: '/', protocol: 'http' },
+  // New applications with web interfaces
+  'plex': { defaultPort: '32400', path: '/web', protocol: 'http', requiresAuth: true },
+  'code': { defaultPort: '8080', path: '/', protocol: 'http', requiresAuth: true },
+  'jellyfin': { defaultPort: '8096', path: '/', protocol: 'http' },
+  'home': { defaultPort: '8123', path: '/', protocol: 'http' },
+  'wordpress': { defaultPort: '80', path: '/', protocol: 'http' },
+  'pi-hole': { defaultPort: '80', path: '/admin', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'admin123' } },
+  'pihole': { defaultPort: '80', path: '/admin', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'admin123' } },
+  'bitwarden': { defaultPort: '80', path: '/', protocol: 'http' },
+  'vaultwarden': { defaultPort: '80', path: '/', protocol: 'http' },
+  'sonarr': { defaultPort: '8989', path: '/', protocol: 'http' },
+  'radarr': { defaultPort: '7878', path: '/', protocol: 'http' },
+  'qbittorrent': { defaultPort: '8080', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'adminadmin' } },
+  'uptime': { defaultPort: '3001', path: '/', protocol: 'http' },
+  'kuma': { defaultPort: '3001', path: '/', protocol: 'http' },
+  'filebrowser': { defaultPort: '80', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'admin' } },
+  'gitea': { defaultPort: '3000', path: '/', protocol: 'http' },
+  'photoprism': { defaultPort: '2342', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'insecure' } },
+  'yacht': { defaultPort: '8000', path: '/', protocol: 'http' },
+  // Additional applications
+  'syncthing': { defaultPort: '8384', path: '/', protocol: 'http' },
+  'plausible': { defaultPort: '8000', path: '/', protocol: 'http' },
+  'netdata': { defaultPort: '19999', path: '/', protocol: 'http' },
+  'mattermost': { defaultPort: '8065', path: '/', protocol: 'http' },
+  'bookstack': { defaultPort: '80', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin@admin.com', password: 'password' } },
+  'minio': { defaultPort: '9001', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'minioadmin', password: 'minioadmin' } },
+  'umami': { defaultPort: '3000', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'umami' } },
+  'duplicati': { defaultPort: '8200', path: '/', protocol: 'http' },
+  'rocket': { defaultPort: '3000', path: '/', protocol: 'http' },
+  'chat': { defaultPort: '3000', path: '/', protocol: 'http' },
+  'influxdb': { defaultPort: '8086', path: '/', protocol: 'http', requiresAuth: true, defaultCredentials: { username: 'admin', password: 'password123' } }
 }
 
 export async function POST(request: NextRequest) {

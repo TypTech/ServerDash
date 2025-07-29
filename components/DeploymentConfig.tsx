@@ -9,8 +9,9 @@ import { Textarea } from './ui/textarea'
 import { Separator } from './ui/separator'
 import { Badge } from './ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
+import { Progress } from './ui/progress'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
-import { Plus, Minus, Info, Loader2, Download } from 'lucide-react'
+import { Plus, Minus, Info, Loader2, Download, CheckCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 interface Application {
@@ -61,6 +62,8 @@ interface DeploymentConfigProps {
   onClose: () => void
   onDeploy: (config: DeploymentConfiguration) => void
   isDeploying: boolean
+  deploymentProgress?: number
+  onDeploymentComplete?: () => void
 }
 
 interface DeploymentConfiguration {
@@ -75,7 +78,7 @@ interface DeploymentConfiguration {
   autoRemove: boolean
 }
 
-export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDeploying }: DeploymentConfigProps) {
+export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDeploying, deploymentProgress = 0, onDeploymentComplete }: DeploymentConfigProps) {
   const t = useTranslations('Dashboard')
   
   const [ports, setPorts] = useState<PortMapping[]>([])
@@ -86,6 +89,134 @@ export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDep
   const [networkMode, setNetworkMode] = useState('bridge')
   const [privileged, setPrivileged] = useState(false)
   const [autoRemove, setAutoRemove] = useState(false)
+  const [deploymentStatus, setDeploymentStatus] = useState<'idle' | 'deploying' | 'success' | 'error'>('idle')
+  const [deploymentMessage, setDeploymentMessage] = useState('')
+  const [modalJustOpened, setModalJustOpened] = useState(false)
+
+  // Debug logging for progress updates
+  useEffect(() => {
+    if (isDeploying && deploymentProgress !== undefined) {
+      console.log('🔄 DeploymentConfig received progress:', deploymentProgress, 'isDeploying:', isDeploying, 'status:', deploymentStatus)
+    }
+  }, [deploymentProgress, isDeploying, deploymentStatus])
+
+  // Debug logging for component renders
+  useEffect(() => {
+    console.log('🔄 DeploymentConfig render:', {
+      isOpen,
+      isDeploying,
+      deploymentProgress,
+      deploymentStatus,
+      deploymentMessage,
+      showProgressBar: isDeploying || deploymentStatus === 'deploying' || deploymentStatus === 'success'
+    })
+  })
+
+
+
+  // Track deployment progress and status
+  useEffect(() => {
+    console.log('🔄 Progress message useEffect triggered:', {
+      isDeploying,
+      deploymentStatus,
+      deploymentProgress,
+      condition: isDeploying && deploymentStatus === 'deploying' && deploymentProgress > 0
+    })
+    
+    if (isDeploying && deploymentStatus === 'deploying' && deploymentProgress > 0) {
+      // Update message based on progress
+      if (deploymentProgress < 20) {
+        console.log('📝 Setting message: Preparing deployment...')
+        setDeploymentMessage('Preparing deployment...')
+      } else if (deploymentProgress < 40) {
+        console.log('📝 Setting message: Pulling Docker image...')
+        setDeploymentMessage('Pulling Docker image...')
+      } else if (deploymentProgress < 60) {
+        console.log('📝 Setting message: Configuring container...')
+        setDeploymentMessage('Configuring container...')
+      } else if (deploymentProgress < 80) {
+        console.log('📝 Setting message: Starting container...')
+        setDeploymentMessage('Starting container...')
+      } else if (deploymentProgress < 100) {
+        console.log('📝 Setting message: Finalizing deployment...')
+        setDeploymentMessage('Finalizing deployment...')
+      }
+    }
+  }, [isDeploying, deploymentProgress, deploymentStatus])
+
+  // Handle deployment completion
+  useEffect(() => {
+    if (deploymentProgress === 100 && deploymentStatus !== 'success') {
+      setDeploymentStatus('success')
+      setDeploymentMessage('Deployment completed successfully!')
+      
+      // Auto-redirect after 2 seconds
+      const redirectTimer = setTimeout(() => {
+        if (onDeploymentComplete) {
+          onDeploymentComplete()
+        }
+        onClose()
+      }, 2000)
+
+      return () => clearTimeout(redirectTimer)
+    }
+  }, [deploymentProgress, deploymentStatus, onDeploymentComplete, onClose])
+
+  // Backup redirect mechanism for reliability
+  useEffect(() => {
+    if (deploymentProgress === 100 && !isDeploying && deploymentStatus === 'deploying') {
+      // If deployment is complete but we're still in deploying state, trigger success
+      setDeploymentStatus('success')
+      setDeploymentMessage('Deployment completed successfully!')
+      
+      const backupTimer = setTimeout(() => {
+        if (onDeploymentComplete) {
+          onDeploymentComplete()
+        }
+        onClose()
+      }, 2500)
+
+      return () => clearTimeout(backupTimer)
+    }
+  }, [deploymentProgress, isDeploying, deploymentStatus, onDeploymentComplete, onClose])
+
+  // Initialize deployment status
+  useEffect(() => {
+    console.log('🔄 Initialize deployment status useEffect:', {
+      isDeploying,
+      deploymentStatus,
+      deploymentProgress,
+      condition: isDeploying && deploymentStatus === 'idle' && deploymentProgress < 100
+    })
+    
+    if (isDeploying && deploymentStatus === 'idle' && deploymentProgress < 100) {
+      console.log('✅ Initializing deployment status to deploying')
+      setDeploymentStatus('deploying')
+      setDeploymentMessage('Preparing deployment...')
+    }
+  }, [isDeploying, deploymentStatus, deploymentProgress])
+
+  // Track when modal opens/closes and reset appropriately
+  useEffect(() => {
+    if (isOpen && !modalJustOpened) {
+      // Modal is opening for the first time
+      setModalJustOpened(true)
+      setDeploymentStatus('idle')
+      setDeploymentMessage('')
+    } else if (!isOpen && modalJustOpened) {
+      // Modal is closing
+      setModalJustOpened(false)
+    }
+  }, [isOpen, modalJustOpened])
+
+  // Reset deployment state when isDeploying becomes false after an error
+  useEffect(() => {
+    if (!isDeploying && deploymentStatus === 'deploying' && deploymentProgress === 0) {
+      console.log('🔄 Resetting deployment state after error')
+      setDeploymentStatus('idle')
+      setDeploymentMessage('')
+    }
+  }, [isDeploying, deploymentStatus, deploymentProgress])
 
   useEffect(() => {
     if (application && isOpen) {
@@ -171,6 +302,8 @@ export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDep
   const handleDeploy = () => {
     if (!application) return
 
+    console.log('🚀 DeploymentConfig handleDeploy clicked for app:', application.id)
+    
     const config: DeploymentConfiguration = {
       applicationId: application.id,
       ports: ports.filter(p => p.hostPort && p.containerPort),
@@ -183,6 +316,7 @@ export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDep
       autoRemove
     }
 
+    console.log('🚀 Calling onDeploy with config:', config)
     onDeploy(config)
   }
 
@@ -528,12 +662,83 @@ export function DeploymentConfig({ application, isOpen, onClose, onDeploy, isDep
 
         <Separator />
         
+        {/* Deployment Progress Section */}
+        {(isDeploying || deploymentStatus === 'deploying' || deploymentStatus === 'success') && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              {deploymentStatus === 'deploying' && (
+                <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+              )}
+              {deploymentStatus === 'success' && (
+                <CheckCircle className="h-5 w-5 text-green-500" />
+              )}
+              <div className="flex-1">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium">
+                    {(() => {
+                      const message = deploymentMessage || (isDeploying ? 'Starting deployment...' : 'Ready to deploy')
+                      console.log('📝 Displaying message:', message, {
+                        deploymentMessage,
+                        isDeploying,
+                        deploymentStatus,
+                        deploymentProgress
+                      })
+                      return message
+                    })()}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {Math.round(deploymentProgress)}%
+                  </span>
+                </div>
+                <Progress 
+                  value={deploymentProgress} 
+                  className="h-3 bg-gray-200"
+                />
+              </div>
+            </div>
+            
+            {deploymentStatus === 'success' && (
+                          <div className="bg-green-50 border border-green-200 rounded-md p-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <p className="text-sm text-green-800 font-medium">
+                  🎉 Deployment completed successfully!
+                </p>
+              </div>
+              <p className="text-xs text-green-600 mt-1">
+                Redirecting to deployed applications in 2 seconds...
+              </p>
+              <div className="mt-2 bg-green-100 rounded-full h-1 overflow-hidden">
+                <div 
+                  className="h-full bg-green-500 transition-all duration-[2000ms] ease-linear"
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+            )}
+            
+            <Separator />
+          </div>
+        )}
+        
         <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={onClose} disabled={isDeploying}>
-            Cancel
+          <Button 
+            variant="outline" 
+            onClick={onClose} 
+            disabled={isDeploying || deploymentStatus === 'success'}
+          >
+            {deploymentStatus === 'success' ? 'Redirecting...' : 'Cancel'}
           </Button>
-          <Button onClick={handleDeploy} disabled={isDeploying}>
-            {isDeploying ? (
+          <Button 
+            onClick={handleDeploy} 
+            disabled={isDeploying || deploymentStatus === 'success'}
+          >
+            {deploymentStatus === 'success' ? (
+              <>
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Completed
+              </>
+            ) : isDeploying ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 Deploying...

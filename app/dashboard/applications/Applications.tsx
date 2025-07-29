@@ -82,6 +82,7 @@ export function Applications() {
   const [terminalApp, setTerminalApp] = useState<Application | null>(null)
   const [showDeployConfig, setShowDeployConfig] = useState(false)
   const [deployingApp, setDeployingApp] = useState<Application | null>(null)
+  const [activeTab, setActiveTab] = useState('store')
 
   const categories = [
     { value: "all", label: t('Applications.Categories.All') },
@@ -119,24 +120,52 @@ export function Applications() {
 
   const simulateProgress = (applicationId: number) => {
     let progress = 0
+    console.log('🚀 Starting progress simulation for app:', applicationId)
+    
+    // Initialize progress at 0%
     setDeploymentProgress(prev => ({ ...prev, [applicationId]: 0 }))
     
     const interval = setInterval(() => {
-      progress += Math.random() * 15
-      if (progress > 90) progress = 90
-      
-      setDeploymentProgress(prev => ({ ...prev, [applicationId]: progress }))
-      
-      if (progress >= 90) {
+      // Simulate realistic deployment progress with different speeds for different stages
+      if (progress < 20) {
+        // Preparation stage - fast
+        progress += Math.random() * 8 + 2
+      } else if (progress < 40) {
+        // Docker image pulling - moderate
+        progress += Math.random() * 6 + 1
+      } else if (progress < 60) {
+        // Configuration stage - fast
+        progress += Math.random() * 8 + 2
+      } else if (progress < 80) {
+        // Container starting - moderate
+        progress += Math.random() * 6 + 1
+      } else if (progress < 95) {
+        // Finalizing - slow
+        progress += Math.random() * 4 + 1
+      } else {
+        // Don't complete automatically - let the API response do it
+        console.log('📊 Progress simulation reached 95%, stopping for app:', applicationId)
         clearInterval(interval)
+        return
       }
-    }, 500)
+      
+      // Cap at 95% until API completes
+      if (progress > 95) progress = 95
+      
+      console.log('📊 Progress update for app:', applicationId, '- Progress:', Math.round(progress))
+      setDeploymentProgress(prev => {
+        const updated = { ...prev, [applicationId]: progress }
+        console.log('📊 Updated deploymentProgress state:', updated)
+        return updated
+      })
+    }, 400)
     
     return interval
   }
 
   const handleDeploy = (application: Application) => {
     // Open deployment configuration modal
+    console.log('🚀 handleDeploy called for app:', application.id)
     setDeployingApp(application)
     setShowDeployConfig(true)
   }
@@ -152,55 +181,107 @@ export function Applications() {
   }
 
   const deployWithConfig = async (config: any) => {
-    if (!deployingApp) return
-
-    setDeployingIds(prev => new Set(prev).add(deployingApp.id))
-    
-    // Start progress animation
-    const progressInterval = simulateProgress(deployingApp.id)
-    
-    try {
-      const response = await axios.post<ApiResponse>('/api/applications/deploy', config)
-      
-      // Complete progress
-      setDeploymentProgress(prev => ({ ...prev, [deployingApp.id]: 100 }))
-      clearInterval(progressInterval)
-      
-      if (response.data.success) {
-        toast.success(t('Applications.DeploymentSuccess'))
-        await fetchApplications(false) // Refresh store
-        await fetchApplications(true)  // Refresh deployed
-        closeDeployConfig()
-      } else {
-        toast.error(response.data.error || t('Applications.DeploymentError'))
-      }
-    } catch (error: any) {
-      clearInterval(progressInterval)
-      console.error('Deploy error:', error)
-      const errorMessage = error.response?.data?.error || t('Applications.DeploymentError')
-      
-      // Show more specific error for port conflicts
-      if (errorMessage.includes('bind: address already in use')) {
-        toast.error('Port already in use. Please choose a different port or stop the conflicting service.')
-      } else {
-        toast.error(errorMessage)
-      }
-    } finally {
-      setDeployingIds(prev => {
-        const newSet = new Set(prev)
-        newSet.delete(deployingApp.id)
-        return newSet
-      })
-      
-      // Clear progress after a delay
-      setTimeout(() => {
-        setDeploymentProgress(prev => {
-          const newProgress = { ...prev }
-          delete newProgress[deployingApp.id]
-          return newProgress
-        })
-      }, 2000)
+    if (!deployingApp) {
+      console.log('❌ deployWithConfig called but no deployingApp set!')
+      return
     }
+
+    console.log('🚀 deployWithConfig called for app:', deployingApp.id, 'with config:', config)
+    setDeployingIds(prev => {
+      const newSet = new Set(prev).add(deployingApp.id)
+      console.log('🚀 Updated deployingIds:', Array.from(newSet))
+      return newSet
+    })
+    
+    // Small delay to ensure state is updated before starting progress
+    setTimeout(() => {
+      console.log('📊 Starting progress simulation after timeout...')
+      const progressInterval = simulateProgress(deployingApp.id)
+      console.log('📊 Progress interval created:', progressInterval)
+      
+      // Store interval reference for cleanup
+      const deploymentRef = { interval: progressInterval }
+      
+      const executeDeployment = async () => {
+        try {
+          const response = await axios.post<ApiResponse>('/api/applications/deploy', config)
+          
+          clearInterval(deploymentRef.interval)
+          
+          if (response.data.success) {
+            // Set progress to 100% to trigger success state
+            console.log('✅ Deployment successful, setting progress to 100%')
+            setDeploymentProgress(prev => ({ ...prev, [deployingApp.id]: 100 }))
+            toast.success(t('Applications.DeploymentSuccess'))
+            await fetchApplications(false) // Refresh store
+            await fetchApplications(true)  // Refresh deployed
+            
+            // Fallback redirect mechanism in case the progress component doesn't handle it
+            setTimeout(() => {
+              if (showDeployConfig) {
+                handleDeploymentComplete()
+                closeDeployConfig()
+              }
+            }, 4000)
+            
+            // Don't close the config here, let the progress component handle it
+          } else {
+            toast.error(response.data.error || t('Applications.DeploymentError'))
+          }
+        } catch (error: any) {
+          clearInterval(deploymentRef.interval)
+          console.error('Deploy error:', error)
+          const errorMessage = error.response?.data?.error || t('Applications.DeploymentError')
+          
+          // Reset deployment progress and show error
+          setDeploymentProgress(prev => ({ ...prev, [deployingApp.id]: 0 }))
+          
+          // Show more specific error for port conflicts
+          if (errorMessage.includes('bind: address already in use')) {
+            toast.error('Port already in use. Please choose a different port or stop the conflicting service.')
+          } else if (errorMessage.includes('container name') && errorMessage.includes('already in use')) {
+            toast.error('Container name conflict. Cleaning up and retrying...')
+          } else {
+            toast.error(errorMessage)
+          }
+
+          // Immediate cleanup on error
+          setDeployingIds(prev => {
+            const newSet = new Set(prev)
+            newSet.delete(deployingApp.id)
+            return newSet
+          })
+        } finally {
+          // Delay clearing deployingIds to allow redirect to complete
+          setTimeout(() => {
+            setDeployingIds(prev => {
+              const newSet = new Set(prev)
+              newSet.delete(deployingApp.id)
+              return newSet
+            })
+          }, 3000)
+          
+          // Clear progress after a longer delay to allow for redirect
+          setTimeout(() => {
+            setDeploymentProgress(prev => {
+              const newProgress = { ...prev }
+              delete newProgress[deployingApp.id]
+              return newProgress
+            })
+          }, 5000)
+        }
+      }
+      
+      executeDeployment()
+    }, 100) // Small delay to ensure state updates are processed
+  }
+
+  const handleDeploymentComplete = () => {
+    // Switch to deployed applications tab
+    setActiveTab('deployed')
+    
+    // Scroll to top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleControl = async (application: Application, action: 'start' | 'stop' | 'remove') => {
@@ -616,7 +697,7 @@ export function Applications() {
         </p>
       </div>
 
-      <Tabs defaultValue="store" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="store" className="flex items-center gap-2">
             <Store className="h-4 w-4" />
@@ -730,13 +811,23 @@ export function Applications() {
       )}
 
       {/* Deployment Configuration Modal */}
-      <DeploymentConfig
-        application={deployingApp}
-        isOpen={showDeployConfig}
-        onClose={closeDeployConfig}
-        onDeploy={deployWithConfig}
-        isDeploying={deployingApp ? deployingIds.has(deployingApp.id) : false}
-      />
+              <DeploymentConfig
+          application={deployingApp}
+          isOpen={showDeployConfig}
+          onClose={closeDeployConfig}
+          onDeploy={deployWithConfig}
+          isDeploying={deployingApp ? deployingIds.has(deployingApp.id) : false}
+          deploymentProgress={(() => {
+            const progress = deployingApp ? (deploymentProgress[deployingApp.id] || 0) : 0
+            console.log('🔄 Calculating deploymentProgress prop:', {
+              deployingApp: deployingApp?.id,
+              deploymentProgressState: deploymentProgress,
+              calculatedProgress: progress
+            })
+            return progress
+          })()}
+          onDeploymentComplete={handleDeploymentComplete}
+        />
     </div>
   )
 } 
