@@ -144,7 +144,7 @@ export default function Uptime() {
       const response = await axios.post<{
         data: UptimeData[];
         pagination: PaginationData;
-      }>("/api/applications/uptime", { 
+      }>("/api/virtual-machines/uptime", { 
         timespan: selectedTimespan,
         page,
         itemsPerPage
@@ -909,13 +909,13 @@ export default function Uptime() {
             })()
           )}
 
-          {/* Applications Section */}
+          {/* Virtual Machines Section */}
           <div className="pt-8 space-y-4">
-            <h2 className="text-xl font-semibold text-foreground/80">Applications</h2>
+            <h2 className="text-xl font-semibold text-foreground/80">Virtual Machines</h2>
             {isLoading ? (
               <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
             ) : data.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">No applications found</div>
+              <div className="text-center py-8 text-muted-foreground">No virtual machines found</div>
             ) : (
               data.map((app) => {
                 const reversedSummary = [...app.uptimeSummary].reverse();
@@ -996,12 +996,12 @@ export default function Uptime() {
             )}
           </div>
 
-          {/* Applications Pagination */}
+          {/* Virtual Machines Pagination */}
           {pagination.totalItems > 0 && !isLoading && (
             <div className="pt-4 pb-4">
               <div className="flex justify-between items-center mb-2">
                 <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">Applications: </span>
+                  <span className="font-medium">Virtual Machines: </span>
                   {pagination.totalItems > 0 
                     ? t('Uptime.Pagination.Showing', { 
                         start: ((pagination.currentPage - 1) * itemsPerPage) + 1, 

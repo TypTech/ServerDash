@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model application {
+model virtual_machine {
   id             Int      @id @default(autoincrement())
   serverId       Int      @default(1)
   name           String
@@ -22,10 +22,10 @@ model application {
 }
 
 model uptime_history {
-  id            Int      @id @default(autoincrement())
-  applicationId Int      @default(1)
-  online        Boolean  @default(true)
-  createdAt     DateTime @default(now())
+  id               Int      @id @default(autoincrement())
+  virtualMachineId Int      @default(1)
+  online           Boolean  @default(true)
+  createdAt        DateTime @default(now())
 }
 
 model server_history {

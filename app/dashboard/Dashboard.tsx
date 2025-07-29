@@ -20,32 +20,32 @@ import { useTranslations } from "next-intl"
 import { GlancesMonitorWidget } from "@/components/glances-monitor-widget"
 
 interface StatsResponse {
-  serverCountNoVMs: number
-  serverCountOnlyVMs: number
-  applicationCount: number
-  onlineApplicationsCount: number
+  serverCount: number
+  virtualMachineCount: number
+  onlineServersCount: number
+  onlineVirtualMachinesCount: number
   networkDeviceCount: number
-  onlineNetworkDeviceCount: number
+  onlineNetworkDevicesCount: number
 }
 
 export default function Dashboard() {
   const t = useTranslations('Dashboard')
-  const [serverCountNoVMs, setServerCountNoVMs] = useState<number>(0)
-  const [serverCountOnlyVMs, setServerCountOnlyVMs] = useState<number>(0)
-  const [applicationCount, setApplicationCount] = useState<number>(0)
-  const [onlineApplicationsCount, setOnlineApplicationsCount] = useState<number>(0)
+  const [serverCount, setServerCount] = useState<number>(0)
+  const [virtualMachineCount, setVirtualMachineCount] = useState<number>(0)
+  const [onlineServersCount, setOnlineServersCount] = useState<number>(0)
+  const [onlineVirtualMachinesCount, setOnlineVirtualMachinesCount] = useState<number>(0)
   const [networkDeviceCount, setNetworkDeviceCount] = useState<number>(0)
   const [onlineNetworkDeviceCount, setOnlineNetworkDeviceCount] = useState<number>(0)
 
   const getStats = async () => {
     try {
       const response = await axios.post<StatsResponse>("/api/dashboard/get", {})
-      setServerCountNoVMs(response.data.serverCountNoVMs)
-      setServerCountOnlyVMs(response.data.serverCountOnlyVMs)
-      setApplicationCount(response.data.applicationCount)
-      setOnlineApplicationsCount(response.data.onlineApplicationsCount)
+      setServerCount(response.data.serverCount)
+      setVirtualMachineCount(response.data.virtualMachineCount)
+      setOnlineServersCount(response.data.onlineServersCount)
+      setOnlineVirtualMachinesCount(response.data.onlineVirtualMachinesCount)
       setNetworkDeviceCount(response.data.networkDeviceCount)
-      setOnlineNetworkDeviceCount(response.data.onlineNetworkDeviceCount)
+      setOnlineNetworkDeviceCount(response.data.onlineNetworkDevicesCount)
     } catch (error: any) {
       console.log("Axios error:", error.response?.data)
     }
@@ -102,30 +102,17 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {/* Physical Servers */}
-                  <div className="metric-card">
-                    <div className="flex flex-col items-center text-center space-y-2">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-foreground">
-                        <Server className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="text-xl font-bold">{serverCountNoVMs}</div>
-                        <p className="text-xs text-muted-foreground">{t('Servers.PhysicalServers')}</p>
-                      </div>
-                    </div>
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold mb-3">{serverCount}</div>
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <div className="status-dot"></div>
+                    <p className="text-sm text-muted-foreground">{t('Servers.PhysicalServers')}</p>
                   </div>
-
-                  {/* Applications */}
+                  
                   <div className="metric-card">
-                    <div className="flex flex-col items-center text-center space-y-2">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted text-foreground">
-                        <Layers className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="text-xl font-bold">{applicationCount}</div>
-                        <p className="text-xs text-muted-foreground">{t('VirtualMachines.Title')}</p>
-                      </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Online Servers</span>
+                      <span className="text-lg font-semibold">{onlineServersCount}</span>
                     </div>
                   </div>
                 </div>
@@ -141,8 +128,8 @@ export default function Dashboard() {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                                    <h3 className="text-xl font-semibold">{t('VirtualMachines.Title')}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{t('VirtualMachines.Description')}</p>
+                    <h3 className="text-xl font-semibold">{t('VirtualMachines.Title')}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{t('VirtualMachines.Description')}</p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-muted">
                     <Layers className="h-6 w-6 text-foreground" />
@@ -150,7 +137,7 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold mb-3">{applicationCount}</div>
+                  <div className="text-4xl font-bold mb-3">{virtualMachineCount}</div>
                   <div className="flex items-center justify-center space-x-2 mb-4">
                     <div className="status-dot"></div>
                     <p className="text-sm text-muted-foreground">{t('VirtualMachines.OnlineVirtualMachines')}</p>
@@ -159,12 +146,12 @@ export default function Dashboard() {
                   <div className="metric-card">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">Active Services</span>
-                      <span className="text-lg font-semibold">{onlineApplicationsCount}</span>
+                      <span className="text-lg font-semibold">{onlineVirtualMachinesCount}</span>
                     </div>
                   </div>
                 </div>
                 
-                <Link href="/dashboard/applications" className="minimal-button w-full flex items-center justify-center space-x-2">
+                <Link href="/dashboard/virtual-machines" className="minimal-button w-full flex items-center justify-center space-x-2">
                   <span>{t('VirtualMachines.ViewAllVirtualMachines')}</span>
                   <div className="status-dot"></div>
                 </Link>
@@ -186,17 +173,17 @@ export default function Dashboard() {
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-3xl font-bold">
-                      {onlineApplicationsCount}/{applicationCount}
+                      {onlineVirtualMachinesCount}/{virtualMachineCount}
                     </span>
                     <div className="flex items-center bg-muted px-3 py-1 rounded-lg text-sm font-semibold">
-                      {applicationCount > 0 ? Math.round((onlineApplicationsCount / applicationCount) * 100) : 0}%
+                      {virtualMachineCount > 0 ? Math.round((onlineVirtualMachinesCount / virtualMachineCount) * 100) : 0}%
                     </div>
                   </div>
                   <div className="progress-modern">
                     <div
                       className="progress-fill"
                       style={{
-                        width: `${applicationCount > 0 ? Math.round((onlineApplicationsCount / applicationCount) * 100) : 0}%`,
+                        width: `${virtualMachineCount > 0 ? Math.round((onlineVirtualMachinesCount / virtualMachineCount) * 100) : 0}%`,
                       }}
                     ></div>
                   </div>

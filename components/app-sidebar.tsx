@@ -12,6 +12,7 @@ import {
   Activity,
   LogOut,
   ChevronDown,
+  MonitorSpeaker,
 } from "lucide-react"
 import {
   Sidebar,
@@ -65,6 +66,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           title: t('Servers'),
           icon: Server,
           url: "/dashboard/servers",
+        },
+        {
+          title: t('VirtualMachines') || "Virtual Machines",
+          icon: MonitorSpeaker,
+          url: "/dashboard/virtual-machines",
         },
         {
           title: t('NetworkDevices'),

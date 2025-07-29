@@ -1,9 +1,9 @@
-import { NextResponse, NextRequest } from "next/server";
-import { prisma } from "@/lib/prisma";
-import Fuse from "fuse.js";
+import { NextRequest, NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma"
+import Fuse from "fuse.js"
 
 interface SearchRequest {
-    searchterm: string;
+  searchterm: string
 }
 
 export async function POST(request: NextRequest) {
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
         const body: SearchRequest = await request.json();
         const { searchterm } = body;  
         
-        const applications = await prisma.application.findMany({});
+        const virtualMachines = await prisma.virtual_machine.findMany({});
 
         const fuseOptions = {
             keys: ['name', 'description'],
@@ -19,26 +19,26 @@ export async function POST(request: NextRequest) {
             includeScore: true,
         };
 
-        const fuse = new Fuse(applications, fuseOptions);
+        const fuse = new Fuse(virtualMachines, fuseOptions);
         
         const searchResults = fuse.search(searchterm);
 
-        const searchedApps = searchResults.map(({ item }) => item);
+        const searchedVMs = searchResults.map(({ item }) => item);
         
         // Get server IDs from the search results
-        const serverIds = searchedApps
-            .map(app => app.serverId)
+        const serverIds = searchedVMs
+            .map(vm => vm.serverId)
             .filter((id): id is number => id !== null);
 
-        // Fetch server data for these applications
+        // Fetch server data for these virtual machines
         const servers = await prisma.server.findMany({
             where: { id: { in: serverIds } }
         });
 
-        // Add server name to each application
-        const results = searchedApps.map(app => ({
-            ...app,
-            server: servers.find(s => s.id === app.serverId)?.name || "No server"
+        // Add server name to each virtual machine
+        const results = searchedVMs.map(vm => ({
+            ...vm,
+            server: servers.find(s => s.id === vm.serverId)?.name || "No server"
         }));
 
         return NextResponse.json({ results });

@@ -1,514 +1,501 @@
 {
     "Common": {
-      "ChangeView": "Ansicht ändern",
-      "ListView": "Listenansicht",
-      "GridView": "Rasteransicht",
-      "optional": "optional",
-      "cancel": "Abbrechen",
-      "add": "Hinzufügen",
-      "since": "seit {date}",
-      "notSet": "Nicht festgelegt",
-      "noData": "Keine Daten",
-      "Loading": "Lade...",
-      "Refresh": "Aktualisieren",
-      "Save": "Speichern",
-      "Server": {
-        "CPU": "CPU",
-        "GPU": "GPU",
-        "RAM": "RAM",
-        "Disk": "Festplatte",
-        "OS": "Betriebssystem",
-        "IP": "IP",
-        "Host": "Host",
-        "Temperature": "Temperatur",
-        "Usage": "Auslastung",
-        "Tabs": {
-          "General": "Allgemein",
-          "Hardware": "Hardware",
-          "Host": "Host",
-          "Monitoring": "Überwachung"
-        }
-      },
-      "ItemsPerPage": {
-        "items": "Einträge",
-        "item": "Eintrag",
-        "4": "4 Einträge",
-        "5": "5 Einträge",
-        "6": "6 Einträge",
-        "10": "10 Einträge",
-        "15": "15 Einträge",
-        "20": "20 Einträge",
-        "25": "25 Einträge",
-        "Custom": "Benutzerdefiniert (1-100)"
-      }
-    },
-    "Server": {
-      "Hardware": "Hardware",
-      "Network": "Netzwerk",
-      "CurrentUsage": "Aktuelle Auslastung",
-      "UsageHistory": "Nutzungsverlauf",
-      "ResourceUsageHistory": "Ressourcennutzungsverlauf",
-      "TimeRange": {
-        "Select": "Zeitraum auswählen",
-        "LastHour": "Letzte Stunde",
-        "Last24Hours": "Letzte 24 Stunden",
-        "Last7Days": "Letzte 7 Tage",
-        "Last30Days": "Letzte 30 Tage"
-      },
-      "VirtualMachines": "Virtuelle Maschinen",
-      "VirtualMachinesDescription": "Virtuelle Maschinen auf diesem Server",
-      "HardwareInformation": "Hardware-Informationen",
-      "ManagementURL": "Management-URL",
-      "VM": "VM",
-      "Physical": "Physisch",
-      "HostedOn": "Gehostet auf",
-      "NotFound": "Server nicht gefunden",
-      "NotFoundDescription": "Der gesuchte Server konnte nicht gefunden werden."
-    },
-    "Sidebar": {
-      "Main Navigation": "Hauptnavigation",
-      "Dashboard": "Dashboard",
-      "My Infrastructure": "Meine Infrastruktur",
-      "Servers": "Server",
-      "NetworkDevices": "Netzwerkgeräte",
-      "Uptime": "Uptime",
-      "Infrastructure": "Infrastruktur",
-      "SystemMonitoring": "System-Überwachung",
-      "Settings": "Einstellungen",
-      "Logout": "Abmelden"
-    },
-    "Home": {
-      "TitleUnder": "Dashboard zur Verwaltung Ihrer Serverinfrastruktur",
-      "LoginCardTitle": "Anmeldung",
-      "LoginCardDescription": "Anmeldedaten eingeben",
-      "AuthenticationError": "Authentifizierungsfehler",
-      "Email": "E-Mail",
-      "Password": "Passwort",
-      "SigninButton": "Anmelden",
-      "SigninButtonSigningIn": "Anmeldung läuft..."
-    },
-    "Dashboard": {
-      "Title": "Dashboard",
-      "Servers": {
-        "Title": "Server",
-        "Description": "Übersicht physischer und virtueller Server",
-        "PhysicalServers": "Physische Server",
-        "VirtualServers": "Virtuelle Server",
-        "ManageServers": "Server verwalten",
-        "ManageInfrastructure": "Infrastruktur verwalten"
-      },
-      "VirtualMachines": {
-        "Title": "Virtuelle Maschinen",
-        "Description": "Verwalten Sie Ihre virtuellen Maschinen",
-        "OnlineVirtualMachines": "Aktive virtuelle Maschinen",
-        "ViewAllVirtualMachines": "Alle virtuellen Maschinen anzeigen"
-      },
-      "Uptime": {
-        "Title": "Uptime",
-        "Description": "Überwachung der Verfügbarkeit",
-        "OnlineVirtualMachines": "Online virtuelle Maschinen",
-        "ViewUptimeMetrics": "Uptime-Statistiken anzeigen"
-      },
-      "Network": {
-        "Title": "Netzwerk",
-        "Description": "Netzwerkkonfiguration verwalten",
-        "ActiveConnections": "Aktive Verbindungen",
-        "NetworkDevices": "Netzwerkgeräte",
-        "ViewNetworkDetails": "Netzwerkdetails anzeigen"
-      },
-      "GlancesMonitor": {
-        "Title": "System Monitor",
-        "Description": "Echtzeit-Systemüberwachung mit Glances",
-        "NoServers": "Keine Server mit Glances-Überwachung gefunden",
-        "AddServers": "Fügen Sie physische Server mit Glances-Überwachung hinzu, um Systemmetriken zu sehen",
-        "LastUpdated": "Zuletzt aktualisiert",
-        "Online": "Online",
-        "Offline": "Offline",
-        "CPU": "CPU",
-        "RAM": "RAM",
-        "Disk": "Festplatte",
-        "GPU": "GPU",
-        "Temperature": "Temperatur",
-        "Uptime": "Betriebszeit",
-        "AverageUsage": "Durchschnittliche Nutzung",
-        "LoadingData": "Lade Überwachungsdaten...",
-        "ErrorLoadingData": "Fehler beim Laden der Überwachungsdaten"
-      }
-    },
-    "NetworkDevices": {
-      "Title": "Netzwerkgeräte",
-      "YourDevices": "Ihre Netzwerkgeräte",
-      "MyInfrastructure": "Meine Infrastruktur",
-      "Tabs": {
-        "All": "Alle Geräte",
-        "Switch": "Switches",
-        "AccessPoint": "Access Points",
-        "Repeater": "Repeater",
-        "Router": "Router",
-        "Firewall": "Firewalls",
-        "Other": "Andere"
-      },
-      "Add": {
-        "Title": "Netzwerkgerät hinzufügen",
-        "DeviceName": "Gerätename",
-        "DeviceType": "Gerätetyp",
-        "Brand": "Marke",
-        "Model": "Modell",
-        "Location": "Standort",
-        "Description": "Beschreibung",
-        "IPAddress": "IP-Adresse",
-        "MACAddress": "MAC-Adresse",
-        "ManagementURL": "Management-URL",
-        "PortCount": "Anzahl Ports",
-        "PowerConsumption": "Stromverbrauch (W)",
-        "WirelessStandard": "WLAN-Standard",
-        "Frequency": "Frequenz",
-        "FirmwareVersion": "Firmware-Version"
-      },
-      "Messages": {
-        "AddSuccess": "Netzwerkgerät erfolgreich hinzugefügt",
-        "EditSuccess": "Netzwerkgerät aktualisiert",
-        "DeleteSuccess": "Netzwerkgerät gelöscht",
-        "GetError": "Fehler beim Laden der Netzwerkgeräte",
-        "EditError": "Fehler beim Aktualisieren",
-        "DeleteError": "Fehler beim Löschen"
-      },
-      "Search": {
-        "Placeholder": "Netzwerkgeräte suchen..."
-      }
-    },
-    "Servers": {
-      "Title": "Server",
-      "MyInfrastructure": "Meine Infrastruktur",
-      "YourServers": "Ihre Server",
-      "Tabs": {
-        "All": "Alle Server",
-        "Physical": "Physische Server",
-        "Virtual": "Virtuelle Maschinen"
-      },
-      "AddServer": {
-        "Title": "Server hinzufügen",
-        "General": {
-          "Title": "Server hinzufügen",
-          "CopyServer": "Server kopieren",
-          "Icon": "Symbol",
-          "IconPlaceholder": "Symbol auswählen",
-          "IconSearchPlaceholder": "Symbole suchen...",
-          "Preview": "Vorschau",
-          "Name": "Name",
-          "OperatingSystem": "Betriebssystem",
-          "OperatingSystemPlaceholder": "OS auswählen",
-          "IPAdress": "IP-Adresse",
-          "ManagementURL": "Management-URL",
-          "ManagementURLTooltip": "Link zur Verwaltungsoberfläche (z.B. Proxmox oder Portainer)"
-        },
-        "Host": {
-          "MarkAsHostServer": "Als Host-Server markieren",
-          "SelectHostServer": "Host-Server auswählen",
-          "SelectHostServerPlaceholder": "Host-Server auswählen",
-          "NoHostServer": "Kein Host-Server"
-        },
-        "Monitoring": {
-          "Enable": "Überwachung aktivieren",
-          "URL": "Monitoring-URL",
-          "SetupTitle": "Erforderliche Serverkonfiguration",
-          "SetupDescription": "Zur Aktivierung benötigen Sie Glances auf dem Server. Beispiel-Docker-Compose-Konfiguration:"
-        }
-      },
-      "ServerCard": {
-        "HardwareInformation": "Hardware-Informationen",
-        "ViewDetails": "Details anzeigen",
-        "OpenManagementURL": "Management-URL öffnen",
-        "EditServer": "Server bearbeiten",
-        "DeleteServer": "Server löschen",
-        "HostedVMs": "Gehostete VMs",
-        "ResourceUsage": "Ressourcennutzung",
-        "DeleteConfirmation": {
-          "Title": "{name} löschen",
-          "Description": "Sind Sie sicher? Diese Aktion kann nicht rückgängig gemacht werden.",
-          "Cancel": "Abbrechen",
-          "Delete": "Löschen"
-        }
-      },
-      "EditServer": {
-        "Title": "{name} bearbeiten",
-        "Save": "Speichern",
-        "General": {
-          "Title": "Allgemein",
-          "Icon": "Symbol",
-          "Name": "Name",
-          "OperatingSystem": "Betriebssystem",
-          "IPAddress": "IP-Adresse",
-          "ManagementURL": "Management-URL"
-        },
-        "Hardware": {
-          "Title": "Hardware",
-          "CPU": "CPU",
-          "GPU": "GPU",
-          "RAM": "RAM",
-          "Disk": "Festplatte"
-        },
-        "Host": {
-          "Title": "Host",
-          "MarkAsHostServer": "Als Host-Server markieren",
-          "CannotDisableHost": "Kann nicht deaktiviert werden, solange VMs gehostet werden",
-          "SelectHostServer": "Host-Server auswählen"
-        },
-        "Monitoring": {
-          "Title": "Überwachung",
-          "Enable": "Überwachung aktivieren",
-          "URL": "Monitoring-URL",
-          "SetupTitle": "Erforderliche Serverkonfiguration",
-          "SetupDescription": "Beispiel-Docker-Compose-Konfiguration für Glances:"
-        }
-      },
-      "Pagination": {
-        "Showing": "Zeige {start}-{end} von {total} Servern",
-        "NoServers": "Keine Server gefunden"
-      },
-      "Search": {
-        "Placeholder": "Suche..."
-      },
-      "Setup": {
-        "Title": "Neue Infrastruktur hinzufügen",
-        "Description": "Wählen Sie aus, welche Art von Infrastruktur Sie hinzufügen möchten",
-        "PhysicalServer": "Physischer Server",
-        "PhysicalDescription": "Einen dedizierten physischen Server hinzufügen",
-        "VirtualMachine": "Virtuelle Maschine",
-        "VirtualMachineDescription": "Eine neue virtuelle Maschine oder einen Dienst hinzufügen"
-      }
-    },
-    "VirtualMachines": {
-      "Title": "Ihre virtuellen Maschinen",
-      "Breadcrumb": {
-        "MyInfrastructure": "Meine Infrastruktur",
-        "VirtualMachines": "Virtuelle Maschinen"
-      },
-      "Views": {
-        "ChangeView": "Ansicht ändern",
+        "ChangeView": "Ansicht \u00e4ndern",
         "ListView": "Listenansicht",
         "GridView": "Rasteransicht",
-        "CompactView": "Kompaktansicht"
-      },
-              "Add": {
-          "Title": "Virtuelle Maschine hinzufügen",
-          "Name": "Name",
-          "NamePlaceholder": "z.B. Portainer",
-          "Server": "Server",
-          "SelectServer": "Server auswählen",
-          "Description": "Beschreibung",
-          "DescriptionPlaceholder": "Beschreibung der virtuellen Maschine",
-        "IconURL": "Symbol-URL",
-        "IconURLPlaceholder": "https://example.com/icon.png",
-        "PublicURL": "Öffentliche URL",
-        "PublicURLPlaceholder": "https://example.com",
-        "LocalURL": "Lokale URL",
-        "LocalURLPlaceholder": "http://localhost:3000",
-        "CustomUptimeCheck": "Benutzerdefinierte Uptime-URL",
-        "CustomUptimeCheckTooltip": "Ersetzt die öffentliche URL für Uptime-Checks",
-        "UptimeCheckURL": "Uptime-Prüf-URL",
-        "UptimeCheckURLPlaceholder": "https://example.com/status"
-      },
-              "Edit": {
-          "Title": "Virtuelle Maschine bearbeiten",
-          "SaveButton": "Änderungen speichern"
+        "optional": "optional",
+        "cancel": "Abbrechen",
+        "add": "Hinzuf\u00fcgen",
+        "since": "seit {date}",
+        "notSet": "Nicht festgelegt",
+        "noData": "Keine Daten",
+        "Loading": "Lade...",
+        "Refresh": "Aktualisieren",
+        "Save": "Speichern",
+        "Server": {
+            "CPU": "CPU",
+            "GPU": "GPU",
+            "RAM": "RAM",
+            "Disk": "Festplatte",
+            "OS": "Betriebssystem",
+            "IP": "IP",
+            "Host": "Host",
+            "Temperature": "Temperatur",
+            "Usage": "Auslastung",
+            "Tabs": {
+                "General": "Allgemein",
+                "Hardware": "Hardware",
+                "Host": "Host",
+                "Monitoring": "\u00dcberwachung"
+            }
         },
-      "Card": {
-        "Server": "Server",
-        "NoServer": "Kein Server",
-        "PublicURL": "Öffentliche URL",
-        "LocalURL": "Lokale URL",
-        "Icon": "Symbol",
-        "Image": "Bild"
-      },
-              "Messages": {
-          "AddServerFirst": "Bitte zuerst Server hinzufügen",
-          "AddSuccess": "Virtuelle Maschine erfolgreich hinzugefügt",
-          "EditSuccess": "Änderungen gespeichert",
-          "DeleteSuccess": "Virtuelle Maschine gelöscht",
-          "GetError": "Fehler beim Laden",
-          "EditError": "Speichern fehlgeschlagen",
-          "DeleteError": "Löschen fehlgeschlagen",
-          "NumberValidation": "Bitte Zahl zwischen 1-100 eingeben"
-        },
-              "Pagination": {
-          "Showing": "Zeige {start}-{end} von {total} virtuellen Maschinen",
-          "NoVirtualMachines": "Keine virtuellen Maschinen gefunden"
-        },
-      "Search": {
-        "Placeholder": "Suche..."
-      }
+        "ItemsPerPage": {
+            "items": "Eintr\u00e4ge",
+            "item": "Eintrag",
+            "4": "4 Eintr\u00e4ge",
+            "5": "5 Eintr\u00e4ge",
+            "6": "6 Eintr\u00e4ge",
+            "10": "10 Eintr\u00e4ge",
+            "15": "15 Eintr\u00e4ge",
+            "20": "20 Eintr\u00e4ge",
+            "25": "25 Eintr\u00e4ge",
+            "Custom": "Benutzerdefiniert (1-100)"
+        }
     },
-    "Applications": {
-      "Add": {
-        "Description": "Beschreibung",
-        "DescriptionPlaceholder": "Anwendungsbeschreibung",
-        "IconURL": "Icon URL",
-        "IconURLPlaceholder": "https://example.com/icon.png",
-        "PublicURL": "Öffentliche URL",
-        "PublicURLPlaceholder": "https://example.com",
-        "LocalURL": "Lokale URL",
-        "LocalURLPlaceholder": "http://localhost:3000",
-        "CustomUptimeCheck": "Benutzerdefinierte Uptime-Check URL",
-        "CustomUptimeCheckTooltip": "Wenn aktiviert, ersetzt diese URL die öffentliche URL für Uptime-Monitoring-Checks"
-      }
+    "Server": {
+        "Hardware": "Hardware",
+        "Network": "Netzwerk",
+        "CurrentUsage": "Aktuelle Auslastung",
+        "UsageHistory": "Nutzungsverlauf",
+        "ResourceUsageHistory": "Ressourcennutzungsverlauf",
+        "TimeRange": {
+            "Select": "Zeitraum ausw\u00e4hlen",
+            "LastHour": "Letzte Stunde",
+            "Last24Hours": "Letzte 24 Stunden",
+            "Last7Days": "Letzte 7 Tage",
+            "Last30Days": "Letzte 30 Tage"
+        },
+        "VirtualMachines": "Virtuelle Maschinen",
+        "VirtualMachinesDescription": "Virtuelle Maschinen auf diesem Server",
+        "HardwareInformation": "Hardware-Informationen",
+        "ManagementURL": "Management-URL",
+        "VM": "VM",
+        "Physical": "Physisch",
+        "HostedOn": "Gehostet auf",
+        "NotFound": "Server nicht gefunden",
+        "NotFoundDescription": "Der gesuchte Server konnte nicht gefunden werden."
+    },
+    "Sidebar": {
+        "Main Navigation": "Hauptnavigation",
+        "Dashboard": "Dashboard",
+        "My Infrastructure": "Meine Infrastruktur",
+        "Servers": "Server",
+        "VirtualMachines": "Virtuelle Maschinen",
+        "NetworkDevices": "Netzwerkger\u00e4te",
+        "Uptime": "Uptime",
+        "Infrastructure": "Infrastruktur",
+        "SystemMonitoring": "System-\u00dcberwachung",
+        "Settings": "Einstellungen",
+        "Logout": "Abmelden"
+    },
+    "Home": {
+        "TitleUnder": "Dashboard zur Verwaltung Ihrer Serverinfrastruktur",
+        "LoginCardTitle": "Anmeldung",
+        "LoginCardDescription": "Anmeldedaten eingeben",
+        "AuthenticationError": "Authentifizierungsfehler",
+        "Email": "E-Mail",
+        "Password": "Passwort",
+        "SigninButton": "Anmelden",
+        "SigninButtonSigningIn": "Anmeldung l\u00e4uft..."
+    },
+    "Dashboard": {
+        "Title": "Dashboard",
+        "Servers": {
+            "Title": "Server",
+            "Description": "\u00dcbersicht physischer und virtueller Server",
+            "PhysicalServers": "Physische Server",
+            "VirtualServers": "Virtuelle Server",
+            "ManageServers": "Server verwalten",
+            "ManageInfrastructure": "Infrastruktur verwalten"
+        },
+        "VirtualMachines": {
+            "Title": "Virtuelle Maschinen",
+            "Description": "Verwalten Sie Ihre virtuellen Maschinen",
+            "OnlineVirtualMachines": "Aktive virtuelle Maschinen",
+            "ViewAllVirtualMachines": "Alle virtuellen Maschinen anzeigen"
+        },
+        "Uptime": {
+            "Title": "Uptime",
+            "Description": "\u00dcberwachung der Verf\u00fcgbarkeit",
+            "OnlineVirtualMachines": "Online virtuelle Maschinen",
+            "ViewUptimeMetrics": "Uptime-Statistiken anzeigen"
+        },
+        "Network": {
+            "Title": "Netzwerk",
+            "Description": "Netzwerkkonfiguration verwalten",
+            "ActiveConnections": "Aktive Verbindungen",
+            "NetworkDevices": "Netzwerkger\u00e4te",
+            "ViewNetworkDetails": "Netzwerkdetails anzeigen"
+        },
+        "GlancesMonitor": {
+            "Title": "System Monitor",
+            "Description": "Echtzeit-System\u00fcberwachung mit Glances",
+            "NoServers": "Keine Server mit Glances-\u00dcberwachung gefunden",
+            "AddServers": "F\u00fcgen Sie physische Server mit Glances-\u00dcberwachung hinzu, um Systemmetriken zu sehen",
+            "LastUpdated": "Zuletzt aktualisiert",
+            "Online": "Online",
+            "Offline": "Offline",
+            "CPU": "CPU",
+            "RAM": "RAM",
+            "Disk": "Festplatte",
+            "GPU": "GPU",
+            "Temperature": "Temperatur",
+            "Uptime": "Betriebszeit",
+            "AverageUsage": "Durchschnittliche Nutzung",
+            "LoadingData": "Lade \u00dcberwachungsdaten...",
+            "ErrorLoadingData": "Fehler beim Laden der \u00dcberwachungsdaten"
+        }
+    },
+    "NetworkDevices": {
+        "Title": "Netzwerkger\u00e4te",
+        "YourDevices": "Ihre Netzwerkger\u00e4te",
+        "MyInfrastructure": "Meine Infrastruktur",
+        "Tabs": {
+            "All": "Alle Ger\u00e4te",
+            "Switch": "Switches",
+            "AccessPoint": "Access Points",
+            "Repeater": "Repeater",
+            "Router": "Router",
+            "Firewall": "Firewalls",
+            "Other": "Andere"
+        },
+        "Add": {
+            "Title": "Netzwerkger\u00e4t hinzuf\u00fcgen",
+            "DeviceName": "Ger\u00e4tename",
+            "DeviceType": "Ger\u00e4tetyp",
+            "Brand": "Marke",
+            "Model": "Modell",
+            "Location": "Standort",
+            "Description": "Beschreibung",
+            "IPAddress": "IP-Adresse",
+            "MACAddress": "MAC-Adresse",
+            "ManagementURL": "Management-URL",
+            "PortCount": "Anzahl Ports",
+            "PowerConsumption": "Stromverbrauch (W)",
+            "WirelessStandard": "WLAN-Standard",
+            "Frequency": "Frequenz",
+            "FirmwareVersion": "Firmware-Version"
+        },
+        "Messages": {
+            "AddSuccess": "Netzwerkger\u00e4t erfolgreich hinzugef\u00fcgt",
+            "EditSuccess": "Netzwerkger\u00e4t aktualisiert",
+            "DeleteSuccess": "Netzwerkger\u00e4t gel\u00f6scht",
+            "GetError": "Fehler beim Laden der Netzwerkger\u00e4te",
+            "EditError": "Fehler beim Aktualisieren",
+            "DeleteError": "Fehler beim L\u00f6schen"
+        },
+        "Search": {
+            "Placeholder": "Netzwerkger\u00e4te suchen..."
+        }
+    },
+    "Servers": {
+        "Title": "Server",
+        "MyInfrastructure": "Meine Infrastruktur",
+        "YourServers": "Ihre Server",
+        "Tabs": {
+            "All": "Alle Server",
+            "Physical": "Physische Server",
+            "Virtual": "Virtuelle Maschinen"
+        },
+        "AddServer": {
+            "Title": "Server hinzuf\u00fcgen",
+            "General": {
+                "Title": "Server hinzuf\u00fcgen",
+                "CopyServer": "Server kopieren",
+                "Icon": "Symbol",
+                "IconPlaceholder": "Symbol ausw\u00e4hlen",
+                "IconSearchPlaceholder": "Symbole suchen...",
+                "Preview": "Vorschau",
+                "Name": "Name",
+                "OperatingSystem": "Betriebssystem",
+                "OperatingSystemPlaceholder": "OS ausw\u00e4hlen",
+                "IPAdress": "IP-Adresse",
+                "ManagementURL": "Management-URL",
+                "ManagementURLTooltip": "Link zur Verwaltungsoberfl\u00e4che (z.B. Proxmox oder Portainer)"
+            },
+            "Host": {
+                "MarkAsHostServer": "Als Host-Server markieren",
+                "SelectHostServer": "Host-Server ausw\u00e4hlen",
+                "SelectHostServerPlaceholder": "Host-Server ausw\u00e4hlen",
+                "NoHostServer": "Kein Host-Server"
+            },
+            "Monitoring": {
+                "Enable": "\u00dcberwachung aktivieren",
+                "URL": "Monitoring-URL",
+                "SetupTitle": "Erforderliche Serverkonfiguration",
+                "SetupDescription": "Zur Aktivierung ben\u00f6tigen Sie Glances auf dem Server. Beispiel-Docker-Compose-Konfiguration:"
+            }
+        },
+        "ServerCard": {
+            "HardwareInformation": "Hardware-Informationen",
+            "ViewDetails": "Details anzeigen",
+            "OpenManagementURL": "Management-URL \u00f6ffnen",
+            "EditServer": "Server bearbeiten",
+            "DeleteServer": "Server l\u00f6schen",
+            "HostedVMs": "Gehostete VMs",
+            "ResourceUsage": "Ressourcennutzung",
+            "DeleteConfirmation": {
+                "Title": "{name} l\u00f6schen",
+                "Description": "Sind Sie sicher? Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+                "Cancel": "Abbrechen",
+                "Delete": "L\u00f6schen"
+            }
+        },
+        "EditServer": {
+            "Title": "{name} bearbeiten",
+            "Save": "Speichern",
+            "General": {
+                "Title": "Allgemein",
+                "Icon": "Symbol",
+                "Name": "Name",
+                "OperatingSystem": "Betriebssystem",
+                "IPAddress": "IP-Adresse",
+                "ManagementURL": "Management-URL"
+            },
+            "Hardware": {
+                "Title": "Hardware",
+                "CPU": "CPU",
+                "GPU": "GPU",
+                "RAM": "RAM",
+                "Disk": "Festplatte"
+            },
+            "Host": {
+                "Title": "Host",
+                "MarkAsHostServer": "Als Host-Server markieren",
+                "CannotDisableHost": "Kann nicht deaktiviert werden, solange VMs gehostet werden",
+                "SelectHostServer": "Host-Server ausw\u00e4hlen"
+            },
+            "Monitoring": {
+                "Title": "\u00dcberwachung",
+                "Enable": "\u00dcberwachung aktivieren",
+                "URL": "Monitoring-URL",
+                "SetupTitle": "Erforderliche Serverkonfiguration",
+                "SetupDescription": "Beispiel-Docker-Compose-Konfiguration f\u00fcr Glances:"
+            }
+        },
+        "Pagination": {
+            "Showing": "Zeige {start}-{end} von {total} Servern",
+            "NoServers": "Keine Server gefunden"
+        },
+        "Search": {
+            "Placeholder": "Suche..."
+        },
+        "Setup": {
+            "Title": "Neue Infrastruktur hinzuf\u00fcgen",
+            "Description": "W\u00e4hlen Sie aus, welche Art von Infrastruktur Sie hinzuf\u00fcgen m\u00f6chten",
+            "PhysicalServer": "Physischer Server",
+            "PhysicalDescription": "Einen dedizierten physischen Server hinzuf\u00fcgen",
+            "VirtualMachine": "Virtuelle Maschine",
+            "VirtualMachineDescription": "Eine neue virtuelle Maschine oder einen Dienst hinzuf\u00fcgen"
+        }
+    },
+    "VirtualMachines": {
+        "Title": "Ihre virtuellen Maschinen",
+        "Breadcrumb": {
+            "MyInfrastructure": "Meine Infrastruktur",
+            "VirtualMachines": "Virtuelle Maschinen"
+        },
+        "Views": {
+            "ChangeView": "Ansicht \u00e4ndern",
+            "ListView": "Listenansicht",
+            "GridView": "Rasteransicht",
+            "CompactView": "Kompaktansicht"
+        },
+        "Add": {
+            "Title": "Virtuelle Maschine hinzuf\u00fcgen",
+            "Name": "Name",
+            "NamePlaceholder": "z.B. Portainer",
+            "Server": "Server",
+            "SelectServer": "Server ausw\u00e4hlen",
+            "Description": "Beschreibung",
+            "DescriptionPlaceholder": "Beschreibung der virtuellen Maschine",
+            "IconURL": "Symbol-URL",
+            "IconURLPlaceholder": "https://example.com/icon.png",
+            "PublicURL": "\u00d6ffentliche URL",
+            "PublicURLPlaceholder": "https://example.com",
+            "LocalURL": "Lokale URL",
+            "LocalURLPlaceholder": "http://localhost:3000",
+            "CustomUptimeCheck": "Benutzerdefinierte Uptime-URL",
+            "CustomUptimeCheckTooltip": "Ersetzt die \u00f6ffentliche URL f\u00fcr Uptime-Checks",
+            "UptimeCheckURL": "Uptime-Pr\u00fcf-URL",
+            "UptimeCheckURLPlaceholder": "https://example.com/status"
+        },
+        "Edit": {
+            "Title": "Virtuelle Maschine bearbeiten",
+            "SaveButton": "\u00c4nderungen speichern"
+        },
+        "Card": {
+            "Server": "Server",
+            "NoServer": "Kein Server",
+            "PublicURL": "\u00d6ffentliche URL",
+            "LocalURL": "Lokale URL",
+            "Icon": "Symbol",
+            "Image": "Bild"
+        },
+        "Messages": {
+            "AddServerFirst": "Bitte zuerst Server hinzuf\u00fcgen",
+            "AddSuccess": "Virtuelle Maschine erfolgreich hinzugef\u00fcgt",
+            "EditSuccess": "\u00c4nderungen gespeichert",
+            "DeleteSuccess": "Virtuelle Maschine gel\u00f6scht",
+            "GetError": "Fehler beim Laden",
+            "EditError": "Speichern fehlgeschlagen",
+            "DeleteError": "L\u00f6schen fehlgeschlagen",
+            "NumberValidation": "Bitte Zahl zwischen 1-100 eingeben"
+        },
+        "Pagination": {
+            "Showing": "Zeige {start}-{end} von {total} virtuellen Maschinen",
+            "NoVirtualMachines": "Keine virtuellen Maschinen gefunden"
+        },
+        "Search": {
+            "Placeholder": "Suche..."
+        }
     },
     "Uptime": {
-      "Title": "Uptime",
-      "Breadcrumb": {
-        "MyInfrastructure": "Meine Infrastruktur",
-        "Uptime": "Uptime"
-      },
-      "TimeRange": {
-        "Select": "Zeitraum wählen",
-        "LastHour": "Letzte Stunde",
-        "LastDay": "Letzter Tag",
-        "Last7Days": "Letzte 7 Tage",
-        "Last30Days": "Letzte 30 Tage"
-      },
-      "Status": {
-        "Online": "Online",
-        "Offline": "Offline",
-        "NoData": "Keine Daten"
-      },
-      "Messages": {
-        "NumberValidation": "Bitte Zahl zwischen 1-100",
-        "NoItems": "Keine Einträge",
-        "Loading": "Lade..."
-      },
-      "Pagination": {
-        "Showing": "Zeige {start}-{end} von {total} Einträgen"
-      }
+        "Title": "Uptime",
+        "Breadcrumb": {
+            "MyInfrastructure": "Meine Infrastruktur",
+            "Uptime": "Uptime"
+        },
+        "TimeRange": {
+            "Select": "Zeitraum w\u00e4hlen",
+            "LastHour": "Letzte Stunde",
+            "LastDay": "Letzter Tag",
+            "Last7Days": "Letzte 7 Tage",
+            "Last30Days": "Letzte 30 Tage"
+        },
+        "Status": {
+            "Online": "Online",
+            "Offline": "Offline",
+            "NoData": "Keine Daten"
+        },
+        "Messages": {
+            "NumberValidation": "Bitte Zahl zwischen 1-100",
+            "NoItems": "Keine Eintr\u00e4ge",
+            "Loading": "Lade..."
+        },
+        "Pagination": {
+            "Showing": "Zeige {start}-{end} von {total} Eintr\u00e4gen"
+        }
     },
     "Network": {
-      "Title": "Netzwerk",
-      "Breadcrumb": {
-        "MyInfrastructure": "Meine Infrastruktur",
-        "Network": "Netzwerk"
-      }
+        "Title": "Netzwerk",
+        "Breadcrumb": {
+            "MyInfrastructure": "Meine Infrastruktur",
+            "Network": "Netzwerk"
+        }
     },
     "Settings": {
-      "Title": "Einstellungen",
-      "Breadcrumb": {
-        "Dashboard": "Dashboard",
-        "Settings": "Einstellungen"
-      },
-      "UserSettings": {
-        "Title": "Benutzereinstellungen",
-        "Description": "E-Mail, Passwort und Kontoeinstellungen verwalten",
-        "ChangeEmail": {
-          "Title": "E-Mail ändern",
-          "Placeholder": "Neue E-Mail",
-          "Button": "E-Mail ändern",
-          "Success": "E-Mail geändert",
-          "Error": "Fehler"
+        "Title": "Einstellungen",
+        "Breadcrumb": {
+            "Dashboard": "Dashboard",
+            "Settings": "Einstellungen"
         },
-        "ChangePassword": {
-          "Title": "Passwort ändern",
-          "OldPassword": "Altes Passwort",
-          "NewPassword": "Neues Passwort",
-          "ConfirmPassword": "Passwort bestätigen",
-          "Button": "Passwort ändern",
-          "Success": "Passwort geändert",
-          "Error": "Fehler",
-          "PasswordsDontMatch": "Passwörter stimmen nicht überein",
-          "AllFieldsRequired": "Alle Felder benötigt"
-        }
-      },
-      "ThemeSettings": {
-        "Title": "Design-Einstellungen",
-        "Description": "Wählen Sie zwischen Hell, Dunkel oder System",
-        "Light": "Hell",
-        "Dark": "Dunkel",
-        "System": "System"
-      },
-      "LanguageSettings": {
-        "Title": "Spracheinstellungen",
-        "Description": "Wählen Sie eine Sprache für die Anwendung.",
-        "English": "Englisch",
-        "German": "Deutsch"
-      },
-      "Notifications": {
-        "Title": "Benachrichtigungen",
-        "Description": "Erhalten Sie Warnungen bei Statusänderungen",
-        "AddChannel": "Kanal hinzufügen",
-        "NoNotifications": "Keine Benachrichtigungen",
-        "NoNotificationsDescription": "Fügen Sie einen Benachrichtigungskanal hinzu",
-        "AddNotification": {
-          "Title": "Benachrichtigung hinzufügen",
-          "Name": "Name (optional)",
-          "Type": "Typ",
-          "SMTP": {
-            "Title": "SMTP",
-            "Description": "Sende Benachrichtigungen via SMTP",
-            "Host": "SMTP-Host",
-            "Port": "SMTP-Port",
-            "Secure": "Sichere Verbindung (TLS/SSL)",
-            "Username": "SMTP-Benutzername",
-            "Password": "SMTP-Passwort",
-            "From": "Absenderadresse",
-            "To": "Empfängeradresse"
-          },
-          "Telegram": {
-            "Title": "Telegram",
-            "Description": "Sende Benachrichtigungen via Telegram",
-            "Token": "Bot-Token",
-            "ChatId": "Chat-ID"
-          },
-          "Discord": {
-            "Title": "Discord",
-            "Description": "Sende Benachrichtigungen via Discord",
-            "Webhook": "Webhook-URL"
-          },
-          "Gotify": {
-            "Title": "Gotify",
-            "Description": "Sende Benachrichtigungen via Gotify",
-            "Url": "Gotify-URL",
-            "Token": "Gotify-Token"
-          },
-          "Ntfy": {
-            "Title": "Ntfy",
-            "Description": "Sende Benachrichtigungen via Ntfy",
-            "Url": "Ntfy-URL",
-            "Token": "Ntfy-Token"
-          },
-          "Pushover": {
-            "Title": "Pushover",
-            "Description": "Sende Benachrichtigungen via Pushover",
-            "Url": "Pushover-URL",
-            "Token": "Pushover-Token",
-            "User": "Pushover-Benutzer"
-          },
-          "Echobell": {
-            "Title": "Echobell",
-            "Description": "Sende Benachrichtigungen via Echobell",
-            "Url": "Echobell-URL",
-            "AddMessage": "Füge in Echobell den \"message\" Feld hinzu."
-          }
-        },
-        "CustomizeText": {
-          "Display": "Benachrichtigungstext anpassen",
-          "Title": "Textanpassung",
-          "VirtualMachine": "Text für virtuelle Maschinen",
-          "Server": "Text für Server",
-          "Placeholders": {
-            "Title": "Verfügbare Platzhalter:",
-            "Server": {
-              "Title": "Server:",
-              "Name": "!name - Servername",
-              "Status": "!status - Status (online/offline)"
+        "UserSettings": {
+            "Title": "Benutzereinstellungen",
+            "Description": "E-Mail, Passwort und Kontoeinstellungen verwalten",
+            "ChangeEmail": {
+                "Title": "E-Mail \u00e4ndern",
+                "Placeholder": "Neue E-Mail",
+                "Button": "E-Mail \u00e4ndern",
+                "Success": "E-Mail ge\u00e4ndert",
+                "Error": "Fehler"
             },
-            "VirtualMachine": {
-              "Title": "Anwendung:",
-              "Name": "!name - Anwendungsname",
-              "Url": "!url - Anwendungs-URL",
-              "Status": "!status - Status (online/offline)"
+            "ChangePassword": {
+                "Title": "Passwort \u00e4ndern",
+                "OldPassword": "Altes Passwort",
+                "NewPassword": "Neues Passwort",
+                "ConfirmPassword": "Passwort best\u00e4tigen",
+                "Button": "Passwort \u00e4ndern",
+                "Success": "Passwort ge\u00e4ndert",
+                "Error": "Fehler",
+                "PasswordsDontMatch": "Passw\u00f6rter stimmen nicht \u00fcberein",
+                "AllFieldsRequired": "Alle Felder ben\u00f6tigt"
             }
-          }
         },
-        "ActiveChannels": "Aktive Kanäle",
-        "Test": "Testen",
-        "Delete": "Löschen"
-      }
+        "ThemeSettings": {
+            "Title": "Design-Einstellungen",
+            "Description": "W\u00e4hlen Sie zwischen Hell, Dunkel oder System",
+            "Light": "Hell",
+            "Dark": "Dunkel",
+            "System": "System"
+        },
+        "LanguageSettings": {
+            "Title": "Spracheinstellungen",
+            "Description": "W\u00e4hlen Sie eine Sprache f\u00fcr die Anwendung.",
+            "English": "Englisch",
+            "German": "Deutsch"
+        },
+        "Notifications": {
+            "Title": "Benachrichtigungen",
+            "Description": "Erhalten Sie Warnungen bei Status\u00e4nderungen",
+            "AddChannel": "Kanal hinzuf\u00fcgen",
+            "NoNotifications": "Keine Benachrichtigungen",
+            "NoNotificationsDescription": "F\u00fcgen Sie einen Benachrichtigungskanal hinzu",
+            "AddNotification": {
+                "Title": "Benachrichtigung hinzuf\u00fcgen",
+                "Name": "Name (optional)",
+                "Type": "Typ",
+                "SMTP": {
+                    "Title": "SMTP",
+                    "Description": "Sende Benachrichtigungen via SMTP",
+                    "Host": "SMTP-Host",
+                    "Port": "SMTP-Port",
+                    "Secure": "Sichere Verbindung (TLS/SSL)",
+                    "Username": "SMTP-Benutzername",
+                    "Password": "SMTP-Passwort",
+                    "From": "Absenderadresse",
+                    "To": "Empf\u00e4ngeradresse"
+                },
+                "Telegram": {
+                    "Title": "Telegram",
+                    "Description": "Sende Benachrichtigungen via Telegram",
+                    "Token": "Bot-Token",
+                    "ChatId": "Chat-ID"
+                },
+                "Discord": {
+                    "Title": "Discord",
+                    "Description": "Sende Benachrichtigungen via Discord",
+                    "Webhook": "Webhook-URL"
+                },
+                "Gotify": {
+                    "Title": "Gotify",
+                    "Description": "Sende Benachrichtigungen via Gotify",
+                    "Url": "Gotify-URL",
+                    "Token": "Gotify-Token"
+                },
+                "Ntfy": {
+                    "Title": "Ntfy",
+                    "Description": "Sende Benachrichtigungen via Ntfy",
+                    "Url": "Ntfy-URL",
+                    "Token": "Ntfy-Token"
+                },
+                "Pushover": {
+                    "Title": "Pushover",
+                    "Description": "Sende Benachrichtigungen via Pushover",
+                    "Url": "Pushover-URL",
+                    "Token": "Pushover-Token",
+                    "User": "Pushover-Benutzer"
+                },
+                "Echobell": {
+                    "Title": "Echobell",
+                    "Description": "Sende Benachrichtigungen via Echobell",
+                    "Url": "Echobell-URL",
+                    "AddMessage": "F\u00fcge in Echobell den \"message\" Feld hinzu."
+                }
+            },
+            "CustomizeText": {
+                "Display": "Benachrichtigungstext anpassen",
+                "Title": "Textanpassung",
+                "VirtualMachine": "Text f\u00fcr virtuelle Maschinen",
+                "Server": "Text f\u00fcr Server",
+                "Placeholders": {
+                    "Title": "Verf\u00fcgbare Platzhalter:",
+                    "Server": {
+                        "Title": "Server:",
+                        "Name": "!name - Servername",
+                        "Status": "!status - Status (online/offline)"
+                    },
+                    "VirtualMachine": {
+                        "Title": "Virtuelle Maschine bezogen:",
+                        "Name": "!name - Der Name der virtuellen Maschine",
+                        "Url": "!url - Die URL wo die virtuelle Maschine gehostet wird",
+                        "Status": "!status - Der aktuelle Status der virtuellen Maschine (online/offline)"
+                    }
+                }
+            },
+            "ActiveChannels": "Aktive Kan\u00e4le",
+            "Test": "Testen",
+            "Delete": "L\u00f6schen"
+        }
     }
-  }
+}

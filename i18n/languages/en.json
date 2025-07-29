@@ -70,6 +70,7 @@
       "Dashboard": "Dashboard",
       "My Infrastructure": "My Infrastructure",
       "Servers": "Servers",
+      "VirtualMachines": "Virtual Machines",
       "NetworkDevices": "Network Devices",
       "Uptime": "Uptime",
       "Infrastructure": "Infrastructure",
@@ -278,26 +279,26 @@
         "VirtualMachineDescription": "Add a new virtual machine or service"
       }
     },
-          "VirtualMachines": {
-        "Title": "Your Virtual Machines",
-        "Breadcrumb": {
-          "MyInfrastructure": "My Infrastructure",
-          "VirtualMachines": "Virtual Machines"
-        },
+    "VirtualMachines": {
+      "Title": "Your Virtual Machines",
+      "Breadcrumb": {
+        "MyInfrastructure": "My Infrastructure",
+        "VirtualMachines": "Virtual Machines"
+      },
       "Views": {
         "ChangeView": "Change view",
         "ListView": "List View",
         "GridView": "Grid View",
         "CompactView": "Compact View"
       },
-              "Add": {
-          "Title": "Add a virtual machine",
-          "Name": "Name",
-          "NamePlaceholder": "e.g. Portainer",
-          "Server": "Server",
-          "SelectServer": "Select server",
-          "Description": "Description",
-          "DescriptionPlaceholder": "Virtual machine description",
+      "Add": {
+        "Title": "Add a virtual machine",
+        "Name": "Name",
+        "NamePlaceholder": "e.g. Portainer",
+        "Server": "Server",
+        "SelectServer": "Select server",
+        "Description": "Description",
+        "DescriptionPlaceholder": "Virtual machine description",
         "IconURL": "Icon URL",
         "IconURLPlaceholder": "https://example.com/icon.png",
         "PublicURL": "Public URL",
@@ -309,6 +310,11 @@
         "UptimeCheckURL": "Uptime Check URL",
         "UptimeCheckURLPlaceholder": "https://example.com/status"
       },
+      "Edit": {
+        "Title": "Edit Virtual Machine",
+        "SaveButton": "Save Changes"
+      },
+      "Card": {
               "Edit": {
           "Title": "Edit Virtual Machine",
           "SaveButton": "Save Changes"
@@ -337,20 +343,6 @@
         },
       "Search": {
         "Placeholder": "Type to search..."
-      }
-    },
-    "Applications": {
-      "Add": {
-        "Description": "Description",
-        "DescriptionPlaceholder": "Application description",
-        "IconURL": "Icon URL",
-        "IconURLPlaceholder": "https://example.com/icon.png",
-        "PublicURL": "Public URL",
-        "PublicURLPlaceholder": "https://example.com",
-        "LocalURL": "Local URL",
-        "LocalURLPlaceholder": "http://localhost:3000",
-        "CustomUptimeCheck": "Custom Uptime Check URL",
-        "CustomUptimeCheckTooltip": "When enabled, this URL replaces the Public URL for uptime monitoring checks"
       }
     },
     "Uptime": {
@@ -512,4 +504,5 @@
       }
     }
   }
+}
   

@@ -30,7 +30,6 @@ import {
   Thermometer,
   ChevronLeft,
   ChevronRight,
-  AppWindow,
   Zap,
   HelpCircle,
 } from "lucide-react"
@@ -182,19 +181,8 @@ export default function Servers() {
   const [hostServers, setHostServers] = useState<Server[]>([])
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isSetupDialogOpen, setIsSetupDialogOpen] = useState(false)
-  const [isApplicationDialogOpen, setIsApplicationDialogOpen] = useState(false)
-  const [serverType, setServerType] = useState<"physical" | "virtual" | "">("")
-  const [activeTab, setActiveTab] = useState<"all" | "physical" | "virtual">("all")
-  
-  // Application form states
-  const [appName, setAppName] = useState<string>("")
-  const [appDescription, setAppDescription] = useState<string>("")
-  const [appIcon, setAppIcon] = useState<string>("")
-  const [appPublicURL, setAppPublicURL] = useState<string>("")
-  const [appLocalURL, setAppLocalURL] = useState<string>("")
-  const [appServerId, setAppServerId] = useState<number>(0)
-  const [customUptimeCheck, setCustomUptimeCheck] = useState<boolean>(false)
-  const [uptimecheckUrl, setUptimecheckUrl] = useState<string>("")
+  const [serverType, setServerType] = useState<"physical" | "">("")
+  const [activeTab, setActiveTab] = useState<"all" | "physical">("all")
 
   const [monitoringInterval, setMonitoringInterval] = useState<NodeJS.Timeout | null>(null);
 
@@ -301,38 +289,38 @@ export default function Servers() {
     try {
       setLoading(true)
       
-      // Fetch both servers and applications in parallel
-      const [serversResponse, applicationsResponse] = await Promise.all([
+      // Fetch both servers and virtual machines in parallel
+      const [serversResponse, virtualMachinesResponse] = await Promise.all([
         axios.post<GetServersResponse>("/api/servers/get", {
           page: currentPage,
           ITEMS_PER_PAGE: itemsPerPage,
         }),
-        axios.post<{applications: any[], servers: any[]}>("/api/applications/get", {
+        axios.post<{virtualMachines: any[], servers: any[]}>("/api/virtual-machines/get", {
           page: 1,
-          ITEMS_PER_PAGE: 1000, // Get all applications for now
+          ITEMS_PER_PAGE: 1000, // Get all virtual machines for now
         })
       ])
       
       // Ensure we have arrays to work with
       const serversList = Array.isArray(serversResponse.data.servers) ? serversResponse.data.servers : [];
-      const applicationsList = Array.isArray(applicationsResponse.data.applications) ? applicationsResponse.data.applications : [];
+      const virtualMachinesList = Array.isArray(virtualMachinesResponse.data.virtualMachines) ? virtualMachinesResponse.data.virtualMachines : [];
       
-      // Transform applications to look like servers for unified display
-      const transformedApplications = applicationsList.map((app: any) => ({
-        id: `app-${app.id}`, // Prefix with 'app-' to avoid ID conflicts
-        name: app.name,
-        description: app.description,
-        icon: app.icon || "AppWindow",
+      // Transform virtual machines to look like servers for unified display
+      const transformedVirtualMachines = virtualMachinesList.map((vm: any) => ({
+        id: `vm-${vm.id}`, // Prefix with 'vm-' to avoid ID conflicts
+        name: vm.name,
+        description: vm.description,
+        icon: vm.icon || "AppWindow",
         os: "Virtual Machine",
-        ip: app.localURL || app.publicURL || "",
-        url: app.publicURL || "",
+        ip: vm.localURL || vm.publicURL || "",
+        url: vm.publicURL || "",
         cpu: "",
         gpu: "",
         ram: "",
         disk: "",
         monitoring: false,
         monitoringURL: "",
-        online: app.online || false,
+        online: vm.online || false,
         cpuUsage: 0,
         ramUsage: 0,
         diskUsage: 0,
@@ -341,22 +329,22 @@ export default function Servers() {
         uptime: "",
         port: 0,
         host: false,
-        hostServer: app.serverId || 0,
-        isVM: true, // Mark applications as VMs
+        hostServer: vm.serverId || 0,
+        isVM: true, // Mark virtual machines as VMs
         hostedVMs: [],
-        // Add application-specific fields
-        publicURL: app.publicURL,
-        localURL: app.localURL,
-        serverId: app.serverId,
-        originalId: app.id // Keep the original ID for API calls
+        // Add virtual machine-specific fields
+        publicURL: vm.publicURL,
+        localURL: vm.localURL,
+        serverId: vm.serverId,
+        originalId: vm.id // Keep the original ID for API calls
       }))
       
-      // Combine servers and applications
-      const combinedServers = [...serversList, ...transformedApplications]
+      // Combine servers and virtual machines
+      const combinedServers = [...serversList, ...transformedVirtualMachines]
       
       setServers(combinedServers)
       setMaxPage(serversResponse.data.maxPage || 1)
-      setTotalItems((serversResponse.data.totalItems || 0) + applicationsList.length)
+      setTotalItems((serversResponse.data.totalItems || 0) + virtualMachinesList.length)
       setLoading(false)
     } catch (error: any) {
       console.error("Failed to fetch servers:", error);
@@ -386,8 +374,8 @@ export default function Servers() {
       const item = servers.find(s => s.id === id)
       
       if (item && item.isVM && item.originalId) {
-        // It's an application (virtual machine) - use original ID for API call
-        await axios.post("/api/applications/delete", { id: item.originalId })
+        // It's a virtual machine - use original ID for API call
+        await axios.post("/api/virtual-machines/delete", { id: item.originalId })
         toast.success("Virtual machine deleted successfully");
       } else {
         // It's a server - use the ID as-is (should be numeric)
@@ -398,7 +386,7 @@ export default function Servers() {
       getServers()
     } catch (error: any) {
       console.log(error.response.data)
-      if (error.response?.data?.error?.includes("applications")) {
+      if (error.response?.data?.error?.includes("virtual")) {
         toast.error("Cannot delete server with associated virtual machines");
       } else {
         toast.error("Failed to delete item");
@@ -460,28 +448,28 @@ export default function Servers() {
     try {
       setIsSearching(true)
       
-      // Search both servers and applications in parallel
-      const [serversResponse, applicationsResponse] = await Promise.all([
+      // Search both servers and virtual machines in parallel
+      const [serversResponse, virtualMachinesResponse] = await Promise.all([
         axios.post<{ results: Server[] }>("/api/servers/search", { searchterm: searchTerm }),
-        axios.post<{ results: any[] }>("/api/applications/search", { searchterm: searchTerm })
+        axios.post<{ results: any[] }>("/api/virtual-machines/search", { searchterm: searchTerm })
       ])
       
-      // Transform applications to match server format
-      const transformedApplications = applicationsResponse.data.results.map((app: any) => ({
-        id: `app-${app.id}`, // Prefix with 'app-' to avoid ID conflicts
-        name: app.name,
-        description: app.description,
-        icon: app.icon || "AppWindow",
+      // Transform virtual machines to match server format
+      const transformedVirtualMachines = virtualMachinesResponse.data.results.map((vm: any) => ({
+        id: `vm-${vm.id}`, // Prefix with 'vm-' to avoid ID conflicts
+        name: vm.name,
+        description: vm.description,
+        icon: vm.icon || "AppWindow",
         os: "Virtual Machine",
-        ip: app.localURL || app.publicURL || "",
-        url: app.publicURL || "",
+        ip: vm.localURL || vm.publicURL || "",
+        url: vm.publicURL || "",
         cpu: "",
         gpu: "",
         ram: "",
         disk: "",
         monitoring: false,
         monitoringURL: "",
-        online: app.online || false,
+        online: vm.online || false,
         cpuUsage: 0,
         ramUsage: 0,
         diskUsage: 0,
@@ -490,17 +478,17 @@ export default function Servers() {
         uptime: "",
         port: 0,
         host: false,
-        hostServer: app.serverId || 0,
+        hostServer: vm.serverId || 0,
         isVM: true,
         hostedVMs: [],
-        publicURL: app.publicURL,
-        localURL: app.localURL,
-        serverId: app.serverId,
-        originalId: app.id // Keep the original ID for API calls
+        publicURL: vm.publicURL,
+        localURL: vm.localURL,
+        serverId: vm.serverId,
+        originalId: vm.id // Keep the original ID for API calls
       }))
       
       // Combine search results
-      const combinedResults = [...serversResponse.data.results, ...transformedApplications]
+      const combinedResults = [...serversResponse.data.results, ...transformedVirtualMachines]
       
       setServers(combinedResults)
       setMaxPage(1)
@@ -868,31 +856,7 @@ export default function Servers() {
                         <p className="text-sm text-muted-foreground">{t('Servers.Setup.PhysicalDescription')}</p>
                       </div>
                     </div>
-                    <div 
-                      className="flex items-center space-x-4 p-4 border rounded-lg cursor-pointer hover:bg-muted transition-colors"
-                      onClick={() => {
-                        // Reset application form state
-                        setAppName("");
-                        setAppDescription("");
-                        setAppIcon("");
-                        setAppPublicURL("");
-                        setAppLocalURL("");
-                        setAppServerId(0);
-                        setCustomUptimeCheck(false);
-                        setUptimecheckUrl("");
-                        
-                        setIsSetupDialogOpen(false);
-                        setIsApplicationDialogOpen(true);
-                      }}
-                    >
-                      <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary text-secondary-foreground">
-                        <AppWindow className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">{t('Servers.Setup.VirtualMachine')}</h3>
-                        <p className="text-sm text-muted-foreground">{t('Servers.Setup.VirtualMachineDescription')}</p>
-                      </div>
-                    </div>
+
                   </div>
                   <AlertDialogFooter>
                     <AlertDialogCancel onClick={() => setIsSetupDialogOpen(false)}>
@@ -1240,172 +1204,16 @@ export default function Servers() {
                 </AlertDialogContent>
               </AlertDialog>
 
-              {/* Application Add Dialog */}
-              <AlertDialog open={isApplicationDialogOpen} onOpenChange={setIsApplicationDialogOpen}>
-                <AlertDialogContent className="max-w-[90vw] w-[600px] max-h-[90vh] overflow-y-auto">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>{t('VirtualMachines.Add.Title')}</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      <div className="space-y-4 pt-4">
-                        <div className="grid w-full items-center gap-1.5">
-                                                      <Label>{t('VirtualMachines.Add.Name')}</Label>
-                            <Input
-                              placeholder={t('VirtualMachines.Add.NamePlaceholder')}
-                            value={appName}
-                            onChange={(e) => setAppName(e.target.value)}
-                          />
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                          <Label>{t('VirtualMachines.Add.Server')}</Label>
-                          <Select
-                            value={appServerId ? String(appServerId) : ""}
-                            onValueChange={(v) => setAppServerId(Number(v))}
-                            required
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder={t('VirtualMachines.Add.SelectServer')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {servers.map((server) => (
-                                <SelectItem
-                                  key={server.id}
-                                  value={String(server.id)}
-                                >
-                                  {server.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                          <Label>
-                            {t('Applications.Add.Description')}{" "}
-                            <span className="text-stone-600">{t('Common.optional')}</span>
-                          </Label>
-                          <Textarea
-                            placeholder={t('Applications.Add.DescriptionPlaceholder')}
-                            value={appDescription}
-                            onChange={(e) => setAppDescription(e.target.value)}
-                          />
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                          <Label>{t('Applications.Add.IconURL')}</Label>
-                          <div className="flex gap-2">
-                            <Input
-                              placeholder={t('Applications.Add.IconURLPlaceholder')}
-                              value={appIcon}
-                              onChange={(e) => setAppIcon(e.target.value)}
-                            />
-                            <Button variant="outline" size="icon" onClick={() => {
-                              if (appName) {
-                                setAppIcon(`https://cdn.jsdelivr.net/gh/selfhst/icons/png/${appName.toLowerCase().replace(/\s+/g, '-')}.png`);
-                              }
-                            }}>
-                              <Zap />
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                          <Label>{t('Applications.Add.PublicURL')}</Label>
-                          <Input
-                            placeholder={t('Applications.Add.PublicURLPlaceholder')}
-                            value={appPublicURL}
-                            onChange={(e) => setAppPublicURL(e.target.value)}
-                          />
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                          <Label>
-                            {t('Applications.Add.LocalURL')}{" "}
-                            <span className="text-stone-600">{t('Common.optional')}</span>
-                          </Label>
-                          <Input
-                            placeholder={t('Applications.Add.LocalURLPlaceholder')}
-                            value={appLocalURL}
-                            onChange={(e) => setAppLocalURL(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            id="custom-uptime-check"
-                            checked={customUptimeCheck}
-                            onChange={(e) => setCustomUptimeCheck(e.target.checked)}
-                            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                          />
-                          <Label htmlFor="custom-uptime-check">{t('Applications.Add.CustomUptimeCheck')}</Label>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                {t('Applications.Add.CustomUptimeCheckTooltip')}
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </div>
-                        {customUptimeCheck && (
-                          <div className="grid w-full items-center gap-1.5">
-                            <Label>{t('Applications.Add.UptimeCheckURL')}</Label>
-                            <Input
-                              placeholder={t('Applications.Add.UptimeCheckURLPlaceholder')}
-                              value={uptimecheckUrl}
-                              onChange={(e) => setUptimecheckUrl(e.target.value)}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel onClick={() => setIsApplicationDialogOpen(false)}>{t('Common.cancel')}</AlertDialogCancel>
-                    <AlertDialogAction onClick={async () => {
-                      if (!appName || !appPublicURL || !appServerId) {
-                        toast.error("Please fill in all required fields");
-                        return;
-                      }
-                      
-                      try {
-                        await axios.post("/api/applications/add", {
-                          name: appName,
-                          description: appDescription,
-                          icon: appIcon,
-                          publicURL: appPublicURL,
-                          localURL: appLocalURL,
-                          serverId: appServerId,
-                          uptimecheckUrl: customUptimeCheck ? uptimecheckUrl : null,
-                        });
-                        
-                        toast.success(t('VirtualMachines.Messages.AddSuccess'));
-                        getServers(); // Refresh the servers list to show the new virtual machine
-                        setIsApplicationDialogOpen(false);
-                        
-                        // Reset form
-                        setAppName("");
-                        setAppDescription("");
-                        setAppIcon("");
-                        setAppPublicURL("");
-                        setAppLocalURL("");
-                        setAppServerId(0);
-                        setCustomUptimeCheck(false);
-                        setUptimecheckUrl("");
-                      } catch (error) {
-                        toast.error("Failed to add application");
-                      }
-                    }}>{t('Common.add')}</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+
             </div>
           </div>
 
           {/* Navigation Tabs */}
           <div className="mb-6">
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "physical" | "virtual")}>
-              <TabsList className="grid w-full grid-cols-3">
+            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "physical")}>
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="all">{t('Servers.Tabs.All')}</TabsTrigger>
                 <TabsTrigger value="physical">{t('Servers.Tabs.Physical')}</TabsTrigger>
-                <TabsTrigger value="virtual">{t('Servers.Tabs.Virtual')}</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -1424,16 +1232,11 @@ export default function Servers() {
             <div className={isGridLayout ? "grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4" : "space-y-4"}>
               {servers
                 .filter((server) => {
-                  // Filter by host (only show top-level servers unless searching OR if it's a VM)
-                  const hostFilter = searchTerm ? true : (server.hostServer === 0 || server.hostServer === null || server.isVM);
+                  // Filter by host (only show top-level servers unless searching)
+                  const hostFilter = searchTerm ? true : (server.hostServer === 0 || server.hostServer === null);
                   
-                  // Filter by tab selection
-                  let tabFilter = true;
-                  if (activeTab === "physical") {
-                    tabFilter = !server.isVM;
-                  } else if (activeTab === "virtual") {
-                    tabFilter = Boolean(server.isVM);
-                  }
+                  // Filter by tab selection - only show physical servers (no virtual machines)
+                  let tabFilter = !server.isVM;
                   
                   return hostFilter && tabFilter;
                 })
