@@ -114,7 +114,7 @@ ServerDash is a modern, feature-rich infrastructure monitoring platform that pro
    - 📊 Display access information
 
 3. **Access the dashboard**
-   - Open http://localhost:3000
+   - Open http://localhost:4332
    - **Login with default credentials:**
      - **Email:** `admin@example.com`
      - **Password:** `admin`
@@ -162,7 +162,7 @@ If you prefer manual configuration:
    ```
 
 4. **Access the dashboard**
-   - Open http://localhost:3000
+   - Open http://localhost:4332
    - **Login with default credentials:**
      - **Email:** `admin@example.com`
      - **Password:** `admin`
@@ -214,7 +214,8 @@ JWT_SECRET="CHANGE_THIS_TO_A_SECURE_RANDOM_STRING_GENERATE_WITH_OPENSSL"
 # Application Settings
 NODE_ENV="production"
 PORT=3000
-WEB_EXTERNAL_PORT=3000
+WEB_EXTERNAL_PORT=4332
+AGENT_EXTERNAL_PORT=4331
 DB_EXTERNAL_PORT=5434
 
 # Monitoring Configuration
@@ -225,10 +226,25 @@ NETWORK_CHECK_INTERVAL=45
 
 **🔒 Security Note**: Always generate a new JWT secret with `openssl rand -base64 64` and use strong database passwords in production. Change the default admin credentials immediately after first login.
 
+### 🌐 Port Configuration
+
+ServerDash uses the following ports by default:
+
+| Service | Port | Description |
+|---------|------|-------------|
+| **Web Dashboard** | `4332` | Main web interface for ServerDash |
+| **Monitoring Agent** | `4331` | Internal monitoring agent API |
+| **Database** | `5434` | PostgreSQL database (external access) |
+| **Uptime Monitor** | `internal` | Standalone uptime monitoring service |
+
+- **Web Interface**: Access at http://localhost:4332
+- **Agent API**: Available at http://localhost:4331 (for advanced users/integrations)
+- **Database**: PostgreSQL accessible on localhost:5434
+
 ## 🎯 Usage
 
 ### Initial Login and Setup
-1. **First Access**: Navigate to http://localhost:3000
+1. **First Access**: Navigate to http://localhost:4332
 2. **Default Login**: Use `admin@example.com` / `admin` 
 3. **🚨 Critical**: Immediately change credentials in Settings → User Management
 4. **Configure**: Set up your monitoring preferences and notification channels

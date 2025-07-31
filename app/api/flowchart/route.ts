@@ -37,8 +37,7 @@ interface Server {
 interface Application {
   id: number;
   name: string;
-  localURL: string;
-  serverId: number;
+  status: string;
 }
 
 const NODE_WIDTH = 220;
@@ -60,10 +59,10 @@ export async function GET() {
     const [servers, applications] = await Promise.all([
       prisma.server.findMany({
         orderBy: { id: "asc" },
-      }) as Promise<Server[]>,
+      }),
       prisma.application.findMany({
-        orderBy: { serverId: "asc" },
-      }) as Promise<Application[]>,
+        orderBy: { id: "asc" },
+      }),
     ]);
 
     // Level 2: Physical Servers
@@ -106,15 +105,15 @@ export async function GET() {
       if (serverNode) {
         const serverX = serverNode.position.x;
         
-        // Services (left column)
+        // Services (left column) - showing first few applications as examples
         applications
-          .filter(app => app.serverId === server.id)
+          .slice(0, 3) // Show max 3 applications per server as example
           .forEach((app, appIndex) => {
             serviceNodes.push({
               id: `service-${app.id}`,
               type: "service",
               data: {
-                label: `${app.name}\n${app.localURL}`,
+                label: `${app.name}\n${app.status}`,
                 ...app,
               },
               position: {
@@ -141,7 +140,7 @@ export async function GET() {
         let currentY = START_Y + NODE_HEIGHT + VERTICAL_SPACING;
         
         hostVMs.forEach(vm => {
-          const appCount = applications.filter(app => app.serverId === vm.id).length;
+          const appCount = Math.min(2, applications.length); // Show max 2 apps per VM
           
           vmNodes.push({
             id: `vm-${vm.id}`,
@@ -186,13 +185,13 @@ export async function GET() {
     vmNodes.forEach((vm) => {
       const vmX = vm.position.x;
       applications
-        .filter(app => app.serverId === vm.data.id)
+        .slice(0, 2) // Show max 2 applications per VM as example
         .forEach((app, appIndex) => {
           vmAppNodes.push({
             id: `vm-app-${app.id}`,
             type: "application",
             data: {
-              label: `${app.name}\n${app.localURL}`,
+              label: `${app.name}\n${app.status}`,
               ...app,
             },
             position: {

@@ -152,7 +152,7 @@ export function GlancesMonitorWidget() {
               <Server className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
               <p className="text-muted-foreground">No monitored servers found</p>
               <p className="text-sm text-muted-foreground mt-2">
-                Servers need "Monitoring = true" to appear here
+                Servers need &ldquo;Monitoring = true&rdquo; to appear here
               </p>
             </div>
             
@@ -194,7 +194,7 @@ export function GlancesMonitorWidget() {
                      <p>• <strong>Servers with monitoring enabled: {allServers.filter(s => s.monitoring).length}</strong></p>
                      <p>• Both physical + monitoring: {allServers.filter(s => s.host && s.monitoring).length}</p>
                      <p className="text-xs text-muted-foreground mt-2">
-                       All servers with "monitoring=true" will be displayed (physical and virtual)
+                       All servers with &ldquo;monitoring=true&rdquo; will be displayed (physical and virtual)
                      </p>
                    </div>
                 </div>

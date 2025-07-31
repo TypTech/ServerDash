@@ -92,6 +92,8 @@ export function Applications() {
     { value: "productivity", label: t('Applications.Categories.Productivity') },
     { value: "networking", label: t('Applications.Categories.Networking') },
     { value: "security", label: t('Applications.Categories.Security') },
+    { value: "storage", label: "Storage" },
+    { value: "messaging", label: "Messaging" },
     { value: "other", label: t('Applications.Categories.Other') }
   ]
 
@@ -588,7 +590,7 @@ export function Applications() {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Remove Application</AlertDialogTitle>
                         <AlertDialogDescription>
-                          This will stop and remove the container for "{application.name}". This action cannot be undone.
+                          This will stop and remove the container for &ldquo;{application.name}&rdquo;. This action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>

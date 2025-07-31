@@ -1,6 +1,6 @@
 # =============================================================================
 # ServerDash Environment Configuration Template
-# Copy this file to .env.local and customize for your environment
+# Copy this file to .env and customize for your environment
 # =============================================================================
 
 # =============================================================================
@@ -23,8 +23,8 @@ JWT_SECRET="CHANGE_THIS_TO_A_SECURE_RANDOM_STRING_GENERATE_WITH_OPENSSL"
 # Application environment
 NODE_ENV="production"
 
-# Application port (default: 3000)
-PORT=3000
+# Application port (default: 4331)
+PORT=4331
 
 # =============================================================================
 # DATABASE CREDENTIALS (used by Docker Compose)
@@ -67,7 +67,7 @@ WEB_IMAGE_TAG=latest
 AGENT_IMAGE_TAG=latest
 
 # External port mappings
-WEB_EXTERNAL_PORT=3000
+WEB_EXTERNAL_PORT=4332
 DB_EXTERNAL_PORT=5434
 
 # =============================================================================

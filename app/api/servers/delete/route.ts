@@ -53,16 +53,7 @@ async function handleServerDelete(request: NextRequest) {
             return NextResponse.json({ error: "Server not found" }, { status: 404 });
         }
         
-        // Check if there are any applications associated with the server
-        const applications = await prisma.application.findMany({
-            where: { serverId: id }
-        });
-        
-        if (applications.length > 0) {
-            return NextResponse.json({ 
-                error: "Cannot delete server with associated applications. Please remove applications first." 
-            }, { status: 400 });
-        }
+        // Applications are not linked to servers in current schema, so no check needed
 
         // Check if this server has VMs
         const hostedVMs = await prisma.server.findMany({

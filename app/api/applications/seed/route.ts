@@ -276,6 +276,182 @@ const sampleApplications = [
     author: "Jakub Vrána",
     website: "https://www.adminer.org",
     documentation: "https://www.adminer.org/en/"
+  },
+  {
+    name: "GitLab",
+    description: "Complete DevOps platform with Git repository management, CI/CD, and project collaboration tools.",
+    icon: "🦊",
+    category: "development",
+    dockerImage: "gitlab/gitlab-ce",
+    ports: JSON.stringify({ "8090": "80", "8443": "443", "2222": "22" }),
+    environment: JSON.stringify({
+      "GITLAB_OMNIBUS_CONFIG": "external_url 'http://localhost:8090'"
+    }),
+    volumes: JSON.stringify({ 
+      "/opt/serverdash/gitlab/config": "/etc/gitlab",
+      "/opt/serverdash/gitlab/logs": "/var/log/gitlab",
+      "/opt/serverdash/gitlab/data": "/var/opt/gitlab"
+    }),
+    featured: true,
+    tags: "git, ci/cd, devops, repository, gitlab",
+    version: "latest",
+    author: "GitLab Inc.",
+    website: "https://gitlab.com",
+    documentation: "https://docs.gitlab.com/"
+  },
+  {
+    name: "Jenkins",
+    description: "Open source automation server for building, testing, and deploying code with extensive plugin ecosystem.",
+    icon: "👷",
+    category: "development",
+    dockerImage: "jenkins/jenkins",
+    ports: JSON.stringify({ "8091": "8080", "50000": "50000" }),
+    environment: JSON.stringify({
+      "JAVA_OPTS": "-Djenkins.install.runSetupWizard=false"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/jenkins": "/var/jenkins_home" }),
+    featured: true,
+    tags: "ci/cd, automation, jenkins, build, deployment",
+    version: "lts",
+    author: "Jenkins Community",
+    website: "https://jenkins.io",
+    documentation: "https://www.jenkins.io/doc/"
+  },
+  {
+    name: "Minio",
+    description: "High performance object storage server compatible with Amazon S3 APIs for modern data infrastructure.",
+    icon: "🪣",
+    category: "storage",
+    dockerImage: "minio/minio",
+    ports: JSON.stringify({ "9000": "9000", "9001": "9001" }),
+    environment: JSON.stringify({
+      "MINIO_ROOT_USER": "minioadmin",
+      "MINIO_ROOT_PASSWORD": "serverDash2024!"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/minio": "/data" }),
+    commands: JSON.stringify({ "args": "server /data --console-address ':9001'" }),
+    featured: true,
+    tags: "storage, s3, object storage, backup",
+    version: "latest",
+    author: "MinIO Inc.",
+    website: "https://min.io",
+    documentation: "https://docs.min.io/"
+  },
+  {
+    name: "Jupyter",
+    description: "Interactive computing environment for data science, machine learning, and research with notebook interface.",
+    icon: "📓",
+    category: "development",
+    dockerImage: "jupyter/scipy-notebook",
+    ports: JSON.stringify({ "8888": "8888" }),
+    environment: JSON.stringify({
+      "JUPYTER_ENABLE_LAB": "yes",
+      "JUPYTER_TOKEN": "serverDash2024!"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/jupyter": "/home/jovyan/work" }),
+    tags: "data science, python, notebook, machine learning",
+    version: "latest",
+    author: "Project Jupyter",
+    website: "https://jupyter.org",
+    documentation: "https://jupyter.readthedocs.io/"
+  },
+  {
+    name: "WordPress",
+    description: "Popular content management system for building websites and blogs with extensive theme and plugin support.",
+    icon: "📝",
+    category: "productivity",
+    dockerImage: "wordpress",
+    ports: JSON.stringify({ "8092": "80" }),
+    environment: JSON.stringify({
+      "WORDPRESS_DB_HOST": "db:3306",
+      "WORDPRESS_DB_USER": "wordpress",
+      "WORDPRESS_DB_PASSWORD": "serverDash2024!",
+      "WORDPRESS_DB_NAME": "wordpress"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/wordpress": "/var/www/html" }),
+    featured: true,
+    tags: "cms, blog, website, wordpress",
+    version: "latest",
+    author: "WordPress Foundation",
+    website: "https://wordpress.org",
+    documentation: "https://wordpress.org/support/"
+  },
+  {
+    name: "Drone CI",
+    description: "Container-native continuous integration platform with simple YAML configuration and Docker integration.",
+    icon: "🚁",
+    category: "development",
+    dockerImage: "drone/drone",
+    ports: JSON.stringify({ "8093": "80" }),
+    environment: JSON.stringify({
+      "DRONE_GITHUB_CLIENT_ID": "your-github-client-id",
+      "DRONE_GITHUB_CLIENT_SECRET": "your-github-client-secret",
+      "DRONE_RPC_SECRET": "serverDash2024!",
+      "DRONE_SERVER_HOST": "localhost:8093",
+      "DRONE_SERVER_PROTO": "http"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/drone": "/data" }),
+    tags: "ci/cd, drone, automation, docker",
+    version: "latest",
+    author: "Drone.io",
+    website: "https://drone.io",
+    documentation: "https://docs.drone.io/"
+  },
+  {
+    name: "RabbitMQ",
+    description: "Reliable message broker that supports multiple messaging protocols for distributed applications.",
+    icon: "🐰",
+    category: "messaging",
+    dockerImage: "rabbitmq",
+    ports: JSON.stringify({ "5672": "5672", "15672": "15672" }),
+    environment: JSON.stringify({
+      "RABBITMQ_DEFAULT_USER": "admin",
+      "RABBITMQ_DEFAULT_PASS": "serverDash2024!"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/rabbitmq": "/var/lib/rabbitmq" }),
+    tags: "message queue, messaging, amqp, rabbitmq",
+    version: "3-management",
+    author: "VMware Inc.",
+    website: "https://rabbitmq.com",
+    documentation: "https://rabbitmq.com/documentation.html"
+  },
+  {
+    name: "Keycloak",
+    description: "Open source identity and access management solution with single sign-on and multi-factor authentication.",
+    icon: "🔐",
+    category: "security",
+    dockerImage: "quay.io/keycloak/keycloak",
+    ports: JSON.stringify({ "8094": "8080" }),
+    environment: JSON.stringify({
+      "KEYCLOAK_ADMIN": "admin",
+      "KEYCLOAK_ADMIN_PASSWORD": "serverDash2024!"
+    }),
+    commands: JSON.stringify({ "args": "start-dev" }),
+    featured: true,
+    tags: "authentication, sso, security, identity management",
+    version: "latest",
+    author: "Red Hat Inc.",
+    website: "https://keycloak.org",
+    documentation: "https://keycloak.org/documentation"
+  },
+  {
+    name: "InfluxDB",
+    description: "Time series database designed for high-performance storage and retrieval of time-stamped data.",
+    icon: "📈",
+    category: "database",
+    dockerImage: "influxdb",
+    ports: JSON.stringify({ "8087": "8086" }),
+    environment: JSON.stringify({
+      "INFLUXDB_DB": "serverdash",
+      "INFLUXDB_ADMIN_USER": "admin",
+      "INFLUXDB_ADMIN_PASSWORD": "serverDash2024!"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/influxdb": "/var/lib/influxdb" }),
+    tags: "time series, database, monitoring, metrics",
+    version: "1.8",
+    author: "InfluxData Inc.",
+    website: "https://influxdata.com",
+    documentation: "https://docs.influxdata.com/"
   }
 ]
 

@@ -11,8 +11,8 @@ interface VirtualMachine {
   id: number
   name: string
   publicURL: string
-  localURL?: string
-  uptimecheckUrl?: string
+  localURL: string | null
+  uptimecheckUrl: string | null
   online: boolean
 }
 
@@ -183,11 +183,13 @@ export async function POST(request: NextRequest) {
       });
   
       return NextResponse.json({
-        virtualMachines: uptimeData,
-        intervals,
-        totalCount,
-        currentPage: page,
-        totalPages: Math.ceil(totalCount / itemsPerPage)
+        data: uptimeData,
+        pagination: {
+          currentPage: page,
+          totalPages: Math.ceil(totalCount / itemsPerPage),
+          totalItems: totalCount
+        },
+        intervals
       });
   
     } catch (error: any) {

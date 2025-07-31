@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.local
     ports:
-      - "${WEB_EXTERNAL_PORT:-3000}:3000"
+      - "${WEB_EXTERNAL_PORT:-4332}:3000"
     environment:
       - JWT_SECRET=${JWT_SECRET}
       - DATABASE_URL=${DATABASE_URL}
@@ -23,6 +23,9 @@ services:
       - DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD:-}
     env_file:
       - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +36,8 @@ services:
     build:
       context: ./agent
       dockerfile: Dockerfile.local
+    ports:
+      - "4331:8080"
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - SERVER_CHECK_INTERVAL=${SERVER_CHECK_INTERVAL:-30}
@@ -53,7 +58,8 @@ services:
       - ./standalone_uptime_monitor.js:/app/standalone_uptime_monitor.js:ro
       - ./package.json:/app/package.json:ro
       - ./package-lock.json:/app/package-lock.json:ro
-    command: sh -c "npm ci --only=production && node standalone_uptime_monitor.js"
+      - ./prisma:/app/prisma:ro
+    command: sh -c "npm ci --only=production && npx prisma generate && node standalone_uptime_monitor.js"
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - UPTIME_CHECK_INTERVAL=${UPTIME_CHECK_INTERVAL:-60}

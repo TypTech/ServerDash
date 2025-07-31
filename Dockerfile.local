@@ -29,7 +29,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.* ./
 
 # Install runtime dependencies
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl docker-cli
 
 EXPOSE 3000
 

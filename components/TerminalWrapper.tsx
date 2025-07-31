@@ -23,8 +23,8 @@ export function TerminalWrapper({ applicationId, applicationName, containerId, o
     // Dynamically import the WebTerminal component
     const loadTerminal = async () => {
       try {
-        const module = await import('./WebTerminal')
-        setWebTerminal(() => module.WebTerminal)
+        const terminalModule = await import('./WebTerminal')
+        setWebTerminal(() => terminalModule.WebTerminal)
         setLoading(false)
       } catch (err) {
         console.error('Failed to load terminal:', err)
