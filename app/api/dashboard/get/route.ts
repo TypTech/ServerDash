@@ -10,14 +10,18 @@ export async function POST(request: NextRequest) {
       networkDeviceCount,
       onlineServersCount,
       onlineVirtualMachinesCount,
-      onlineNetworkDevicesCount
+      onlineNetworkDevicesCount,
+      applicationCount,
+      runningApplicationsCount
     ] = await Promise.all([
       prisma.server.count(),
       prisma.virtual_machine.count(),
       prisma.network_device.count(),
       prisma.server.count({ where: { online: true } }),
       prisma.virtual_machine.count({ where: { online: true } }),
-      prisma.network_device.count({ where: { online: true } })
+      prisma.network_device.count({ where: { online: true } }),
+      (prisma as any).application.count({ where: { deployed: true } }),
+      (prisma as any).application.count({ where: { deployed: true, status: 'running' } })
     ])
 
     return NextResponse.json({
@@ -26,7 +30,9 @@ export async function POST(request: NextRequest) {
       networkDeviceCount,
       onlineServersCount,
       onlineVirtualMachinesCount,
-      onlineNetworkDevicesCount
+      onlineNetworkDevicesCount,
+      applicationCount,
+      runningApplicationsCount
     })
   } catch (error: unknown) {
     console.error("Dashboard API error:", error)

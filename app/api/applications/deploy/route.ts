@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { exec } from 'child_process'
 import { promisify } from 'util'
+import fs from 'fs'
+import path from 'path'
 
 const execAsync = promisify(exec)
 
@@ -24,8 +26,65 @@ interface DeploymentConfiguration {
   autoRemove: boolean
 }
 
+// Function to ensure host directories exist
+async function ensureDirectoriesExist(volumes: any[]) {
+  for (const volume of volumes) {
+    const hostPath = typeof volume === 'object' ? volume.hostPath : Object.keys(volume)[0]
+    
+    // Skip special Docker paths
+    if (hostPath === '/var/run/docker.sock' || hostPath.startsWith('portainer_') || hostPath.startsWith('/var/run/')) {
+      continue
+    }
+    
+    try {
+      // Create directory if it doesn't exist
+      const fullPath = path.resolve(hostPath)
+      if (!fs.existsSync(fullPath)) {
+        fs.mkdirSync(fullPath, { recursive: true, mode: 0o755 })
+        console.log(`Created directory: ${fullPath}`)
+      }
+    } catch (error) {
+      console.warn(`Could not create directory ${hostPath}:`, error)
+    }
+  }
+}
+
+// Function to check Docker availability
+async function checkDockerAvailable() {
+  try {
+    await execAsync('docker --version')
+    return true
+  } catch (error) {
+    throw new Error('Docker is not installed or not running. Please install Docker and ensure it is running.')
+  }
+}
+
+// Function to pull Docker image if needed
+async function ensureImageAvailable(dockerImage: string, version: string) {
+  const fullImageName = `${dockerImage}:${version}`
+  
+  try {
+    // Check if image exists locally
+    const { stdout } = await execAsync(`docker images ${fullImageName} --format "{{.Repository}}"`)
+    
+    if (!stdout.trim()) {
+      console.log(`Pulling Docker image: ${fullImageName}`)
+      await execAsync(`docker pull ${fullImageName}`)
+      console.log(`Successfully pulled image: ${fullImageName}`)
+    } else {
+      console.log(`Image ${fullImageName} already exists locally`)
+    }
+  } catch (error) {
+    console.warn(`Could not pull image ${fullImageName}:`, error)
+    throw new Error(`Failed to pull Docker image: ${fullImageName}. Please check if the image exists and you have internet connectivity.`)
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Check Docker availability first
+    await checkDockerAvailable()
+    
     const body = await request.json()
     
     // Check if this is new configuration format or legacy format
@@ -97,6 +156,12 @@ async function deployWithConfig(config: DeploymentConfiguration) {
   })
 
   try {
+    // Ensure Docker image is available
+    await ensureImageAvailable(application.dockerImage, application.version)
+    
+    // Ensure host directories exist
+    await ensureDirectoriesExist(config.volumes)
+    
     // Build Docker command with custom configuration
     const containerName = config.containerName || `serverdash-${application.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${applicationId}`
     
@@ -204,11 +269,17 @@ async function deployWithDefaults(applicationId: number, customPorts?: Record<st
   })
 
   try {
+    // Ensure Docker image is available
+    await ensureImageAvailable(application.dockerImage, application.version)
+    
     // Parse existing configuration
     const ports = customPorts || (application.ports ? JSON.parse(application.ports) : {})
     const environment = customEnvironment || (application.environment ? JSON.parse(application.environment) : {})
     const volumes = customVolumes || (application.volumes ? JSON.parse(application.volumes) : {})
     const commands = application.commands ? JSON.parse(application.commands) : {}
+
+    // Ensure host directories exist
+    await ensureDirectoriesExist([volumes])
 
     // Build Docker command
     const containerName = `serverdash-${application.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${applicationId}`

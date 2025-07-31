@@ -59,6 +59,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/dashboard",
     },
     {
+      title: t('Applications'),
+      icon: Package,
+      url: "/dashboard/applications",
+    },
+    {
       title: t('My Infrastructure'),
       url: "#",
       icon: Briefcase,
@@ -77,11 +82,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           title: t('NetworkDevices'),
           icon: Network,
           url: "/dashboard/network-devices",
-        },
-        {
-          title: t('Applications'),
-          icon: Package,
-          url: "/dashboard/applications",
         },
         {
           title: t('Uptime'),

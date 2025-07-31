@@ -18,6 +18,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 
 import { useTranslations } from "next-intl"
 import { GlancesMonitorWidget } from "@/components/glances-monitor-widget"
+import { ApplicationsWidget } from "@/components/applications-widget"
 
 interface StatsResponse {
   serverCount: number
@@ -26,6 +27,8 @@ interface StatsResponse {
   onlineVirtualMachinesCount: number
   networkDeviceCount: number
   onlineNetworkDevicesCount: number
+  applicationCount: number
+  runningApplicationsCount: number
 }
 
 export default function Dashboard() {
@@ -89,6 +92,9 @@ export default function Dashboard() {
             <div className="lg:col-span-2">
               <GlancesMonitorWidget />
             </div>
+
+            {/* Applications Widget */}
+            <ApplicationsWidget />
 
             <div className="modern-card">
               <div className="p-6">

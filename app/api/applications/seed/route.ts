@@ -8,7 +8,7 @@ const sampleApplications = [
     icon: "🌐",
     category: "networking",
     dockerImage: "nginx",
-    ports: JSON.stringify({ "80": "80", "443": "443" }),
+    ports: JSON.stringify({ "8080": "80", "8443": "443" }),
     environment: JSON.stringify({ "NGINX_HOST": "localhost" }),
     volumes: JSON.stringify({ "/var/www/html": "/usr/share/nginx/html" }),
     commands: JSON.stringify({ "args": "-g 'daemon off;'" }),
@@ -25,16 +25,16 @@ const sampleApplications = [
     icon: "🐘",
     category: "database",
     dockerImage: "postgres",
-    ports: JSON.stringify({ "5432": "5432" }),
+    ports: JSON.stringify({ "5433": "5432" }),
     environment: JSON.stringify({ 
       "POSTGRES_DB": "myapp", 
-      "POSTGRES_USER": "user", 
-      "POSTGRES_PASSWORD": "password" 
+      "POSTGRES_USER": "postgres", 
+      "POSTGRES_PASSWORD": "serverDash2024!" 
     }),
-    volumes: JSON.stringify({ "/var/lib/postgresql/data": "/var/lib/postgresql/data" }),
+    volumes: JSON.stringify({ "/var/lib/postgresql/serverdash": "/var/lib/postgresql/data" }),
     featured: true,
     tags: "database, sql, postgresql",
-    version: "15",
+    version: "15-alpine",
     author: "PostgreSQL Global Development Group",
     website: "https://postgresql.org",
     documentation: "https://www.postgresql.org/docs/"
@@ -45,13 +45,13 @@ const sampleApplications = [
     icon: "🔴",
     category: "database",
     dockerImage: "redis",
-    ports: JSON.stringify({ "6379": "6379" }),
-    environment: JSON.stringify({ "REDIS_PASSWORD": "your_password" }),
-    volumes: JSON.stringify({ "/data": "/data" }),
-    commands: JSON.stringify({ "args": "redis-server --requirepass your_password" }),
+    ports: JSON.stringify({ "6380": "6379" }),
+    environment: JSON.stringify({ "REDIS_PASSWORD": "serverDash2024!" }),
+    volumes: JSON.stringify({ "/opt/serverdash/redis": "/data" }),
+    commands: JSON.stringify({ "args": "redis-server --requirepass serverDash2024!" }),
     featured: true,
     tags: "cache, database, in-memory, nosql",
-    version: "alpine",
+    version: "7-alpine",
     author: "Redis Team",
     website: "https://redis.io",
     documentation: "https://redis.io/documentation"
@@ -62,10 +62,10 @@ const sampleApplications = [
     icon: "🟢",
     category: "development",
     dockerImage: "node",
-    ports: JSON.stringify({ "3000": "3000" }),
+    ports: JSON.stringify({ "3001": "3000" }),
     environment: JSON.stringify({ "NODE_ENV": "production" }),
-    volumes: JSON.stringify({ "/app": "/usr/src/app" }),
-    commands: JSON.stringify({ "args": "node index.js" }),
+    volumes: JSON.stringify({ "/opt/serverdash/nodejs": "/usr/src/app" }),
+    commands: JSON.stringify({ "args": "node -e 'console.log(\"Node.js container is running!\"); setInterval(() => {}, 1000)'" }),
     tags: "javascript, nodejs, runtime, development",
     version: "18-alpine",
     author: "Node.js Foundation",
@@ -78,14 +78,14 @@ const sampleApplications = [
     icon: "🍃",
     category: "database",
     dockerImage: "mongo",
-    ports: JSON.stringify({ "27017": "27017" }),
+    ports: JSON.stringify({ "27018": "27017" }),
     environment: JSON.stringify({ 
       "MONGO_INITDB_ROOT_USERNAME": "admin", 
-      "MONGO_INITDB_ROOT_PASSWORD": "password" 
+      "MONGO_INITDB_ROOT_PASSWORD": "serverDash2024!" 
     }),
-    volumes: JSON.stringify({ "/data/db": "/data/db" }),
+    volumes: JSON.stringify({ "/opt/serverdash/mongo": "/data/db" }),
     tags: "database, nosql, mongodb, document",
-    version: "latest",
+    version: "7",
     author: "MongoDB Inc.",
     website: "https://mongodb.com",
     documentation: "https://docs.mongodb.com/"
@@ -96,14 +96,13 @@ const sampleApplications = [
     icon: "📊",
     category: "monitoring",
     dockerImage: "grafana/grafana",
-    ports: JSON.stringify({ "3000": "3000" }),
+    ports: JSON.stringify({ "3002": "3000" }),
     environment: JSON.stringify({ 
-      "GF_SECURITY_ADMIN_PASSWORD": "admin",
+      "GF_SECURITY_ADMIN_PASSWORD": "serverDash2024!",
       "GF_SECURITY_ADMIN_USER": "admin"
     }),
     volumes: JSON.stringify({ 
-      "/var/lib/grafana": "/var/lib/grafana",
-      "/etc/grafana": "/etc/grafana"
+      "/opt/serverdash/grafana": "/var/lib/grafana"
     }),
     featured: true,
     tags: "monitoring, visualization, dashboard, metrics",
@@ -118,13 +117,12 @@ const sampleApplications = [
     icon: "🔥",
     category: "monitoring",
     dockerImage: "prom/prometheus",
-    ports: JSON.stringify({ "9090": "9090" }),
+    ports: JSON.stringify({ "9091": "9090" }),
     volumes: JSON.stringify({ 
-      "/prometheus": "/prometheus",
-      "/etc/prometheus": "/etc/prometheus"
+      "/opt/serverdash/prometheus": "/prometheus"
     }),
     commands: JSON.stringify({ 
-      "args": "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+      "args": "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --web.console.libraries=/etc/prometheus/console_libraries --web.console.templates=/etc/prometheus/consoles --web.enable-lifecycle"
     }),
     tags: "monitoring, metrics, alerting, prometheus",
     version: "latest",
@@ -138,10 +136,10 @@ const sampleApplications = [
     icon: "🪶",
     category: "networking",
     dockerImage: "httpd",
-    ports: JSON.stringify({ "80": "80" }),
-    volumes: JSON.stringify({ "/usr/local/apache2/htdocs": "/usr/local/apache2/htdocs" }),
+    ports: JSON.stringify({ "8081": "80" }),
+    volumes: JSON.stringify({ "/opt/serverdash/apache": "/usr/local/apache2/htdocs" }),
     tags: "web server, apache, http",
-    version: "alpine",
+    version: "2.4-alpine",
     author: "Apache Software Foundation",
     website: "https://httpd.apache.org",
     documentation: "https://httpd.apache.org/docs/"
@@ -152,14 +150,15 @@ const sampleApplications = [
     icon: "🔍",
     category: "database",
     dockerImage: "elasticsearch",
-    ports: JSON.stringify({ "9200": "9200", "9300": "9300" }),
+    ports: JSON.stringify({ "9201": "9200", "9301": "9300" }),
     environment: JSON.stringify({ 
       "discovery.type": "single-node",
-      "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+      "ES_JAVA_OPTS": "-Xms512m -Xmx512m",
+      "xpack.security.enabled": "false"
     }),
-    volumes: JSON.stringify({ "/usr/share/elasticsearch/data": "/usr/share/elasticsearch/data" }),
+    volumes: JSON.stringify({ "/opt/serverdash/elasticsearch": "/usr/share/elasticsearch/data" }),
     tags: "search, analytics, elasticsearch, lucene",
-    version: "8.11.0",
+    version: "8.11.3",
     author: "Elastic N.V.",
     website: "https://elastic.co",
     documentation: "https://www.elastic.co/guide/"
@@ -170,14 +169,14 @@ const sampleApplications = [
     icon: "☁️",
     category: "productivity",
     dockerImage: "nextcloud",
-    ports: JSON.stringify({ "80": "80" }),
+    ports: JSON.stringify({ "8082": "80" }),
     environment: JSON.stringify({ 
       "NEXTCLOUD_ADMIN_USER": "admin",
-      "NEXTCLOUD_ADMIN_PASSWORD": "admin123"
+      "NEXTCLOUD_ADMIN_PASSWORD": "serverDash2024!",
+      "NEXTCLOUD_TRUSTED_DOMAINS": "localhost"
     }),
     volumes: JSON.stringify({ 
-      "/var/www/html": "/var/www/html",
-      "/var/www/html/data": "/var/www/html/data"
+      "/opt/serverdash/nextcloud": "/var/www/html"
     }),
     featured: true,
     tags: "cloud, storage, collaboration, self-hosted",
@@ -192,10 +191,10 @@ const sampleApplications = [
     icon: "🐳",
     category: "development",
     dockerImage: "portainer/portainer-ce",
-    ports: JSON.stringify({ "9000": "9000" }),
+    ports: JSON.stringify({ "9001": "9000" }),
     volumes: JSON.stringify({ 
       "/var/run/docker.sock": "/var/run/docker.sock",
-      "portainer_data": "/data"
+      "/opt/serverdash/portainer": "/data"
     }),
     featured: true,
     tags: "docker, management, ui, containers",
@@ -210,19 +209,73 @@ const sampleApplications = [
     icon: "🚪",
     category: "networking",
     dockerImage: "traefik",
-    ports: JSON.stringify({ "80": "80", "443": "443", "8080": "8080" }),
+    ports: JSON.stringify({ "8083": "80", "8444": "443", "8084": "8080" }),
     volumes: JSON.stringify({ 
       "/var/run/docker.sock": "/var/run/docker.sock",
-      "/etc/traefik": "/etc/traefik"
+      "/opt/serverdash/traefik": "/etc/traefik"
     }),
     commands: JSON.stringify({ 
-      "args": "--api.insecure=true --providers.docker=true --providers.docker.exposedbydefault=false"
+      "args": "--api.insecure=true --providers.docker=true --providers.docker.exposedbydefault=false --entrypoints.web.address=:80 --entrypoints.websecure.address=:443"
     }),
     tags: "reverse proxy, load balancer, ssl, traefik",
     version: "latest",
     author: "Traefik Labs",
     website: "https://traefik.io",
     documentation: "https://doc.traefik.io/traefik/"
+  },
+  {
+    name: "phpMyAdmin",
+    description: "Web-based administration tool for MySQL and MariaDB databases with intuitive interface.",
+    icon: "🗄️",
+    category: "database",
+    dockerImage: "phpmyadmin/phpmyadmin",
+    ports: JSON.stringify({ "8085": "80" }),
+    environment: JSON.stringify({
+      "PMA_ARBITRARY": "1",
+      "PMA_HOST": "localhost",
+      "PMA_PORT": "3306"
+    }),
+    tags: "mysql, database, admin, web interface",
+    version: "latest",
+    author: "phpMyAdmin Team",
+    website: "https://www.phpmyadmin.net",
+    documentation: "https://docs.phpmyadmin.net/"
+  },
+  {
+    name: "MySQL",
+    description: "Popular open-source relational database management system known for speed and reliability.",
+    icon: "🐬",
+    category: "database",
+    dockerImage: "mysql",
+    ports: JSON.stringify({ "3307": "3306" }),
+    environment: JSON.stringify({
+      "MYSQL_ROOT_PASSWORD": "serverDash2024!",
+      "MYSQL_DATABASE": "serverdash",
+      "MYSQL_USER": "serverdash",
+      "MYSQL_PASSWORD": "serverDash2024!"
+    }),
+    volumes: JSON.stringify({ "/opt/serverdash/mysql": "/var/lib/mysql" }),
+    tags: "database, sql, mysql, relational",
+    version: "8.0",
+    author: "Oracle Corporation",
+    website: "https://mysql.com",
+    documentation: "https://dev.mysql.com/doc/"
+  },
+  {
+    name: "Adminer",
+    description: "Full-featured database management tool written in PHP. Single file, supports multiple databases.",
+    icon: "🔧",
+    category: "database",
+    dockerImage: "adminer",
+    ports: JSON.stringify({ "8086": "8080" }),
+    environment: JSON.stringify({
+      "ADMINER_DEFAULT_SERVER": "localhost"
+    }),
+    tags: "database, admin, mysql, postgresql, sqlite",
+    version: "latest",
+    author: "Jakub Vrána",
+    website: "https://www.adminer.org",
+    documentation: "https://www.adminer.org/en/"
   }
 ]
 
