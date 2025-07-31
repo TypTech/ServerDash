@@ -129,7 +129,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="gap-3">
-              <a href="https://github.com/serverdash/serverdash" target="_blank" rel="noreferrer noopener" className="transition-all hover:opacity-80">
+              <a href="https://github.com/typtech/serverdash" target="_blank" rel="noreferrer noopener" className="transition-all hover:opacity-80">
                 <div className="flex items-center justify-center rounded-lg overflow-hidden bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm">
                   <Image src="/logo.png" width={48} height={48} alt="ServerDash Logo" className="object-cover" />
                 </div>
