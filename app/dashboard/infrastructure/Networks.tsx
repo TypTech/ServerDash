@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Dashboard() {
-  const t = useTranslations();
+  const t = useTranslations('Network');
   const [nodes, setNodes] = useState<any[]>([]);
   const [edges, setEdges] = useState<any[]>([]);
 

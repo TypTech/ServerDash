@@ -70,7 +70,7 @@ interface GetServersResponse {
 }
 
 export default function ServerDetail() {
-  const t = useTranslations()
+  const t = useTranslations('Servers')
   const params = useParams()
   const serverId = params.server_id as string
   const [server, setServer] = useState<Server | null>(null)

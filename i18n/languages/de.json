@@ -416,6 +416,23 @@
             "English": "Englisch",
             "German": "Deutsch"
         },
+        "UpdateManager": {
+            "Title": "Update-Manager",
+            "Description": "ServerDash-Updates von GitHub-Releases pr\u00fcfen und verwalten",
+            "CurrentVersion": "Aktuelle Version",
+            "LatestVersion": "Neueste Version",
+            "Status": "Status",
+            "LastChecked": "Zuletzt gepr\u00fcft",
+            "UpToDate": "Aktuell",
+            "UpdateAvailable": "Update verf\u00fcgbar",
+            "CheckFailed": "Update-Pr\u00fcfung fehlgeschlagen",
+            "CheckForUpdates": "Nach Updates suchen",
+            "Checking": "Pr\u00fcfe...",
+            "ViewRelease": "Release anzeigen",
+            "NewRelease": "Neues Release",
+            "Published": "Ver\u00f6ffentlicht",
+            "PreRelease": "Vorabversion"
+        },
         "Notifications": {
             "Title": "Benachrichtigungen",
             "Description": "Erhalten Sie Warnungen bei Status\u00e4nderungen",

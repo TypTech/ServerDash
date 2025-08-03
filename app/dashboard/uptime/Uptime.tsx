@@ -104,7 +104,7 @@ interface PaginationData {
 }
 
 export default function Uptime() {
-  const t = useTranslations();
+  const t = useTranslations('Uptime');
   const [data, setData] = useState<UptimeData[]>([]);
   const [networkData, setNetworkData] = useState<NetworkDeviceUptimeData[]>([]);
   const [serverData, setServerData] = useState<ServerUptimeData[]>([]);

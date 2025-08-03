@@ -19,7 +19,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, Check, Palette, User, Bell, AtSign, Send, MessageSquare, Trash2, Play, Languages } from "lucide-react"
+import { AlertCircle, Check, Palette, User, Bell, AtSign, Send, MessageSquare, Trash2, Play, Languages, Download, RefreshCw, ExternalLink, Info } from "lucide-react"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { Textarea } from "@/components/ui/textarea"
@@ -46,8 +46,24 @@ interface NotificationResponse {
   notification_text_server?: string
 }
 
+interface UpdateResponse {
+  success: boolean
+  currentVersion: string
+  latestVersion: string
+  updateAvailable: boolean
+  releaseInfo: {
+    name: string
+    publishedAt: string
+    htmlUrl: string
+    body: string
+    isPrerelease: boolean
+  }
+  lastChecked: string
+  error?: string
+}
+
 export default function Settings() {
-  const t = useTranslations()
+  const t = useTranslations('Settings')
   const { theme, setTheme } = useTheme()
 
   const [email, setEmail] = useState<string>("")
@@ -88,6 +104,11 @@ export default function Settings() {
 
   const [notificationTextApplication, setNotificationTextApplication] = useState<string>("")
   const [notificationTextServer, setNotificationTextServer] = useState<string>("")
+
+  // Update manager state
+  const [updateInfo, setUpdateInfo] = useState<any>(null)
+  const [checkingForUpdates, setCheckingForUpdates] = useState<boolean>(false)
+  const [lastUpdateCheck, setLastUpdateCheck] = useState<string>("")
 
   const changeEmail = async () => {
     setEmailErrorVisible(false)
@@ -293,6 +314,32 @@ export default function Settings() {
     window.location.reload()
   }
 
+  const checkForUpdates = async () => {
+    setCheckingForUpdates(true)
+    try {
+      const response = await axios.get<UpdateResponse>("/api/system/check-version")
+      if (response.status === 200) {
+        setUpdateInfo(response.data)
+        setLastUpdateCheck(new Date().toLocaleString())
+        if (response.data.updateAvailable) {
+          toast.success(t('UpdateManager.UpdateAvailable'))
+        } else {
+          toast.success(t('UpdateManager.UpToDate'))
+        }
+      }
+    } catch (error: any) {
+      console.error("Failed to check for updates:", error)
+      toast.error(error.response?.data?.error || t('UpdateManager.CheckFailed'))
+    } finally {
+      setCheckingForUpdates(false)
+    }
+  }
+
+  // Check for updates on component mount
+  useEffect(() => {
+    checkForUpdates()
+  }, [])
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -470,6 +517,115 @@ export default function Settings() {
                       <SelectItem value="german">{t('Settings.LanguageSettings.German')}</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-2 border-muted/20 shadow-sm">
+              <CardHeader className="bg-muted/10 px-6 py-4 border-b">
+                <div className="flex items-center gap-2">
+                  <Download className="h-5 w-5 text-primary" />
+                  <h2 className="text-xl font-semibold">{t('UpdateManager.Title')}</h2>
+                </div>
+              </CardHeader>
+              <CardContent className="pb-6">
+                <div className="text-sm text-muted-foreground mb-6">
+                  {t('UpdateManager.Description')}
+                </div>
+
+                <div className="space-y-4">
+                  {updateInfo && (
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{t('UpdateManager.CurrentVersion')}:</span>
+                          <span className="font-medium">{updateInfo.currentVersion}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{t('UpdateManager.LatestVersion')}:</span>
+                          <span className="font-medium">{updateInfo.latestVersion}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{t('UpdateManager.Status')}:</span>
+                          <div className="flex items-center gap-2">
+                            {updateInfo.updateAvailable ? (
+                              <>
+                                <div className="h-2 w-2 bg-orange-500 rounded-full animate-pulse"></div>
+                                <span className="text-orange-600 font-medium">{t('UpdateManager.UpdateAvailable')}</span>
+                              </>
+                            ) : (
+                              <>
+                                <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                                <span className="text-green-600 font-medium">{t('UpdateManager.UpToDate')}</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        {lastUpdateCheck && (
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-muted-foreground">{t('UpdateManager.LastChecked')}:</span>
+                            <span className="font-medium text-xs">{lastUpdateCheck}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {updateInfo.updateAvailable && (
+                        <div className="space-y-3">
+                          <div className="p-4 bg-muted/10 rounded-lg border">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Info className="h-4 w-4 text-primary" />
+                              <span className="font-medium">{t('UpdateManager.NewRelease')}: {updateInfo.releaseInfo.name}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-3">
+                              {t('UpdateManager.Published')}: {new Date(updateInfo.releaseInfo.publishedAt).toLocaleDateString()}
+                            </p>
+                            {updateInfo.releaseInfo.isPrerelease && (
+                              <div className="mb-2">
+                                <span className="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-md">
+                                  {t('UpdateManager.PreRelease')}
+                                </span>
+                              </div>
+                            )}
+                            {updateInfo.releaseInfo.body && (
+                              <div className="text-xs text-muted-foreground max-h-20 overflow-y-auto">
+                                {updateInfo.releaseInfo.body.split('\n').slice(0, 3).join('\n')}
+                                {updateInfo.releaseInfo.body.split('\n').length > 3 && '...'}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3 pt-4">
+                    <Button 
+                      onClick={checkForUpdates} 
+                      disabled={checkingForUpdates}
+                      className="flex items-center gap-2"
+                    >
+                      <RefreshCw className={`h-4 w-4 ${checkingForUpdates ? 'animate-spin' : ''}`} />
+                      {checkingForUpdates ? t('UpdateManager.Checking') : t('UpdateManager.CheckForUpdates')}
+                    </Button>
+                    
+                    {updateInfo?.updateAvailable && (
+                      <Button 
+                        variant="outline" 
+                        onClick={() => window.open(updateInfo.releaseInfo.htmlUrl, '_blank')}
+                        className="flex items-center gap-2"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        {t('UpdateManager.ViewRelease')}
+                      </Button>
+                    )}
+                  </div>
+
+                  {!updateInfo && !checkingForUpdates && (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Download className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                      <p>Click "{t('UpdateManager.CheckForUpdates')}" to verify your version</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

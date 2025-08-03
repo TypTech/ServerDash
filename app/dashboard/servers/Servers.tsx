@@ -135,7 +135,7 @@ interface MonitoringData {
 }
 
 export default function Servers() {
-  const t = useTranslations()
+  const t = useTranslations('Servers')
   const [host, setHost] = useState<boolean>(false)
   const [hostServer, setHostServer] = useState<number>(0)
   const [name, setName] = useState<string>("")

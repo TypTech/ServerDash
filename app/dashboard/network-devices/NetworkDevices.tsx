@@ -136,7 +136,7 @@ interface MonitoringData {
 }
 
 export default function NetworkDevices() {
-  const t = useTranslations()
+  const t = useTranslations('NetworkDevices')
   const [devices, setDevices] = useState<NetworkDevice[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)

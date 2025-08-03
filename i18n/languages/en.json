@@ -479,6 +479,23 @@
         "English": "English",
         "German": "German"
       },
+      "UpdateManager": {
+        "Title": "Update Manager",
+        "Description": "Check for and manage ServerDash updates from GitHub releases",
+        "CurrentVersion": "Current Version",
+        "LatestVersion": "Latest Version",
+        "Status": "Status",
+        "LastChecked": "Last Checked",
+        "UpToDate": "Up to Date",
+        "UpdateAvailable": "Update Available",
+        "CheckFailed": "Failed to check for updates",
+        "CheckForUpdates": "Check for Updates",
+        "Checking": "Checking...",
+        "ViewRelease": "View Release",
+        "NewRelease": "New Release",
+        "Published": "Published",
+        "PreRelease": "Pre-release"
+      },
       "Notifications": {
         "Title": "Notifications",
         "Description": "Set up notifications to get instantly alerted when an application changes status.",
