@@ -275,7 +275,7 @@ export default function Uptime() {
       const newItemsPerPage = parseInt(value);
       
       if (isNaN(newItemsPerPage) || newItemsPerPage < 1) {
-        toast.error(t('Uptime.Messages.NumberValidation'));
+        toast.error(t('Messages.NumberValidation'));
         return;
       }
       
@@ -362,11 +362,11 @@ export default function Uptime() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Uptime.Breadcrumb.MyInfrastructure')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('Breadcrumb.MyInfrastructure')}</BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Uptime.Breadcrumb.Uptime')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('Breadcrumb.Uptime')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -376,7 +376,7 @@ export default function Uptime() {
         <div className="p-6">
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="text-3xl font-bold">{t('Uptime.Title')}</span>
+              <span className="text-3xl font-bold">{t('Title')}</span>
               {lastUpdated && (
                 <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                   <span>
@@ -511,13 +511,13 @@ export default function Uptime() {
                 disabled={isLoading || isNetworkLoading || isServerLoading}
               >
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={t('Uptime.TimeRange.Select')} />
+                  <SelectValue placeholder={t('TimeRange.Select')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">{t('Uptime.TimeRange.LastHour')}</SelectItem>
-                  <SelectItem value="2">{t('Uptime.TimeRange.LastDay')}</SelectItem>
-                  <SelectItem value="3">{t('Uptime.TimeRange.Last7Days')}</SelectItem>
-                  <SelectItem value="4">{t('Uptime.TimeRange.Last30Days')}</SelectItem>
+                  <SelectItem value="1">{t('TimeRange.LastHour')}</SelectItem>
+                  <SelectItem value="2">{t('TimeRange.LastDay')}</SelectItem>
+                  <SelectItem value="3">{t('TimeRange.Last7Days')}</SelectItem>
+                  <SelectItem value="4">{t('TimeRange.Last30Days')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -527,7 +527,7 @@ export default function Uptime() {
           {isServerLoading ? (
             <div className="pt-4 space-y-4">
               <h2 className="text-xl font-semibold text-foreground/80">Servers</h2>
-              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+              <div className="text-center py-8">{t('Messages.Loading')}</div>
             </div>
           ) : serverData.length === 0 ? (
             <div className="pt-4 space-y-4">
@@ -634,10 +634,10 @@ export default function Uptime() {
                                                 </p>
                                                 <p>
                                                   {entry.missing
-                                                    ? t('Uptime.Status.NoData')
+                                                    ? t('Status.NoData')
                                                     : entry.online
-                                                    ? t('Uptime.Status.Online')
-                                                    : t('Uptime.Status.Offline')}
+                                                    ? t('Status.Online')
+                                                    : t('Status.Offline')}
                                                 </p>
                                               </div>
                                               <Tooltip.Arrow className="fill-gray-900" />
@@ -664,7 +664,7 @@ export default function Uptime() {
           {isServerLoading ? (
             <div className="pt-8 space-y-4">
               <h2 className="text-xl font-semibold text-foreground/80">Virtual Machines</h2>
-              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+              <div className="text-center py-8">{t('Messages.Loading')}</div>
             </div>
           ) : (
             // Filter and show only Virtual Machines
@@ -747,10 +747,10 @@ export default function Uptime() {
                                             </p>
                                             <p>
                                               {entry.missing
-                                                ? t('Uptime.Status.NoData')
+                                                ? t('Status.NoData')
                                                 : entry.online
-                                                ? t('Uptime.Status.Online')
-                                                : t('Uptime.Status.Offline')}
+                                                ? t('Status.Online')
+                                                : t('Status.Offline')}
                                             </p>
                                           </div>
                                           <Tooltip.Arrow className="fill-gray-900" />
@@ -775,7 +775,7 @@ export default function Uptime() {
           {isNetworkLoading ? (
             <div className="pt-8 space-y-4">
               <h2 className="text-xl font-semibold text-foreground/80">Network Devices</h2>
-              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+              <div className="text-center py-8">{t('Messages.Loading')}</div>
             </div>
           ) : networkData.length === 0 ? (
             <div className="pt-8 space-y-4">
@@ -885,10 +885,10 @@ export default function Uptime() {
                                             </p>
                                             <p>
                                               {entry.missing
-                                                ? t('Uptime.Status.NoData')
+                                                ? t('Status.NoData')
                                                 : entry.online
-                                                ? t('Uptime.Status.Online')
-                                                : t('Uptime.Status.Offline')}
+                                                ? t('Status.Online')
+                                                : t('Status.Offline')}
                                             </p>
                                           </div>
                                           <Tooltip.Arrow className="fill-gray-900" />
@@ -913,7 +913,7 @@ export default function Uptime() {
           <div className="pt-8 space-y-4">
             <h2 className="text-xl font-semibold text-foreground/80">Virtual Machines</h2>
             {isLoading ? (
-              <div className="text-center py-8">{t('Uptime.Messages.Loading')}</div>
+              <div className="text-center py-8">{t('Messages.Loading')}</div>
             ) : data.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">No virtual machines found</div>
             ) : (
@@ -974,10 +974,10 @@ export default function Uptime() {
                                         </p>
                                         <p>
                                           {entry.missing
-                                            ? t('Uptime.Status.NoData')
+                                            ? t('Status.NoData')
                                             : entry.online
-                                            ? t('Uptime.Status.Online')
-                                            : t('Uptime.Status.Offline')}
+                                            ? t('Status.Online')
+                                            : t('Status.Offline')}
                                         </p>
                                       </div>
                                       <Tooltip.Arrow className="fill-gray-900" />
@@ -1003,12 +1003,12 @@ export default function Uptime() {
                 <div className="text-sm text-muted-foreground">
                   <span className="font-medium">Virtual Machines: </span>
                   {pagination.totalItems > 0 
-                    ? t('Uptime.Pagination.Showing', { 
+                    ? t('Pagination.Showing', { 
                         start: ((pagination.currentPage - 1) * itemsPerPage) + 1, 
                         end: Math.min(pagination.currentPage * itemsPerPage, pagination.totalItems), 
                         total: pagination.totalItems 
                       })
-                    : t('Uptime.Messages.NoItems')}
+                    : t('Messages.NoItems')}
                 </div>
               </div>
               <Pagination>
@@ -1050,12 +1050,12 @@ export default function Uptime() {
                 <div className="text-sm text-muted-foreground">
                   <span className="font-medium">Network Devices: </span>
                   {networkPagination.totalItems > 0 
-                    ? t('Uptime.Pagination.Showing', { 
+                    ? t('Pagination.Showing', { 
                         start: ((networkPagination.currentPage - 1) * itemsPerPage) + 1, 
                         end: Math.min(networkPagination.currentPage * itemsPerPage, networkPagination.totalItems), 
                         total: networkPagination.totalItems 
                       })
-                    : t('Uptime.Messages.NoItems')}
+                    : t('Messages.NoItems')}
                 </div>
               </div>
               <Pagination>
@@ -1097,12 +1097,12 @@ export default function Uptime() {
                 <div className="text-sm text-muted-foreground">
                   <span className="font-medium">Servers: </span>
                   {serverPagination.totalItems > 0 
-                    ? t('Uptime.Pagination.Showing', { 
+                    ? t('Pagination.Showing', { 
                         start: ((serverPagination.currentPage - 1) * itemsPerPage) + 1, 
                         end: Math.min(serverPagination.currentPage * itemsPerPage, serverPagination.totalItems), 
                         total: serverPagination.totalItems 
                       })
-                    : t('Uptime.Messages.NoItems')}
+                    : t('Messages.NoItems')}
                 </div>
               </div>
               <Pagination>

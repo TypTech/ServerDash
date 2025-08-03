@@ -1,383 +1,384 @@
 {
-    "Common": {
-      "ChangeView": "Change View",
-      "ListView": "List View",
-      "GridView": "Grid View",
-      "optional": "optional",
-      "cancel": "Cancel",
-      "add": "Add",
-      "since": "since {date}",
-      "notSet": "Not set",
-      "noData": "No data",
-      "Loading": "Loading...",
-      "Refresh": "Refresh",
-      "Save": "Save",
-      "Server": {
-        "CPU": "CPU",
-        "GPU": "GPU",
-        "RAM": "RAM",
-        "Disk": "Disk",
-        "OS": "OS",
-        "IP": "IP",
-        "Host": "Host",
-        "Temperature": "Temperature",
-        "Usage": "Usage",
-        "Tabs": {
-            "General": "General",
-            "Hardware": "Hardware",
-            "Host": "Host",
-            "Monitoring": "Monitoring"
-        }
-      },
-      "ItemsPerPage": {
-        "items": "items",
-        "item": "item",
-        "4": "4 items",
-        "5": "5 items",
-        "6": "6 items",
-        "10": "10 items",
-        "15": "15 items",
-        "20": "20 items",
-        "25": "25 items",
-        "Custom": "Custom (1-100)"
-      }
-    },
+  "Common": {
+    "ChangeView": "Change View",
+    "ListView": "List View",
+    "GridView": "Grid View",
+    "optional": "optional",
+    "cancel": "Cancel",
+    "add": "Add",
+    "since": "since {date}",
+    "notSet": "Not set",
+    "noData": "No data",
+    "Loading": "Loading...",
+    "Refresh": "Refresh",
+    "Save": "Save",
+    "Error": "Error",
     "Server": {
-      "Hardware": "Hardware",
-      "Network": "Network",
-      "CurrentUsage": "Current Usage",
-      "UsageHistory": "Usage History",
-      "ResourceUsageHistory": "Resource Usage History",
-      "TimeRange": {
-        "Select": "Select time range",
-        "LastHour": "Last Hour",
-        "Last24Hours": "Last 24 Hours",
-        "Last7Days": "Last 7 Days",
-        "Last30Days": "Last 30 Days"
-      },
-      "VirtualMachines": "Virtual Machines",
-      "VirtualMachinesDescription": "Virtual machines hosted on this server",
-      "HardwareInformation": "Hardware Information",
-      "ManagementURL": "Management URL",
-      "VM": "VM",
-      "Physical": "Physical",
-      "HostedOn": "Hosted on",
-      "NotFound": "Server not found",
-      "NotFoundDescription": "The server you are looking for could not be found."
-    },
-    "Sidebar": {
-      "Main Navigation": "Main Navigation",
-      "Dashboard": "Dashboard",
-      "My Infrastructure": "My Infrastructure",
-      "Servers": "Servers",
-      "VirtualMachines": "Virtual Machines",
-      "NetworkDevices": "Network Devices",
-      "Applications": "Applications",
-      "Uptime": "Uptime",
-      "Infrastructure": "Infrastructure",
-      "SystemMonitoring": "System Monitoring",
-      "Settings": "Settings",
-      "Logout": "Logout"
-    },
-    "Home": {
-      "TitleUnder": "Dashboard to manage your entire server infrastructure",
-      "LoginCardTitle": "Login",
-      "LoginCardDescription": "Enter your credentials to continue",
-      "AuthenticationError": "Authentication Error",
-      "Email": "Email",
-      "Password": "Password",
-      "SigninButton": "Sign in",
-      "SigninButtonSigningIn": "Signing in..."
-    },
-    "Dashboard": {
-      "Title": "Dashboard",
-      "Servers": {
-        "Title": "Servers",
-        "Description": "Physical and virtual servers overview",
-        "PhysicalServers": "Physical Servers",
-        "VirtualServers": "Virtual Servers",
-        "ManageServers": "Manage Servers",
-        "ManageInfrastructure": "Manage Infrastructure"
-      },
-      "VirtualMachines": {
-        "Title": "Virtual Machines",
-        "Description": "Manage your deployed virtual machines",
-        "OnlineVirtualMachines": "Running Virtual Machines",
-        "ViewAllVirtualMachines": "View all virtual machines"
-      },
-      "Uptime": {
-        "Title": "Uptime",
-        "Description": "Monitor your service availability",
-        "OnlineVirtualMachines": "Online Virtual Machines",
-        "ViewUptimeMetrics": "View uptime metrics"
-      },
-      "Network": {
-        "Title": "Network",
-        "Description": "Manage network configuration",
-        "ActiveConnections": "Active Connections",
-        "NetworkDevices": "Network Devices",
-        "ViewNetworkDetails": "View network details"
-      },
-      "GlancesMonitor": {
-        "Title": "System Monitor",
-        "Description": "Real-time system monitoring with Glances",
-        "NoServers": "No servers with Glances monitoring found",
-        "AddServers": "Add physical servers with Glances monitoring to see system metrics",
-        "LastUpdated": "Last updated",
-        "Online": "Online",
-        "Offline": "Offline",
-        "CPU": "CPU",
-        "RAM": "RAM",
-        "Disk": "Disk",
-        "GPU": "GPU",
-        "Temperature": "Temperature",
-        "Uptime": "Uptime",
-        "AverageUsage": "Average Usage",
-        "LoadingData": "Loading monitoring data...",
-        "ErrorLoadingData": "Failed to load monitoring data"
-      },
-      "Applications": {
-        "Title": "Applications",
-        "Description": "Deploy and manage Docker containers",
-        "Store": "Application Store",
-        "StoreDescription": "Browse and deploy applications from our container store",
-        "MyApplications": "My Applications",
-        "MyApplicationsDescription": "Manage your deployed applications",
-        "Categories": {
-          "All": "All",
-          "Development": "Development",
-          "Database": "Database",
-          "Monitoring": "Monitoring",
-          "Productivity": "Productivity",
-          "Networking": "Networking",
-          "Security": "Security",
-          "Other": "Other"
-        },
-        "Deploy": "Deploy",
-        "Deploying": "Deploying...",
-        "Stop": "Stop",
-        "Stopping": "Stopping...",
-        "Start": "Start",
-        "Starting": "Starting...",
-        "Remove": "Remove",
-        "Removing": "Removing...",
-        "Status": {
-          "Running": "Running",
-          "Stopped": "Stopped",
-          "Error": "Error",
-          "Deploying": "Deploying"
-        },
-        "NoApplications": "No applications deployed",
-        "NoApplicationsDescription": "Deploy applications from the store to get started",
-        "SearchPlaceholder": "Search applications...",
-        "Featured": "Featured",
-        "Version": "Version",
-        "Author": "Author",
-        "Website": "Website",
-        "Documentation": "Documentation",
-        "Ports": "Ports",
-        "Environment": "Environment Variables",
-        "Volumes": "Volumes",
-        "DeploymentSuccess": "Application deployed successfully",
-        "DeploymentError": "Failed to deploy application",
-        "StopSuccess": "Application stopped successfully",
-        "StopError": "Failed to stop application",
-        "StartSuccess": "Application started successfully",
-        "StartError": "Failed to start application",
-        "RemoveSuccess": "Application removed successfully",
-        "RemoveError": "Failed to remove application",
-        "WebDashboard": "Web Dashboard",
-        "Terminal": "Terminal",
-        "Logs": "Logs",
-        "AccessInfo": "Access Information",
-        "TerminalCommand": "Terminal Command",
-        "CopyCommand": "Copy Command",
-        "LoginCredentials": "Login Credentials"
-      }
-    },
-    "NetworkDevices": {
-      "Title": "Network Devices",
-      "YourDevices": "Your Network Devices",
-      "MyInfrastructure": "My Infrastructure",
+      "CPU": "CPU",
+      "GPU": "GPU",
+      "RAM": "RAM",
+      "Disk": "Disk",
+      "OS": "OS",
+      "IP": "IP",
+      "Host": "Host",
+      "Temperature": "Temperature",
+      "Usage": "Usage",
       "Tabs": {
-        "All": "All Devices",
-        "Switch": "Switches",
-        "AccessPoint": "Access Points",
-        "Repeater": "Repeaters",
-        "Router": "Routers",
-        "Firewall": "Firewalls",
-        "Other": "Other"
-      },
-      "Add": {
-        "Title": "Add Network Device",
-        "DeviceName": "Device Name",
-        "DeviceType": "Device Type",
-        "Brand": "Brand",
-        "Model": "Model",
-        "Location": "Location",
-        "Description": "Description",
-        "IPAddress": "IP Address",
-        "MACAddress": "MAC Address",
-        "ManagementURL": "Management URL",
-        "PortCount": "Port Count",
-        "PowerConsumption": "Power Consumption (W)",
-        "WirelessStandard": "Wireless Standard",
-        "Frequency": "Frequency",
-        "FirmwareVersion": "Firmware Version"
-      },
-      "Messages": {
-        "AddSuccess": "Network device added successfully",
-        "EditSuccess": "Network device updated successfully",
-        "DeleteSuccess": "Network device deleted successfully",
-        "GetError": "Failed to fetch network devices",
-        "EditError": "Failed to update network device",
-        "DeleteError": "Failed to delete network device"
-      },
-      "Search": {
-        "Placeholder": "Search network devices..."
+        "General": "General",
+        "Hardware": "Hardware",
+        "Host": "Host",
+        "Monitoring": "Monitoring"
       }
     },
+    "ItemsPerPage": {
+      "items": "items",
+      "item": "item",
+      "4": "4 items",
+      "5": "5 items",
+      "6": "6 items",
+      "10": "10 items",
+      "15": "15 items",
+      "20": "20 items",
+      "25": "25 items",
+      "Custom": "Custom (1-100)"
+    }
+  },
+  "Server": {
+    "Hardware": "Hardware",
+    "Network": "Network",
+    "CurrentUsage": "Current Usage",
+    "UsageHistory": "Usage History",
+    "ResourceUsageHistory": "Resource Usage History",
+    "TimeRange": {
+      "Select": "Select time range",
+      "LastHour": "Last Hour",
+      "Last24Hours": "Last 24 Hours",
+      "Last7Days": "Last 7 Days",
+      "Last30Days": "Last 30 Days"
+    },
+    "VirtualMachines": "Virtual Machines",
+    "VirtualMachinesDescription": "Virtual machines hosted on this server",
+    "HardwareInformation": "Hardware Information",
+    "ManagementURL": "Management URL",
+    "VM": "VM",
+    "Physical": "Physical",
+    "HostedOn": "Hosted on",
+    "NotFound": "Server not found",
+    "NotFoundDescription": "The server you are looking for could not be found."
+  },
+  "Sidebar": {
+    "Main Navigation": "Main Navigation",
+    "Dashboard": "Dashboard",
+    "My Infrastructure": "My Infrastructure",
+    "Servers": "Servers",
+    "VirtualMachines": "Virtual Machines",
+    "NetworkDevices": "Network Devices",
+    "Applications": "Applications",
+    "Uptime": "Uptime",
+    "Infrastructure": "Infrastructure",
+    "SystemMonitoring": "System Monitoring",
+    "Settings": "Settings",
+    "Logout": "Logout"
+  },
+  "Home": {
+    "TitleUnder": "Dashboard to manage your entire server infrastructure",
+    "LoginCardTitle": "Login",
+    "LoginCardDescription": "Enter your credentials to continue",
+    "AuthenticationError": "Authentication Error",
+    "Email": "Email",
+    "Password": "Password",
+    "SigninButton": "Sign in",
+    "SigninButtonSigningIn": "Signing in..."
+  },
+  "Dashboard": {
+    "Title": "Dashboard",
     "Servers": {
       "Title": "Servers",
-      "MyInfrastructure": "My Infrastructure",
-      "YourServers": "Your Servers",
-      "Tabs": {
-        "All": "All Servers",
-        "Physical": "Physical Servers",
-        "Virtual": "Virtual Machines"
-      },
-      "AddServer": {
-        "Title": "Add a server",
-        "General": {
-          "Title": "Add a server",
-          "CopyServer": "Copy server",
-          "Icon": "Icon",
-          "IconPlaceholder": "Select an icon",
-          "IconSearchPlaceholder": "Search icons...",
-          "Preview": "Preview",
-          "Name": "Name",
-          "OperatingSystem": "Operating System",
-          "OperatingSystemPlaceholder": "Select OS",
-          "IPAdress": "IP Adress",
-          "ManagementURL": "Management URL",
-          "ManagementURLTooltip": "Link to a web interface (e.g. Proxmox or Portainer) with which the server can be managed"
-        },
-        "Host": {
-          "MarkAsHostServer": "Mark as host server",
-          "SelectHostServer": "Select a host server",
-          "SelectHostServerPlaceholder": "Select a host server",
-          "NoHostServer": "No host server"
-        },
-        "Monitoring": {
-          "Enable": "Enable monitoring",
-          "URL": "Monitoring URL",
-          "SetupTitle": "Required Server Setup",
-          "SetupDescription": "To enable monitoring, you need to install Glances on your server. Here's an example Docker Compose configuration:"
-        }
-      },
-      "ServerCard": {
-        "HardwareInformation": "Hardware Information",
-        "ViewDetails": "View Details",
-        "OpenManagementURL": "Open Management URL",
-        "EditServer": "Edit Server",
-        "DeleteServer": "Delete Server",
-        "HostedVMs": "Hosted VMs",
-        "ResourceUsage": "Resource Usage",
-        "DeleteConfirmation": {
-          "Title": "Delete {name}",
-          "Description": "Are you sure you want to delete this server? This action cannot be undone.",
-          "Cancel": "Cancel",
-          "Delete": "Delete"
-        }
-      },
-      "EditServer": {
-        "Title": "Edit {name}",
-        "Save": "Save",
-        "General": {
-          "Title": "General",
-          "Icon": "Icon",
-          "Name": "Name",
-          "OperatingSystem": "Operating System",
-          "IPAddress": "IP Address",
-          "ManagementURL": "Management URL"
-        },
-        "Hardware": {
-          "Title": "Hardware",
-          "CPU": "CPU",
-          "GPU": "GPU",
-          "RAM": "RAM",
-          "Disk": "Disk"
-        },
-        "Host": {
-          "Title": "Host",
-          "MarkAsHostServer": "Mark as host server",
-          "CannotDisableHost": "Cannot be disabled while hosting VMs",
-          "SelectHostServer": "Select a host server"
-        },
-        "Monitoring": {
-          "Title": "Monitoring",
-          "Enable": "Enable monitoring",
-          "URL": "Monitoring URL",
-          "SetupTitle": "Required Server Setup",
-          "SetupDescription": "To enable monitoring, you need to install Glances on your server. Here's an example Docker Compose configuration:"
-        }
-      },
-      "Pagination": {
-        "Showing": "Showing {start}-{end} of {total} servers",
-        "NoServers": "No servers found"
-      },
-      "Search": {
-        "Placeholder": "Type to search..."
-      },
-      "Setup": {
-        "Title": "Add New Infrastructure",
-        "Description": "Choose what type of infrastructure you want to add",
-        "PhysicalServer": "Physical Server",
-        "PhysicalDescription": "Add a dedicated physical server",
-        "VirtualMachine": "Virtual Machine",
-        "VirtualMachineDescription": "Add a new virtual machine or service"
-      }
+      "Description": "Physical and virtual servers overview",
+      "PhysicalServers": "Physical Servers",
+      "VirtualServers": "Virtual Servers",
+      "ManageServers": "Manage Servers",
+      "ManageInfrastructure": "Manage Infrastructure"
     },
     "VirtualMachines": {
-      "Title": "Your Virtual Machines",
-      "Breadcrumb": {
-        "MyInfrastructure": "My Infrastructure",
-        "VirtualMachines": "Virtual Machines"
+      "Title": "Virtual Machines",
+      "Description": "Manage your deployed virtual machines",
+      "OnlineVirtualMachines": "Running Virtual Machines",
+      "ViewAllVirtualMachines": "View all virtual machines"
+    },
+    "Uptime": {
+      "Title": "Uptime",
+      "Description": "Monitor your service availability",
+      "OnlineVirtualMachines": "Online Virtual Machines",
+      "ViewUptimeMetrics": "View uptime metrics"
+    },
+    "Network": {
+      "Title": "Network",
+      "Description": "Manage network configuration",
+      "ActiveConnections": "Active Connections",
+      "NetworkDevices": "Network Devices",
+      "ViewNetworkDetails": "View network details"
+    },
+    "GlancesMonitor": {
+      "Title": "System Monitor",
+      "Description": "Real-time system monitoring with Glances",
+      "NoServers": "No servers with Glances monitoring found",
+      "AddServers": "Add physical servers with Glances monitoring to see system metrics",
+      "LastUpdated": "Last updated",
+      "Online": "Online",
+      "Offline": "Offline",
+      "CPU": "CPU",
+      "RAM": "RAM",
+      "Disk": "Disk",
+      "GPU": "GPU",
+      "Temperature": "Temperature",
+      "Uptime": "Uptime",
+      "AverageUsage": "Average Usage",
+      "LoadingData": "Loading monitoring data...",
+      "ErrorLoadingData": "Failed to load monitoring data"
+    },
+    "Applications": {
+      "Title": "Applications",
+      "Description": "Deploy and manage Docker containers",
+      "Store": "Application Store",
+      "StoreDescription": "Browse and deploy applications from our container store",
+      "MyApplications": "My Applications",
+      "MyApplicationsDescription": "Manage your deployed applications",
+      "Categories": {
+        "All": "All",
+        "Development": "Development",
+        "Database": "Database",
+        "Monitoring": "Monitoring",
+        "Productivity": "Productivity",
+        "Networking": "Networking",
+        "Security": "Security",
+        "Other": "Other"
       },
-      "Views": {
-        "ChangeView": "Change view",
-        "ListView": "List View",
-        "GridView": "Grid View",
-        "CompactView": "Compact View"
+      "Deploy": "Deploy",
+      "Deploying": "Deploying...",
+      "Stop": "Stop",
+      "Stopping": "Stopping...",
+      "Start": "Start",
+      "Starting": "Starting...",
+      "Remove": "Remove",
+      "Removing": "Removing...",
+      "Status": {
+        "Running": "Running",
+        "Stopped": "Stopped",
+        "Error": "Error",
+        "Deploying": "Deploying"
       },
-      "Add": {
-        "Title": "Add a virtual machine",
+      "NoApplications": "No applications deployed",
+      "NoApplicationsDescription": "Deploy applications from the store to get started",
+      "SearchPlaceholder": "Search applications...",
+      "Featured": "Featured",
+      "Version": "Version",
+      "Author": "Author",
+      "Website": "Website",
+      "Documentation": "Documentation",
+      "Ports": "Ports",
+      "Environment": "Environment Variables",
+      "Volumes": "Volumes",
+      "DeploymentSuccess": "Application deployed successfully",
+      "DeploymentError": "Failed to deploy application",
+      "StopSuccess": "Application stopped successfully",
+      "StopError": "Failed to stop application",
+      "StartSuccess": "Application started successfully",
+      "StartError": "Failed to start application",
+      "RemoveSuccess": "Application removed successfully",
+      "RemoveError": "Failed to remove application",
+      "WebDashboard": "Web Dashboard",
+      "Terminal": "Terminal",
+      "Logs": "Logs",
+      "AccessInfo": "Access Information",
+      "TerminalCommand": "Terminal Command",
+      "CopyCommand": "Copy Command",
+      "LoginCredentials": "Login Credentials"
+    }
+  },
+  "NetworkDevices": {
+    "Title": "Network Devices",
+    "YourDevices": "Your Network Devices",
+    "MyInfrastructure": "My Infrastructure",
+    "Tabs": {
+      "All": "All Devices",
+      "Switch": "Switches",
+      "AccessPoint": "Access Points",
+      "Repeater": "Repeaters",
+      "Router": "Routers",
+      "Firewall": "Firewalls",
+      "Other": "Other"
+    },
+    "Add": {
+      "Title": "Add Network Device",
+      "DeviceName": "Device Name",
+      "DeviceType": "Device Type",
+      "Brand": "Brand",
+      "Model": "Model",
+      "Location": "Location",
+      "Description": "Description",
+      "IPAddress": "IP Address",
+      "MACAddress": "MAC Address",
+      "ManagementURL": "Management URL",
+      "PortCount": "Port Count",
+      "PowerConsumption": "Power Consumption (W)",
+      "WirelessStandard": "Wireless Standard",
+      "Frequency": "Frequency",
+      "FirmwareVersion": "Firmware Version"
+    },
+    "Messages": {
+      "AddSuccess": "Network device added successfully",
+      "EditSuccess": "Network device updated successfully",
+      "DeleteSuccess": "Network device deleted successfully",
+      "GetError": "Failed to fetch network devices",
+      "EditError": "Failed to update network device",
+      "DeleteError": "Failed to delete network device"
+    },
+    "Search": {
+      "Placeholder": "Search network devices..."
+    }
+  },
+  "Servers": {
+    "Title": "Servers",
+    "MyInfrastructure": "My Infrastructure",
+    "YourServers": "Your Servers",
+    "Tabs": {
+      "All": "All Servers",
+      "Physical": "Physical Servers",
+      "Virtual": "Virtual Machines"
+    },
+    "AddServer": {
+      "Title": "Add a server",
+      "General": {
+        "Title": "Add a server",
+        "CopyServer": "Copy server",
+        "Icon": "Icon",
+        "IconPlaceholder": "Select an icon",
+        "IconSearchPlaceholder": "Search icons...",
+        "Preview": "Preview",
         "Name": "Name",
-        "NamePlaceholder": "e.g. Portainer",
-        "Server": "Server",
-        "SelectServer": "Select server",
-        "Description": "Description",
-        "DescriptionPlaceholder": "Virtual machine description",
-        "IconURL": "Icon URL",
-        "IconURLPlaceholder": "https://example.com/icon.png",
-        "PublicURL": "Public URL",
-        "PublicURLPlaceholder": "https://example.com",
-        "LocalURL": "Local URL",
-        "LocalURLPlaceholder": "http://localhost:3000",
-        "CustomUptimeCheck": "Custom Uptime Check URL",
-        "CustomUptimeCheckTooltip": "When enabled, this URL replaces the Public URL for uptime monitoring checks",
-        "UptimeCheckURL": "Uptime Check URL",
-        "UptimeCheckURLPlaceholder": "https://example.com/status"
+        "OperatingSystem": "Operating System",
+        "OperatingSystemPlaceholder": "Select OS",
+        "IPAdress": "IP Adress",
+        "ManagementURL": "Management URL",
+        "ManagementURLTooltip": "Link to a web interface (e.g. Proxmox or Portainer) with which the server can be managed"
       },
+      "Host": {
+        "MarkAsHostServer": "Mark as host server",
+        "SelectHostServer": "Select a host server",
+        "SelectHostServerPlaceholder": "Select a host server",
+        "NoHostServer": "No host server"
+      },
+      "Monitoring": {
+        "Enable": "Enable monitoring",
+        "URL": "Monitoring URL",
+        "SetupTitle": "Required Server Setup",
+        "SetupDescription": "To enable monitoring, you need to install Glances on your server. Here's an example Docker Compose configuration:"
+      }
+    },
+    "ServerCard": {
+      "HardwareInformation": "Hardware Information",
+      "ViewDetails": "View Details",
+      "OpenManagementURL": "Open Management URL",
+      "EditServer": "Edit Server",
+      "DeleteServer": "Delete Server",
+      "HostedVMs": "Hosted VMs",
+      "ResourceUsage": "Resource Usage",
+      "DeleteConfirmation": {
+        "Title": "Delete {name}",
+        "Description": "Are you sure you want to delete this server? This action cannot be undone.",
+        "Cancel": "Cancel",
+        "Delete": "Delete"
+      }
+    },
+    "EditServer": {
+      "Title": "Edit {name}",
+      "Save": "Save",
+      "General": {
+        "Title": "General",
+        "Icon": "Icon",
+        "Name": "Name",
+        "OperatingSystem": "Operating System",
+        "IPAddress": "IP Address",
+        "ManagementURL": "Management URL"
+      },
+      "Hardware": {
+        "Title": "Hardware",
+        "CPU": "CPU",
+        "GPU": "GPU",
+        "RAM": "RAM",
+        "Disk": "Disk"
+      },
+      "Host": {
+        "Title": "Host",
+        "MarkAsHostServer": "Mark as host server",
+        "CannotDisableHost": "Cannot be disabled while hosting VMs",
+        "SelectHostServer": "Select a host server"
+      },
+      "Monitoring": {
+        "Title": "Monitoring",
+        "Enable": "Enable monitoring",
+        "URL": "Monitoring URL",
+        "SetupTitle": "Required Server Setup",
+        "SetupDescription": "To enable monitoring, you need to install Glances on your server. Here's an example Docker Compose configuration:"
+      }
+    },
+    "Pagination": {
+      "Showing": "Showing {start}-{end} of {total} servers",
+      "NoServers": "No servers found"
+    },
+    "Search": {
+      "Placeholder": "Type to search..."
+    },
+    "Setup": {
+      "Title": "Add New Infrastructure",
+      "Description": "Choose what type of infrastructure you want to add",
+      "PhysicalServer": "Physical Server",
+      "PhysicalDescription": "Add a dedicated physical server",
+      "VirtualMachine": "Virtual Machine",
+      "VirtualMachineDescription": "Add a new virtual machine or service"
+    }
+  },
+  "VirtualMachines": {
+    "Title": "Your Virtual Machines",
+    "Breadcrumb": {
+      "MyInfrastructure": "My Infrastructure",
+      "VirtualMachines": "Virtual Machines"
+    },
+    "Views": {
+      "ChangeView": "Change view",
+      "ListView": "List View",
+      "GridView": "Grid View",
+      "CompactView": "Compact View"
+    },
+    "Add": {
+      "Title": "Add a virtual machine",
+      "Name": "Name",
+      "NamePlaceholder": "e.g. Portainer",
+      "Server": "Server",
+      "SelectServer": "Select server",
+      "Description": "Description",
+      "DescriptionPlaceholder": "Virtual machine description",
+      "IconURL": "Icon URL",
+      "IconURLPlaceholder": "https://example.com/icon.png",
+      "PublicURL": "Public URL",
+      "PublicURLPlaceholder": "https://example.com",
+      "LocalURL": "Local URL",
+      "LocalURLPlaceholder": "http://localhost:3000",
+      "CustomUptimeCheck": "Custom Uptime Check URL",
+      "CustomUptimeCheckTooltip": "When enabled, this URL replaces the Public URL for uptime monitoring checks",
+      "UptimeCheckURL": "Uptime Check URL",
+      "UptimeCheckURLPlaceholder": "https://example.com/status"
+    },
+    "Edit": {
+      "Title": "Edit Virtual Machine",
+      "SaveButton": "Save Changes"
+    },
+    "Card": {
       "Edit": {
         "Title": "Edit Virtual Machine",
         "SaveButton": "Save Changes"
       },
-      "Card": {
-              "Edit": {
-          "Title": "Edit Virtual Machine",
-          "SaveButton": "Save Changes"
-        },
       "Card": {
         "Server": "Server",
         "NoServer": "No server",
@@ -386,199 +387,200 @@
         "Icon": "Icon",
         "Image": "Image"
       },
-              "Messages": {
-          "AddServerFirst": "You must first add a server.",
-          "AddSuccess": "Virtual machine added successfully",
-          "EditSuccess": "Virtual machine edited successfully",
-          "DeleteSuccess": "Virtual machine deleted successfully",
-          "GetError": "Failed to get virtual machines",
-          "EditError": "Failed to edit virtual machine",
-          "DeleteError": "Failed to delete virtual machine",
-          "NumberValidation": "Please enter a number between 1 and 100"
-        },
-              "Pagination": {
-          "Showing": "Showing {start}-{end} of {total} virtual machines",
-          "NoVirtualMachines": "No virtual machines found"
-        },
+      "Messages": {
+        "AddServerFirst": "You must first add a server.",
+        "AddSuccess": "Virtual machine added successfully",
+        "EditSuccess": "Virtual machine edited successfully",
+        "DeleteSuccess": "Virtual machine deleted successfully",
+        "GetError": "Failed to get virtual machines",
+        "EditError": "Failed to edit virtual machine",
+        "DeleteError": "Failed to delete virtual machine",
+        "NumberValidation": "Please enter a number between 1 and 100"
+      },
+      "Pagination": {
+        "Showing": "Showing {start}-{end} of {total} virtual machines",
+        "NoVirtualMachines": "No virtual machines found"
+      },
       "Search": {
         "Placeholder": "Type to search..."
       }
+    }
+  },
+  "Uptime": {
+    "Title": "Uptime",
+    "Breadcrumb": {
+      "MyInfrastructure": "My Infrastructure",
+      "Uptime": "Uptime"
     },
-    "Uptime": {
-      "Title": "Uptime",
-      "Breadcrumb": {
-        "MyInfrastructure": "My Infrastructure",
-        "Uptime": "Uptime"
+    "TimeRange": {
+      "Select": "Select timespan",
+      "LastHour": "Last 1 hour",
+      "LastDay": "Last 1 day",
+      "Last7Days": "Last 7 days",
+      "Last30Days": "Last 30 days"
+    },
+    "Status": {
+      "Online": "Online",
+      "Offline": "Offline",
+      "NoData": "No data"
+    },
+    "Messages": {
+      "NumberValidation": "Please enter a number between 1 and 100",
+      "NoItems": "No items found",
+      "Loading": "Loading..."
+    },
+    "Pagination": {
+      "Showing": "Showing {start}-{end} of {total} items"
+    }
+  },
+  "Network": {
+    "Title": "Network",
+    "Breadcrumb": {
+      "MyInfrastructure": "My Infrastructure",
+      "Network": "Network"
+    }
+  },
+  "Settings": {
+    "Title": "Settings",
+    "Breadcrumb": {
+      "Dashboard": "Dashboard",
+      "Settings": "Settings"
+    },
+    "UserSettings": {
+      "Title": "User Settings",
+      "Description": "Manage your user settings here. You can change your email, password, and other account settings.",
+      "ChangeEmail": {
+        "Title": "Change Email",
+        "Placeholder": "Enter new email",
+        "Button": "Change Email",
+        "Success": "Email changed successfully.",
+        "Error": "Error",
+        "EmailRequired": "Email is required"
       },
-      "TimeRange": {
-        "Select": "Select timespan",
-        "LastHour": "Last 1 hour",
-        "LastDay": "Last 1 day",
-        "Last7Days": "Last 7 days",
-        "Last30Days": "Last 30 days"
-      },
-      "Status": {
-        "Online": "Online",
-        "Offline": "Offline",
-        "NoData": "No data"
-      },
-      "Messages": {
-        "NumberValidation": "Please enter a number between 1 and 100",
-        "NoItems": "No items found",
-        "Loading": "Loading..."
-      },
-      "Pagination": {
-        "Showing": "Showing {start}-{end} of {total} items"
+      "ChangePassword": {
+        "Title": "Change Password",
+        "OldPassword": "Enter old password",
+        "NewPassword": "Enter new password",
+        "ConfirmPassword": "Confirm new password",
+        "Button": "Change Password",
+        "Success": "Password changed successfully.",
+        "Error": "Error",
+        "PasswordsDontMatch": "Passwords do not match",
+        "AllFieldsRequired": "All fields are required"
       }
     },
-    "Network": {
-      "Title": "Network",
-      "Breadcrumb": {
-        "MyInfrastructure": "My Infrastructure",
-        "Network": "Network"
-      }
+    "ThemeSettings": {
+      "Title": "Theme Settings",
+      "Description": "Select a theme for the application. You can choose between light, dark, or system theme.",
+      "Light": "Light",
+      "Dark": "Dark",
+      "System": "System"
     },
-    "Settings": {
-      "Title": "Settings",
-      "Breadcrumb": {
-        "Dashboard": "Dashboard",
-        "Settings": "Settings"
-      },
-      "UserSettings": {
-        "Title": "User Settings",
-        "Description": "Manage your user settings here. You can change your email, password, and other account settings.",
-        "ChangeEmail": {
-          "Title": "Change Email",
-          "Placeholder": "Enter new email",
-          "Button": "Change Email",
-          "Success": "Email changed successfully.",
-          "Error": "Error"
+    "LanguageSettings": {
+      "Title": "Language Settings",
+      "Description": "Select a language for the application.",
+      "English": "English",
+      "German": "German"
+    },
+    "UpdateManager": {
+      "Title": "Update Manager",
+      "Description": "Check for and manage ServerDash updates from GitHub releases",
+      "CurrentVersion": "Current Version",
+      "LatestVersion": "Latest Version",
+      "Status": "Status",
+      "LastChecked": "Last Checked",
+      "UpToDate": "Up to Date",
+      "UpdateAvailable": "Update Available",
+      "CheckFailed": "Failed to check for updates",
+      "CheckForUpdates": "Check for Updates",
+      "Checking": "Checking...",
+      "ViewRelease": "View Release",
+      "NewRelease": "New Release",
+      "Published": "Published",
+      "PreRelease": "Pre-release"
+    },
+    "Notifications": {
+      "Title": "Notifications",
+      "Description": "Set up notifications to get instantly alerted when an application changes status.",
+      "AddChannel": "Add Notification Channel",
+      "NoNotifications": "No notifications configured",
+      "NoNotificationsDescription": "Add a notification channel to get alerted when your applications change status.",
+      "AddNotification": {
+        "Title": "Add Notification",
+        "Name": "Notification Name (optional)",
+        "Type": "Notification Type",
+        "SMTP": {
+          "Title": "SMTP",
+          "Description": "Send notifications via SMTP",
+          "Host": "SMTP Host",
+          "Port": "SMTP Port",
+          "Secure": "Secure Connection (TLS/SSL)",
+          "Username": "SMTP Username",
+          "Password": "SMTP Password",
+          "From": "From Address",
+          "To": "To Address"
         },
-        "ChangePassword": {
-          "Title": "Change Password",
-          "OldPassword": "Enter old password",
-          "NewPassword": "Enter new password",
-          "ConfirmPassword": "Confirm new password",
-          "Button": "Change Password",
-          "Success": "Password changed successfully.",
-          "Error": "Error",
-          "PasswordsDontMatch": "Passwords do not match",
-          "AllFieldsRequired": "All fields are required"
+        "Telegram": {
+          "Title": "Telegram",
+          "Description": "Send notifications via Telegram",
+          "Token": "Bot Token",
+          "ChatId": "Chat ID"
+        },
+        "Discord": {
+          "Title": "Discord",
+          "Description": "Send notifications via Discord",
+          "Webhook": "Webhook URL"
+        },
+        "Gotify": {
+          "Title": "Gotify",
+          "Description": "Send notifications via Gotify",
+          "Url": "Gotify URL",
+          "Token": "Gotify Token"
+        },
+        "Ntfy": {
+          "Title": "Ntfy",
+          "Description": "Send notifications via Ntfy",
+          "Url": "Ntfy URL",
+          "Token": "Ntfy Token"
+        },
+        "Pushover": {
+          "Title": "Pushover",
+          "Description": "Send notifications via Pushover",
+          "Url": "Pushover URL",
+          "Token": "Pushover Token",
+          "User": "Pushover User"
+        },
+        "Echobell": {
+          "Title": "Echobell",
+          "Description": "Send notifications via Echobell",
+          "Url": "Echobell URL",
+          "AddMessage": "Add in Echobell the \"message\" field."
         }
       },
-      "ThemeSettings": {
-        "Title": "Theme Settings",
-        "Description": "Select a theme for the application. You can choose between light, dark, or system theme.",
-        "Light": "Light",
-        "Dark": "Dark",
-        "System": "System"
-      },
-      "LanguageSettings": {
-        "Title": "Language Settings",
-        "Description": "Select a language for the application.",
-        "English": "English",
-        "German": "German"
-      },
-      "UpdateManager": {
-        "Title": "Update Manager",
-        "Description": "Check for and manage ServerDash updates from GitHub releases",
-        "CurrentVersion": "Current Version",
-        "LatestVersion": "Latest Version",
-        "Status": "Status",
-        "LastChecked": "Last Checked",
-        "UpToDate": "Up to Date",
-        "UpdateAvailable": "Update Available",
-        "CheckFailed": "Failed to check for updates",
-        "CheckForUpdates": "Check for Updates",
-        "Checking": "Checking...",
-        "ViewRelease": "View Release",
-        "NewRelease": "New Release",
-        "Published": "Published",
-        "PreRelease": "Pre-release"
-      },
-      "Notifications": {
-        "Title": "Notifications",
-        "Description": "Set up notifications to get instantly alerted when an application changes status.",
-        "AddChannel": "Add Notification Channel",
-        "NoNotifications": "No notifications configured",
-        "NoNotificationsDescription": "Add a notification channel to get alerted when your applications change status.",
-        "AddNotification": {
-          "Title": "Add Notification",
-          "Name": "Notification Name (optional)",
-          "Type": "Notification Type",
-          "SMTP": {
-            "Title": "SMTP",
-            "Description": "Send notifications via SMTP",
-            "Host": "SMTP Host",
-            "Port": "SMTP Port",
-            "Secure": "Secure Connection (TLS/SSL)",
-            "Username": "SMTP Username",
-            "Password": "SMTP Password",
-            "From": "From Address",
-            "To": "To Address"
+      "CustomizeText": {
+        "Display": "Customize Notification Text",
+        "Title": "Customize Notification Text",
+        "VirtualMachine": "Notification Text for Virtual Machines",
+        "Server": "Notification Text for Servers",
+        "Placeholders": {
+          "Title": "You can use the following placeholders in the text:",
+          "Server": {
+            "Title": "Server related:",
+            "Name": "!name - The name of the server",
+            "Status": "!status - The current status of the server (online/offline)"
           },
-          "Telegram": {
-            "Title": "Telegram",
-            "Description": "Send notifications via Telegram",
-            "Token": "Bot Token",
-            "ChatId": "Chat ID"
-          },
-          "Discord": {
-            "Title": "Discord",
-            "Description": "Send notifications via Discord",
-            "Webhook": "Webhook URL"
-          },
-          "Gotify": {
-            "Title": "Gotify",
-            "Description": "Send notifications via Gotify",
-            "Url": "Gotify URL",
-            "Token": "Gotify Token"
-          },
-          "Ntfy": {
-            "Title": "Ntfy",
-            "Description": "Send notifications via Ntfy",
-            "Url": "Ntfy URL",
-            "Token": "Ntfy Token"
-          },
-          "Pushover": {
-            "Title": "Pushover",
-            "Description": "Send notifications via Pushover",
-            "Url": "Pushover URL",
-            "Token": "Pushover Token",
-            "User": "Pushover User"
-          },
-          "Echobell": {
-            "Title": "Echobell",
-            "Description": "Send notifications via Echobell",
-            "Url": "Echobell URL",
-            "AddMessage": "Add in Echobell the \"message\" field."
+          "VirtualMachine": {
+            "Title": "Virtual Machine related:",
+            "Name": "!name - The name of the virtual machine",
+            "Url": "!url - The URL where the virtual machine is hosted",
+            "Status": "!status - The current status of the virtual machine (online/offline)"
           }
-        },
-        "CustomizeText": {
-          "Display": "Customize Notification Text",
-          "Title": "Customize Notification Text",
-          "VirtualMachine": "Notification Text for Virtual Machines",
-          "Server": "Notification Text for Servers",
-          "Placeholders": {
-            "Title": "You can use the following placeholders in the text:",
-            "Server": {
-              "Title": "Server related:",
-              "Name": "!name - The name of the server",
-              "Status": "!status - The current status of the server (online/offline)"
-            },
-            "VirtualMachine": {
-              "Title": "Virtual Machine related:",
-                              "Name": "!name - The name of the virtual machine",
-                "Url": "!url - The URL where the virtual machine is hosted",
-                "Status": "!status - The current status of the virtual machine (online/offline)"
-            }
-          }
-        },
-        "ActiveChannels": "Active Notification Channels",
-        "Test": "Test",
-        "Delete": "Delete"
-      }
+        }
+      },
+      "ActiveChannels": "Active Notification Channels",
+      "Test": "Test",
+      "Delete": "Delete",
+      "TestSuccess": "Notification test sent successfully"
     }
   }
 }
-  

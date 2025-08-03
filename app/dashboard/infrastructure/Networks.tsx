@@ -60,13 +60,13 @@ export default function Dashboard() {
                 <BreadcrumbSeparator className="hidden md:block dark:text-slate-500" />
                 <BreadcrumbItem>
                   <BreadcrumbPage className="dark:text-slate-300">
-                    {t('Network.Breadcrumb.MyInfrastructure')}
+                    {t('Breadcrumb.MyInfrastructure')}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block dark:text-slate-500" />
                 <BreadcrumbItem>
                   <BreadcrumbPage className="dark:text-slate-300">
-                    {t('Network.Breadcrumb.Network')}
+                    {t('Breadcrumb.Network')}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>

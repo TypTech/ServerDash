@@ -12,6 +12,7 @@
         "Loading": "Lade...",
         "Refresh": "Aktualisieren",
         "Save": "Speichern",
+        "Error": "Fehler",
         "Server": {
             "CPU": "CPU",
             "GPU": "GPU",
@@ -389,7 +390,8 @@
                 "Placeholder": "Neue E-Mail",
                 "Button": "E-Mail \u00e4ndern",
                 "Success": "E-Mail ge\u00e4ndert",
-                "Error": "Fehler"
+                "Error": "Fehler",
+                "EmailRequired": "E-Mail ist erforderlich"
             },
             "ChangePassword": {
                 "Title": "Passwort \u00e4ndern",
@@ -513,7 +515,8 @@
             },
             "ActiveChannels": "Aktive Kan\u00e4le",
             "Test": "Testen",
-            "Delete": "L\u00f6schen"
+            "Delete": "L\u00f6schen",
+            "TestSuccess": "Benachrichtigungstest erfolgreich gesendet"
         }
     }
 }

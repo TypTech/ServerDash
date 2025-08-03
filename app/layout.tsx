@@ -31,7 +31,7 @@ export default async function RootLayout({
   const messages = (await import(`@/i18n/languages/${locale}.json`)).default;
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning={true}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

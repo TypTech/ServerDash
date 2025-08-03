@@ -64,6 +64,7 @@ interface UpdateResponse {
 
 export default function Settings() {
   const t = useTranslations('Settings')
+  const tCommon = useTranslations('Common')
   const { theme, setTheme } = useTheme()
 
   const [email, setEmail] = useState<string>("")
@@ -116,7 +117,7 @@ export default function Settings() {
     setEmailError("")
 
     if (!email) {
-      setEmailError(t('Settings.UserSettings.ChangeEmail.EmailRequired'))
+      setEmailError(t('UserSettings.ChangeEmail.EmailRequired'))
       setEmailErrorVisible(true)
       setTimeout(() => {
         setEmailErrorVisible(false)
@@ -147,7 +148,7 @@ export default function Settings() {
   const changePassword = async () => {
     try {
       if (password !== confirmPassword) {
-        setPasswordError(t('Settings.UserSettings.ChangePassword.PasswordsDontMatch'))
+        setPasswordError(t('UserSettings.ChangePassword.PasswordsDontMatch'))
         setPasswordErrorVisible(true)
         setTimeout(() => {
           setPasswordErrorVisible(false)
@@ -156,7 +157,7 @@ export default function Settings() {
         return
       }
       if (!oldPassword || !password || !confirmPassword) {
-        setPasswordError(t('Settings.UserSettings.ChangePassword.AllFieldsRequired'))
+        setPasswordError(t('UserSettings.ChangePassword.AllFieldsRequired'))
         setPasswordErrorVisible(true)
         setTimeout(() => {
           setPasswordErrorVisible(false)
@@ -288,7 +289,7 @@ export default function Settings() {
       const response = await axios.post("/api/notifications/test", {
         notificationId: id,
       })
-      toast.success(t('Settings.Notifications.TestSuccess'))
+      toast.success(t('Notifications.TestSuccess'))
     } catch (error: any) {
       toast.error(error.response.data.error)
     }
@@ -351,11 +352,11 @@ export default function Settings() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbPage>{t('Settings.Breadcrumb.Dashboard')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('Breadcrumb.Dashboard')}</BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Settings.Breadcrumb.Settings')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('Breadcrumb.Settings')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -363,31 +364,31 @@ export default function Settings() {
         </header>
         <div className="p-6">
           <div className="pb-4">
-            <span className="text-3xl font-bold">{t('Settings.Title')}</span>
+            <span className="text-3xl font-bold">{t('Title')}</span>
           </div>
           <div className="grid gap-6">
             <Card className="overflow-hidden border-2 border-muted/20 shadow-sm">
               <CardHeader className="bg-muted/10 px-6 py-4 border-b">
                 <div className="flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">{t('Settings.UserSettings.Title')}</h2>
+                  <h2 className="text-xl font-semibold">{t('UserSettings.Title')}</h2>
                 </div>
               </CardHeader>
               <CardContent className="pb-6">
                 <div className="text-sm text-muted-foreground mb-6">
-                  {t('Settings.UserSettings.Description')}
+                  {t('UserSettings.Description')}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-4">
                     <div className="border-b pb-2">
-                      <h3 className="font-semibold text-lg">{t('Settings.UserSettings.ChangeEmail.Title')}</h3>
+                      <h3 className="font-semibold text-lg">{t('UserSettings.ChangeEmail.Title')}</h3>
                     </div>
 
                     {emailErrorVisible && (
                       <Alert variant="destructive" className="animate-in fade-in-50">
                         <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>{t('Common.Error')}</AlertTitle>
+                        <AlertTitle>{tCommon('Error')}</AlertTitle>
                         <AlertDescription>{emailError}</AlertDescription>
                       </Alert>
                     )}
@@ -395,33 +396,33 @@ export default function Settings() {
                     {emailSuccess && (
                       <Alert className="border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-300 animate-in fade-in-50">
                         <Check className="h-4 w-4" />
-                        <AlertTitle>{t('Settings.UserSettings.ChangeEmail.Success')}</AlertTitle>
+                                                  <AlertTitle>{t('UserSettings.ChangeEmail.Success')}</AlertTitle>
                       </Alert>
                     )}
 
                     <div className="space-y-3">
                       <Input
                         type="email"
-                        placeholder={t('Settings.UserSettings.ChangeEmail.Placeholder')}
+                        placeholder={t('UserSettings.ChangeEmail.Placeholder')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="h-11"
                       />
                       <Button onClick={changeEmail} className="w-full h-11">
-                        {t('Settings.UserSettings.ChangeEmail.Button')}
+                                                  {t('UserSettings.ChangeEmail.Button')}
                       </Button>
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <div className="border-b pb-2">
-                      <h3 className="font-semibold text-lg">{t('Settings.UserSettings.ChangePassword.Title')}</h3>
+                      <h3 className="font-semibold text-lg">{t('UserSettings.ChangePassword.Title')}</h3>
                     </div>
 
                     {passwordErrorVisible && (
                       <Alert variant="destructive" className="animate-in fade-in-50">
                         <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>{t('Common.Error')}</AlertTitle>
+                        <AlertTitle>{tCommon('Error')}</AlertTitle>
                         <AlertDescription>{passwordError}</AlertDescription>
                       </Alert>
                     )}
@@ -429,34 +430,34 @@ export default function Settings() {
                     {passwordSuccess && (
                       <Alert className="border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-300 animate-in fade-in-50">
                         <Check className="h-4 w-4" />
-                        <AlertTitle>{t('Settings.UserSettings.ChangePassword.Success')}</AlertTitle>
+                        <AlertTitle>{t('UserSettings.ChangePassword.Success')}</AlertTitle>
                       </Alert>
                     )}
 
                     <div className="space-y-3">
                       <Input
                         type="password"
-                        placeholder={t('Settings.UserSettings.ChangePassword.OldPassword')}
+                                                  placeholder={t('UserSettings.ChangePassword.OldPassword')}
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
                         className="h-11"
                       />
                       <Input
                         type="password"
-                        placeholder={t('Settings.UserSettings.ChangePassword.NewPassword')}
+                                                  placeholder={t('UserSettings.ChangePassword.NewPassword')}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="h-11"
                       />
                       <Input
                         type="password"
-                        placeholder={t('Settings.UserSettings.ChangePassword.ConfirmPassword')}
+                                                  placeholder={t('UserSettings.ChangePassword.ConfirmPassword')}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="h-11"
                       />
                       <Button onClick={changePassword} className="w-full h-11">
-                        {t('Settings.UserSettings.ChangePassword.Button')}
+                                                  {t('UserSettings.ChangePassword.Button')}
                       </Button>
                     </div>
                   </div>
@@ -468,25 +469,25 @@ export default function Settings() {
               <CardHeader className="bg-muted/10 px-6 py-4 border-b">
                 <div className="flex items-center gap-2">
                   <Palette className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">{t('Settings.ThemeSettings.Title')}</h2>
+                  <h2 className="text-xl font-semibold">{t('ThemeSettings.Title')}</h2>
                 </div>
               </CardHeader>
               <CardContent className="pb-6">
                 <div className="text-sm text-muted-foreground mb-6">
-                  {t('Settings.ThemeSettings.Description')}
+                  {t('ThemeSettings.Description')}
                 </div>
 
                 <div className="max-w-md">
                   <Select value={theme} onValueChange={(value: string) => setTheme(value)}>
                     <SelectTrigger className="w-full h-11">
                       <SelectValue>
-                        {t(`Settings.ThemeSettings.${(theme ?? "system").charAt(0).toUpperCase() + (theme ?? "system").slice(1)}`)}
+                        {t(`ThemeSettings.${(theme ?? "system").charAt(0).toUpperCase() + (theme ?? "system").slice(1)}`)}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="light">{t('Settings.ThemeSettings.Light')}</SelectItem>
-                      <SelectItem value="dark">{t('Settings.ThemeSettings.Dark')}</SelectItem>
-                      <SelectItem value="system">{t('Settings.ThemeSettings.System')}</SelectItem>
+                      <SelectItem value="light">{t('ThemeSettings.Light')}</SelectItem>
+                      <SelectItem value="dark">{t('ThemeSettings.Dark')}</SelectItem>
+                      <SelectItem value="system">{t('ThemeSettings.System')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -497,24 +498,24 @@ export default function Settings() {
               <CardHeader className="bg-muted/10 px-6 py-4 border-b">
                 <div className="flex items-center gap-2">
                   <Languages className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">{t('Settings.LanguageSettings.Title')}</h2>
+                  <h2 className="text-xl font-semibold">{t('LanguageSettings.Title')}</h2>
                 </div>
               </CardHeader>
               <CardContent className="pb-6">
                 <div className="text-sm text-muted-foreground mb-6">
-                  {t('Settings.LanguageSettings.Description')}
+                  {t('LanguageSettings.Description')}
                 </div>
 
                 <div className="max-w-md">
                   <Select value={language} onValueChange={(value: string) => setLanguageFunc(value)}>
                     <SelectTrigger className="w-full h-11">
                       <SelectValue>
-                        {t(`Settings.LanguageSettings.${(language ?? "english").charAt(0).toUpperCase() + (language ?? "english").slice(1)}`)}
+                        {t(`LanguageSettings.${(language ?? "english").charAt(0).toUpperCase() + (language ?? "english").slice(1)}`)}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="english">{t('Settings.LanguageSettings.English')}</SelectItem>
-                      <SelectItem value="german">{t('Settings.LanguageSettings.German')}</SelectItem>
+                      <SelectItem value="english">{t('LanguageSettings.English')}</SelectItem>
+                      <SelectItem value="german">{t('LanguageSettings.German')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -636,50 +637,50 @@ export default function Settings() {
                   <div className="bg-muted/20 p-2 rounded-full">
                     <Bell className="h-5 w-5 text-primary" />
                   </div>
-                  <h2 className="text-xl font-semibold">{t('Settings.Notifications.Title')}</h2>
+                  <h2 className="text-xl font-semibold">{t('Notifications.Title')}</h2>
                 </div>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="text-sm text-muted-foreground mb-6">
-                  {t('Settings.Notifications.Description')}
+                  {t('Notifications.Description')}
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button className="w-full h-11 flex items-center gap-2">
-                        {t('Settings.Notifications.AddChannel')}
+                        {t('Notifications.AddChannel')}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
-                      <AlertDialogTitle>{t('Settings.Notifications.AddNotification.Title')}</AlertDialogTitle>
+                      <AlertDialogTitle>{t('Notifications.AddNotification.Title')}</AlertDialogTitle>
                       <AlertDialogDescription>
                         <div className="space-y-4">
                             <Input
                               type="text"
                               id="notificationName"
-                              placeholder={t('Settings.Notifications.AddNotification.Name')}
+                              placeholder={t('Notifications.AddNotification.Name')}
                               onChange={(e) => setNotificationName(e.target.value)}
                             />
                             <Select value={notificationType} onValueChange={(value: string) => setNotificationType(value)}>
                               <SelectTrigger className="w-full">
-                                <SelectValue placeholder={t('Settings.Notifications.AddNotification.Type')} />
+                                <SelectValue placeholder={t('Notifications.AddNotification.Type')} />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="smtp">{t('Settings.Notifications.AddNotification.SMTP.Title')}</SelectItem>
-                              <SelectItem value="telegram">{t('Settings.Notifications.AddNotification.Telegram.Title')}</SelectItem>
-                              <SelectItem value="discord">{t('Settings.Notifications.AddNotification.Discord.Title')}</SelectItem>
-                              <SelectItem value="gotify">{t('Settings.Notifications.AddNotification.Gotify.Title')}</SelectItem>
-                              <SelectItem value="ntfy">{t('Settings.Notifications.AddNotification.Ntfy.Title')}</SelectItem>
-                              <SelectItem value="pushover">{t('Settings.Notifications.AddNotification.Pushover.Title')}</SelectItem>
-                              <SelectItem value="echobell">{t('Settings.Notifications.AddNotification.Echobell.Title')}</SelectItem>
+                              <SelectItem value="smtp">{t('Notifications.AddNotification.SMTP.Title')}</SelectItem>
+                              <SelectItem value="telegram">{t('Notifications.AddNotification.Telegram.Title')}</SelectItem>
+                              <SelectItem value="discord">{t('Notifications.AddNotification.Discord.Title')}</SelectItem>
+                              <SelectItem value="gotify">{t('Notifications.AddNotification.Gotify.Title')}</SelectItem>
+                              <SelectItem value="ntfy">{t('Notifications.AddNotification.Ntfy.Title')}</SelectItem>
+                              <SelectItem value="pushover">{t('Notifications.AddNotification.Pushover.Title')}</SelectItem>
+                              <SelectItem value="echobell">{t('Notifications.AddNotification.Echobell.Title')}</SelectItem>
                             </SelectContent>
 
                             {notificationType === "smtp" && (
                               <div className="mt-4 space-y-4">
                                 <div className="grid md:grid-cols-2 gap-4">
                                   <div className="space-y-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.SMTP.Host')}</Label>
+                                    <Label>{t('Notifications.AddNotification.SMTP.Host')}</Label>
                                     <Input
                                       type="text"
                                       placeholder="smtp.example.com"
@@ -687,7 +688,7 @@ export default function Settings() {
                                     />
                                   </div>
                                   <div className="space-y-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.SMTP.Port')}</Label>
+                                    <Label>{t('Notifications.AddNotification.SMTP.Port')}</Label>
                                     <Input
                                       type="number"
                                       placeholder="587"
@@ -699,13 +700,13 @@ export default function Settings() {
                                 <div className="flex items-center space-x-2 pt-2 pb-4">
                                   <Checkbox id="smtpSecure" onCheckedChange={(checked: any) => setSmtpSecure(checked)} />
                                   <Label htmlFor="smtpSecure" className="text-sm font-medium leading-none">
-                                    {t('Settings.Notifications.AddNotification.SMTP.Secure')}
+                                    {t('Notifications.AddNotification.SMTP.Secure')}
                                   </Label>
                                 </div>
 
                                 <div className="grid gap-4">
                                   <div className="space-y-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.SMTP.Username')}</Label>
+                                    <Label>{t('Notifications.AddNotification.SMTP.Username')}</Label>
                                     <Input
                                       type="text"
                                       placeholder="user@example.com"
@@ -714,7 +715,7 @@ export default function Settings() {
                                   </div>
 
                                   <div className="space-y-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.SMTP.Password')}</Label>
+                                    <Label>{t('Notifications.AddNotification.SMTP.Password')}</Label>
                                     <Input
                                       type="password"
                                       placeholder="••••••••"
@@ -724,7 +725,7 @@ export default function Settings() {
 
                                   <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
-                                      <Label>{t('Settings.Notifications.AddNotification.SMTP.From')}</Label>
+                                      <Label>{t('Notifications.AddNotification.SMTP.From')}</Label>
                                       <Input
                                         type="email"
                                         placeholder="noreply@example.com"
@@ -733,7 +734,7 @@ export default function Settings() {
                                     </div>
 
                                     <div className="space-y-1.5">
-                                      <Label>{t('Settings.Notifications.AddNotification.SMTP.To')}</Label>
+                                      <Label>{t('Notifications.AddNotification.SMTP.To')}</Label>
                                       <Input
                                         type="email"
                                         placeholder="admin@example.com"
@@ -748,14 +749,14 @@ export default function Settings() {
                             {notificationType === "telegram" && (
                               <div className="mt-4 space-y-2">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Telegram.Token')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Telegram.Token')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setTelegramToken(e.target.value)}
                                   />
                                 </div>
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Telegram.ChatId')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Telegram.ChatId')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setTelegramChatId(e.target.value)}
@@ -767,7 +768,7 @@ export default function Settings() {
                             {notificationType === "discord" && (
                               <div className="mt-4">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Discord.Webhook')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Discord.Webhook')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setDiscordWebhook(e.target.value)}
@@ -779,13 +780,13 @@ export default function Settings() {
                             {notificationType === "gotify" && (
                               <div className="mt-4">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Gotify.Url')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Gotify.Url')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setGotifyUrl(e.target.value)}
                                   />
                                   <div className="grid w-full items-center gap-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.Gotify.Token')}</Label>
+                                    <Label>{t('Notifications.AddNotification.Gotify.Token')}</Label>
                                     <Input
                                       type="text"
                                       onChange={(e) => setGotifyToken(e.target.value)}
@@ -798,13 +799,13 @@ export default function Settings() {
                             {notificationType === "ntfy" && (
                               <div className="mt-4">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Ntfy.Url')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Ntfy.Url')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setNtfyUrl(e.target.value)}
                                   />
                                   <div className="grid w-full items-center gap-1.5">
-                                    <Label>{t('Settings.Notifications.AddNotification.Ntfy.Token')}</Label>
+                                    <Label>{t('Notifications.AddNotification.Ntfy.Token')}</Label>
                                     <Input
                                       type="text"
                                       onChange={(e) => setNtfyToken(e.target.value)}
@@ -817,7 +818,7 @@ export default function Settings() {
                             {notificationType === "pushover" && (
                               <div className="mt-4 flex flex-col gap-2">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Pushover.Url')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Pushover.Url')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setPushoverUrl(e.target.value)}
@@ -825,7 +826,7 @@ export default function Settings() {
                                 </div>
 
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Pushover.Token')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Pushover.Token')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setPushoverToken(e.target.value)}
@@ -833,7 +834,7 @@ export default function Settings() {
                                 </div>
 
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Pushover.User')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Pushover.User')}</Label>
                                   <Input
                                     type="text"
                                     onChange={(e) => setPushoverUser(e.target.value)}
@@ -845,14 +846,14 @@ export default function Settings() {
                             {notificationType === "echobell" && (
                               <div className="mt-4 flex flex-col gap-2">
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label>{t('Settings.Notifications.AddNotification.Echobell.Url')}</Label>
+                                  <Label>{t('Notifications.AddNotification.Echobell.Url')}</Label>
                                   <Input
                                     type="text"
                                     placeholder="e.g. https://hook.echobell.one/t/xxx"
                                     onChange={(e) => setEchobellURL(e.target.value)}
                                   />
                                 </div>
-                               <span className="text-xs text-muted-foreground">{t('Settings.Notifications.AddNotification.Echobell.AddMessage')}</span>
+                               <span className="text-xs text-muted-foreground">{t('Notifications.AddNotification.Echobell.AddMessage')}</span>
                               </div>
                             )}
                             
@@ -860,8 +861,8 @@ export default function Settings() {
                         </div>
                       </AlertDialogDescription>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>{t('Common.cancel')}</AlertDialogCancel>
-                        <AlertDialogAction onClick={addNotification}>{t('Common.add')}</AlertDialogAction>
+                                                  <AlertDialogCancel>{tCommon('cancel')}</AlertDialogCancel>
+                          <AlertDialogAction onClick={addNotification}>{tCommon('add')}</AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
@@ -869,15 +870,15 @@ export default function Settings() {
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button className="w-full h-11" variant="outline">
-                        {t('Settings.Notifications.CustomizeText.Display')}
+                        {t('Notifications.CustomizeText.Display')}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
-                      <AlertDialogTitle>{t('Settings.Notifications.CustomizeText.Title')}</AlertDialogTitle>
+                      <AlertDialogTitle>{t('Notifications.CustomizeText.Title')}</AlertDialogTitle>
                       <AlertDialogDescription>
                         <div className="space-y-4">
                           <div className="space-y-1.5">
-                            <Label>{t('Settings.Notifications.CustomizeText.Application')}</Label>
+                            <Label>{t('Notifications.CustomizeText.VirtualMachine')}</Label>
                             <Textarea
                               value={notificationTextApplication}
                               onChange={(e) => setNotificationTextApplication(e.target.value)}
@@ -885,7 +886,7 @@ export default function Settings() {
                             />
                           </div>
                           <div className="space-y-1.5">
-                            <Label>{t('Settings.Notifications.CustomizeText.Server')}</Label>
+                            <Label>{t('Notifications.CustomizeText.Server')}</Label>
                             <Textarea
                               value={notificationTextServer}
                               onChange={(e) => setNotificationTextServer(e.target.value)}
@@ -893,31 +894,31 @@ export default function Settings() {
                             />
                           </div>
                           <div className="pt-4 text-sm text-muted-foreground">
-                            {t('Settings.Notifications.CustomizeText.Placeholders.Title')}
+                            {t('Notifications.CustomizeText.Placeholders.Title')}
                             <ul className="list-disc list-inside space-y-1 pt-2">
                               <li>
-                                <b>{t('Settings.Notifications.CustomizeText.Placeholders.Server.Title')}</b>
+                                <b>{t('Notifications.CustomizeText.Placeholders.Server.Title')}</b>
                                 <ul className="list-disc list-inside ml-4 space-y-1 pt-1 text-muted-foreground">
-                                  <li>{t('Settings.Notifications.CustomizeText.Placeholders.Server.Name')}</li>
-                                  <li>{t('Settings.Notifications.CustomizeText.Placeholders.Server.Status')}</li>
+                                  <li>{t('Notifications.CustomizeText.Placeholders.Server.Name')}</li>
+                                  <li>{t('Notifications.CustomizeText.Placeholders.Server.Status')}</li>
                                 </ul>
                               </li>
                               <li>
-                                <b>{t('Settings.Notifications.CustomizeText.Placeholders.Application.Title')}</b>
-                                <ul className="list-disc list-inside ml-4 space-y-1 pt-1 text-muted-foreground">
-                                  <li>{t('Settings.Notifications.CustomizeText.Placeholders.Application.Name')}</li>
-                                  <li>{t('Settings.Notifications.CustomizeText.Placeholders.Application.Url')}</li>
-                                  <li>{t('Settings.Notifications.CustomizeText.Placeholders.Application.Status')}</li>
-                                </ul>
+                                                                <b>{t('Notifications.CustomizeText.Placeholders.VirtualMachine.Title')}</b>
+                                 <ul className="list-disc list-inside ml-4 space-y-1 pt-1 text-muted-foreground">
+                                   <li>{t('Notifications.CustomizeText.Placeholders.VirtualMachine.Name')}</li>
+                                   <li>{t('Notifications.CustomizeText.Placeholders.VirtualMachine.Url')}</li>
+                                   <li>{t('Notifications.CustomizeText.Placeholders.VirtualMachine.Status')}</li>
+                                 </ul>
                               </li>
                             </ul>
                           </div>
                         </div>
                       </AlertDialogDescription>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>{t('Common.cancel')}</AlertDialogCancel>
-                        <AlertDialogAction onClick={editNotificationText}>
-                          {t('Common.Save')}
+                                                  <AlertDialogCancel>{tCommon('cancel')}</AlertDialogCancel>
+                          <AlertDialogAction onClick={editNotificationText}>
+                            {tCommon('Save')}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -925,7 +926,7 @@ export default function Settings() {
                 </div>
 
                 <div className="mt-8">
-                  <h3 className="text-lg font-medium mb-4">{t('Settings.Notifications.ActiveChannels')}</h3>
+                  <h3 className="text-lg font-medium mb-4">{t('Notifications.ActiveChannels')}</h3>
                   <div className="space-y-3">
                     {notifications.length > 0 ? (
                       notifications.map((notification) => (
@@ -967,10 +968,10 @@ export default function Settings() {
                             <div className="space-y-1">
                               <h3 className="font-medium capitalize">
                                 {notification.name || 
-                                  t(`Settings.Notifications.AddNotification.${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}.Title`)}
+                                  t(`Notifications.AddNotification.${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}.Title`)}
                               </h3>
                               <p className="text-xs text-muted-foreground">
-                                {t(`Settings.Notifications.AddNotification.${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}.Description`)}
+                                {t(`Notifications.AddNotification.${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}.Description`)}
                               </p>
                             </div>
                           </div>
@@ -982,7 +983,7 @@ export default function Settings() {
                               onClick={() => testNotification(notification.id)}
                             >
                               <Play className="h-4 w-4 mr-1" />
-                              {t('Settings.Notifications.Test')}
+                              {t('Notifications.Test')}
                             </Button>
                             <Button
                               variant="ghost"
@@ -991,7 +992,7 @@ export default function Settings() {
                               onClick={() => deleteNotification(notification.id)}
                             >
                               <Trash2 className="h-4 w-4 mr-1" />
-                              {t('Settings.Notifications.Delete')}
+                              {t('Notifications.Delete')}
                             </Button>
                           </div>
                         </div>
@@ -1004,10 +1005,10 @@ export default function Settings() {
                           </div>
                         </div>
                         <h3 className="text-lg font-medium mb-1">
-                          {t('Settings.Notifications.NoNotifications')}
+                          {t('Notifications.NoNotifications')}
                         </h3>
                         <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                          {t('Settings.Notifications.NoNotificationsDescription')}
+                          {t('Notifications.NoNotificationsDescription')}
                         </p>
                       </div>
                     )}

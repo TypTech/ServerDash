@@ -692,11 +692,11 @@ export default function Servers() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Servers.MyInfrastructure')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('MyInfrastructure')}</BreadcrumbPage>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{t('Servers.Title')}</BreadcrumbPage>
+                  <BreadcrumbPage>{t('Title')}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -705,7 +705,7 @@ export default function Servers() {
         <Toaster />
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <span className="text-3xl font-bold">{t('Servers.YourServers')}</span>
+            <span className="text-3xl font-bold">{t('YourServers')}</span>
             <div className="flex gap-2">              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -819,9 +819,9 @@ export default function Servers() {
                 </AlertDialogTrigger>
                 <AlertDialogContent className="max-w-md">
                   <AlertDialogHeader>
-                    <AlertDialogTitle>{t('Servers.Setup.Title')}</AlertDialogTitle>
+                    <AlertDialogTitle>{t('Setup.Title')}</AlertDialogTitle>
                     <AlertDialogDescription>
-                      {t('Servers.Setup.Description')}
+                      {t('Setup.Description')}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <div className="grid gap-4 py-4">
@@ -852,8 +852,8 @@ export default function Servers() {
                         <LucideServer className="h-6 w-6" />
                       </div>
                       <div>
-                        <h3 className="font-semibold">{t('Servers.Setup.PhysicalServer')}</h3>
-                        <p className="text-sm text-muted-foreground">{t('Servers.Setup.PhysicalDescription')}</p>
+                        <h3 className="font-semibold">{t('Setup.PhysicalServer')}</h3>
+                        <p className="text-sm text-muted-foreground">{t('Setup.PhysicalDescription')}</p>
                       </div>
                     </div>
 
@@ -870,7 +870,7 @@ export default function Servers() {
                 <AlertDialogContent className="max-w-[95vw] w-[600px] max-h-[90vh] overflow-y-auto">
                   <AlertDialogHeader>
                     <AlertDialogTitle className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                      <span>{t('Servers.AddServer.Title')}</span>
+                      <span>{t('AddServer.Title')}</span>
                       <Select 
                         onValueChange={(value) => {
                           if (!value) return;
@@ -911,7 +911,7 @@ export default function Servers() {
                         <SelectTrigger className="w-[140px] h-8 text-xs">
                           <div className="flex items-center gap-1.5">
                             <Copy className="h-3 w-3 text-muted-foreground" />
-                            <SelectValue placeholder={t('Servers.AddServer.General.CopyServer')} />
+                            <SelectValue placeholder={t('AddServer.General.CopyServer')} />
                           </div>
                         </SelectTrigger>
                         <SelectContent>
@@ -935,11 +935,11 @@ export default function Servers() {
                           <div className="space-y-4 pt-4">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                               <div className="grid w-full sm:w-[calc(100%-52px)] items-center gap-1.5">
-                                <Label htmlFor="icon">{t('Servers.AddServer.General.Icon')}</Label>
+                                <Label htmlFor="icon">{t('AddServer.General.Icon')}</Label>
                                 <div className="space-y-2">
                                   <Select value={icon} onValueChange={(value) => setIcon(value)}>
                                     <SelectTrigger className="w-full">
-                                      <SelectValue placeholder={t('Servers.AddServer.General.IconPlaceholder')}>
+                                      <SelectValue placeholder={t('AddServer.General.IconPlaceholder')}>
                                         {icon && (
                                           <div className="flex items-center gap-2">
                                             <DynamicIcon name={icon as any} size={18} />
@@ -950,7 +950,7 @@ export default function Servers() {
                                     </SelectTrigger>
                                     <SelectContent className="max-h-[300px]">
                                       <Input
-                                        placeholder={t('Servers.AddServer.General.IconSearchPlaceholder')}
+                                        placeholder={t('AddServer.General.IconSearchPlaceholder')}
                                         className="mb-2"
                                         onChange={(e) => {
                                           const iconElements = document.querySelectorAll("[data-icon-item]")
@@ -991,14 +991,14 @@ export default function Servers() {
                                 </div>
                               </div>
                               <div className="grid w-[52px] items-center gap-1.5">
-                                <Label htmlFor="icon">{t('Servers.AddServer.General.Preview')}</Label>
+                                <Label htmlFor="icon">{t('AddServer.General.Preview')}</Label>
                                 <div className="flex items-center justify-center">
                                   {icon && <DynamicIcon name={icon as any} size={36} />}
                                 </div>
                               </div>
                             </div>
                             <div className="grid w-full items-center gap-1.5">
-                              <Label htmlFor="name">{t('Servers.AddServer.General.Name')}</Label>
+                              <Label htmlFor="name">{t('AddServer.General.Name')}</Label>
                               <Input
                                 id="name"
                                 type="text"
@@ -1009,11 +1009,11 @@ export default function Servers() {
                             </div>
                             <div className="grid w-full items-center gap-1.5">
                               <Label htmlFor="description">
-                                {t('Servers.AddServer.General.OperatingSystem')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                {t('AddServer.General.OperatingSystem')} <span className="text-stone-600">({t('Common.optional')})</span>
                               </Label>
                               <Select value={os} onValueChange={(value) => setOs(value)}>
                                 <SelectTrigger className="w-full">
-                                  <SelectValue placeholder={t('Servers.AddServer.General.OperatingSystemPlaceholder')} />
+                                  <SelectValue placeholder={t('AddServer.General.OperatingSystemPlaceholder')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value="Windows">Windows</SelectItem>
@@ -1024,7 +1024,7 @@ export default function Servers() {
                             </div>
                             <div className="grid w-full items-center gap-1.5">
                               <Label htmlFor="ip">
-                                {t('Servers.AddServer.General.IPAdress')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                {t('AddServer.General.IPAdress')} <span className="text-stone-600">({t('Common.optional')})</span>
                               </Label>
                               <Input
                                 id="ip"
@@ -1039,11 +1039,11 @@ export default function Servers() {
                                 <Tooltip>
                                   <TooltipTrigger>
                                     <Label htmlFor="publicURL">
-                                      {t('Servers.AddServer.General.ManagementURL')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                      {t('AddServer.General.ManagementURL')} <span className="text-stone-600">({t('Common.optional')})</span>
                                     </Label>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    {t('Servers.AddServer.General.ManagementURLTooltip')}
+                                    {t('AddServer.General.ManagementURLTooltip')}
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
@@ -1117,11 +1117,11 @@ export default function Servers() {
                                 checked={host}
                                 onCheckedChange={(checked) => setHost(checked === true)}
                               />
-                              <Label htmlFor="hostCheckbox">{t('Servers.AddServer.Host.MarkAsHostServer')}</Label>
+                              <Label htmlFor="hostCheckbox">{t('AddServer.Host.MarkAsHostServer')}</Label>
                             </div>
                             {!host && (
                               <div className="grid w-full items-center gap-1.5">
-                                <Label>{t('Servers.AddServer.Host.SelectHostServer')}</Label>
+                                <Label>{t('AddServer.Host.SelectHostServer')}</Label>
                                 <Select
                                   value={hostServer?.toString()}
                                   onValueChange={(value) => {
@@ -1133,10 +1133,10 @@ export default function Servers() {
                                   }}
                                 >
                                   <SelectTrigger>
-                                    <SelectValue placeholder={t('Servers.AddServer.Host.SelectHostServerPlaceholder')} />
+                                    <SelectValue placeholder={t('AddServer.Host.SelectHostServerPlaceholder')} />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="0">{t('Servers.AddServer.Host.NoHostServer')}</SelectItem>
+                                    <SelectItem value="0">{t('AddServer.Host.NoHostServer')}</SelectItem>
                                     {hostServers.map((server) => (
                                       <SelectItem key={server.id} value={server.id.toString()}>
                                         {server.name}
@@ -1156,12 +1156,12 @@ export default function Servers() {
                                 checked={monitoring}
                                 onCheckedChange={(checked) => setMonitoring(checked === true)}
                               />
-                              <Label htmlFor="monitoringCheckbox">{t('Servers.AddServer.Monitoring.Enable')}</Label>
+                              <Label htmlFor="monitoringCheckbox">{t('AddServer.Monitoring.Enable')}</Label>
                             </div>
                             {monitoring && (
                               <>
                                 <div className="grid w-full items-center gap-1.5">
-                                  <Label htmlFor="monitoringURL">{t('Servers.AddServer.Monitoring.URL')}</Label>
+                                  <Label htmlFor="monitoringURL">{t('AddServer.Monitoring.URL')}</Label>
                                   <Input
                                     id="monitoringURL"
                                     type="text"
@@ -1171,9 +1171,9 @@ export default function Servers() {
                                   />
                                 </div>
                                 <div className="mt-4 p-4 border rounded-lg bg-muted">
-                                  <h4 className="text-sm font-semibold mb-2">{t('Servers.AddServer.Monitoring.SetupTitle')}</h4>
+                                  <h4 className="text-sm font-semibold mb-2">{t('AddServer.Monitoring.SetupTitle')}</h4>
                                   <p className="text-sm text-muted-foreground mb-3">
-                                    {t('Servers.AddServer.Monitoring.SetupDescription')}
+                                    {t('AddServer.Monitoring.SetupDescription')}
                                   </p>
                                   <pre className="bg-background p-4 rounded-md text-sm overflow-x-auto">
                               <code>{`services:
@@ -1212,8 +1212,8 @@ export default function Servers() {
           <div className="mb-6">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "physical")}>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="all">{t('Servers.Tabs.All')}</TabsTrigger>
-                <TabsTrigger value="physical">{t('Servers.Tabs.Physical')}</TabsTrigger>
+                <TabsTrigger value="all">{t('Tabs.All')}</TabsTrigger>
+                <TabsTrigger value="physical">{t('Tabs.Physical')}</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -1221,7 +1221,7 @@ export default function Servers() {
           <div className="flex flex-col gap-2 mb-4 pt-2">
             <Input
               id="application-search"
-              placeholder={t('Servers.Search.Placeholder')}
+              placeholder={t('Search.Placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -1313,7 +1313,7 @@ export default function Servers() {
                                     </div>
 
                                     <div className="col-span-full mb-2">
-                                      <h4 className="text-sm font-semibold">{t('Servers.ServerCard.HardwareInformation')}</h4>
+                                      <h4 className="text-sm font-semibold">{t('ServerCard.HardwareInformation')}</h4>
                                     </div>
 
                                     <div className="flex items-center gap-2 text-foreground/80">
@@ -1350,7 +1350,7 @@ export default function Servers() {
                                     </div>
 
                                     <div className="col-span-full">
-                                      <h4 className="text-sm font-semibold mb-3">{t('Servers.ServerCard.ResourceUsage')}</h4>
+                                      <h4 className="text-sm font-semibold mb-3">{t('ServerCard.ResourceUsage')}</h4>
                                       <div className="grid grid-cols-2 gap-4">
                                         <div>
                                           <div className="flex items-center justify-between">
@@ -1460,7 +1460,7 @@ export default function Servers() {
                           <NextLink href={`/dashboard/servers/${server.id}`} className="flex-1">
                             <Button variant="outline" className="w-full">
                               <History className="h-4 w-4 mr-2" />
-                              {t('Servers.ServerCard.ViewDetails')}
+                              {t('ServerCard.ViewDetails')}
                             </Button>
                           </NextLink>
                           
@@ -1476,7 +1476,7 @@ export default function Servers() {
                                     <LinkIcon className="h-4 w-4" />
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>{t('Servers.ServerCard.OpenManagementURL')}</TooltipContent>
+                                <TooltipContent>{t('ServerCard.OpenManagementURL')}</TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           )}
@@ -1501,7 +1501,7 @@ export default function Servers() {
                                     <Pencil className="h-4 w-4" />
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>{t('Servers.ServerCard.EditServer')}</TooltipContent>
+                                <TooltipContent>{t('ServerCard.EditServer')}</TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           )}
@@ -1518,7 +1518,7 @@ export default function Servers() {
                                     </AlertDialogTrigger>
                                     <AlertDialogContent>
                                       <AlertDialogHeader>
-                                        <AlertDialogTitle>{t('Servers.ServerCard.HostedVMs')}</AlertDialogTitle>
+                                        <AlertDialogTitle>{t('ServerCard.HostedVMs')}</AlertDialogTitle>
                                         <AlertDialogDescription>
                                           {server.host && (
                                             <div className="mt-4">
@@ -1574,7 +1574,7 @@ export default function Servers() {
                                                             </AlertDialogTrigger>
                                                             <AlertDialogContent className="max-w-[95vw] w-[600px] max-h-[90vh] overflow-y-auto">
                                                               <AlertDialogHeader>
-                                                                <AlertDialogTitle>{t('Servers.EditServer.Title', { name: hostedVM.name })}</AlertDialogTitle>
+                                                                <AlertDialogTitle>{t('EditServer.Title', { name: hostedVM.name })}</AlertDialogTitle>
                                                                 <AlertDialogDescription>
                                                                   <Tabs defaultValue="general" className="w-full">
                                                                     <TabsList className="w-full">
@@ -1588,7 +1588,7 @@ export default function Servers() {
                                                                       <div className="space-y-4 pt-4">
                                                                         <div className="flex items-center gap-2">
                                                                           <div className="grid w-[calc(100%-52px)] items-center gap-1.5">
-                                                                            <Label htmlFor="editIcon">{t('Servers.EditServer.General.Icon')}</Label>
+                                                                            <Label htmlFor="editIcon">{t('EditServer.General.Icon')}</Label>
                                                                             <div className="space-y-2">
                                                                               <Select
                                                                                 value={editIcon}
@@ -1597,7 +1597,7 @@ export default function Servers() {
                                                                                 }
                                                                               >
                                                                                 <SelectTrigger className="w-full">
-                                                                                  <SelectValue placeholder={t('Servers.AddServer.General.IconPlaceholder')}>
+                                                                                  <SelectValue placeholder={t('AddServer.General.IconPlaceholder')}>
                                                                                     {editIcon && (
                                                                                       <div className="flex items-center gap-2">
                                                                                         <DynamicIcon
@@ -1611,7 +1611,7 @@ export default function Servers() {
                                                                                 </SelectTrigger>
                                                                                 <SelectContent className="max-h-[300px]">
                                                                                   <Input
-                                                                                    placeholder={t('Servers.AddServer.General.IconSearchPlaceholder')}
+                                                                                    placeholder={t('AddServer.General.IconSearchPlaceholder')}
                                                                                     className="mb-2"
                                                                                     onChange={(e) => {
                                                                                       const iconElements =
@@ -1675,7 +1675,7 @@ export default function Servers() {
                                                                             </div>
                                                                           </div>
                                                                           <div className="grid w-[52px] items-center gap-1.5">
-                                                                            <Label htmlFor="editIcon">{t('Servers.AddServer.General.Preview')}</Label>
+                                                                            <Label htmlFor="editIcon">{t('AddServer.General.Preview')}</Label>
                                                                             <div className="flex items-center justify-center">
                                                                               {editIcon && (
                                                                                 <DynamicIcon
@@ -1687,7 +1687,7 @@ export default function Servers() {
                                                                           </div>
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editName">{t('Servers.EditServer.General.Name')}</Label>
+                                                                          <Label htmlFor="editName">{t('EditServer.General.Name')}</Label>
                                                                           <Input
                                                                             id="editName"
                                                                             type="text"
@@ -1697,13 +1697,13 @@ export default function Servers() {
                                                                           />
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editOs">{t('Servers.EditServer.General.OperatingSystem')}</Label>
+                                                                          <Label htmlFor="editOs">{t('EditServer.General.OperatingSystem')}</Label>
                                                                           <Select
                                                                             value={editOs}
                                                                             onValueChange={setEditOs}
                                                                           >
                                                                             <SelectTrigger className="w-full">
-                                                                              <SelectValue placeholder={t('Servers.AddServer.General.OperatingSystemPlaceholder')} />
+                                                                              <SelectValue placeholder={t('AddServer.General.OperatingSystemPlaceholder')} />
                                                                             </SelectTrigger>
                                                                             <SelectContent>
                                                                               <SelectItem value="Windows">
@@ -1715,7 +1715,7 @@ export default function Servers() {
                                                                           </Select>
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editIp">{t('Servers.EditServer.General.IPAddress')}</Label>
+                                                                          <Label htmlFor="editIp">{t('EditServer.General.IPAddress')}</Label>
                                                                           <Input
                                                                             id="editIp"
                                                                             type="text"
@@ -1725,7 +1725,7 @@ export default function Servers() {
                                                                           />
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editUrl">{t('Servers.EditServer.General.ManagementURL')}</Label>
+                                                                          <Label htmlFor="editUrl">{t('EditServer.General.ManagementURL')}</Label>
                                                                           <Input
                                                                             id="editUrl"
                                                                             type="text"
@@ -1740,7 +1740,7 @@ export default function Servers() {
                                                                     <TabsContent value="hardware">
                                                                       <div className="space-y-4 pt-4">
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editCpu">{t('Servers.EditServer.Hardware.CPU')}</Label>
+                                                                          <Label htmlFor="editCpu">{t('EditServer.Hardware.CPU')}</Label>
                                                                           <Input
                                                                             id="editCpu"
                                                                             value={editCpu}
@@ -1748,7 +1748,7 @@ export default function Servers() {
                                                                           />
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editGpu">{t('Servers.EditServer.Hardware.GPU')}</Label>
+                                                                          <Label htmlFor="editGpu">{t('EditServer.Hardware.GPU')}</Label>
                                                                           <Input
                                                                             id="editGpu"
                                                                             value={editGpu}
@@ -1756,7 +1756,7 @@ export default function Servers() {
                                                                           />
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editRam">{t('Servers.EditServer.Hardware.RAM')}</Label>
+                                                                          <Label htmlFor="editRam">{t('EditServer.Hardware.RAM')}</Label>
                                                                           <Input
                                                                             id="editRam"
                                                                             value={editRam}
@@ -1764,7 +1764,7 @@ export default function Servers() {
                                                                           />
                                                                         </div>
                                                                         <div className="grid w-full items-center gap-1.5">
-                                                                          <Label htmlFor="editDisk">{t('Servers.EditServer.Hardware.Disk')}</Label>
+                                                                          <Label htmlFor="editDisk">{t('EditServer.Hardware.Disk')}</Label>
                                                                           <Input
                                                                             id="editDisk"
                                                                             value={editDisk}
@@ -1788,18 +1788,18 @@ export default function Servers() {
                                                                             }
                                                                           />
                                                                           <Label htmlFor="editHostCheckbox">
-                                                                            {t('Servers.EditServer.Host.MarkAsHostServer')}
+                                                                            {t('EditServer.Host.MarkAsHostServer')}
                                                                             {server.hostedVMs &&
                                                                               server.hostedVMs.length > 0 && (
                                                                                 <span className="text-muted-foreground text-sm ml-2">
-                                                                                  ({t('Servers.EditServer.Host.CannotDisableHost')})
+                                                                                  ({t('EditServer.Host.CannotDisableHost')})
                                                                                 </span>
                                                                               )}
                                                                           </Label>
                                                                         </div>
                                                                         {!editHost && (
                                                                           <div className="grid w-full items-center gap-1.5">
-                                                                            <Label>{t('Servers.EditServer.Host.SelectHostServer')}</Label>
+                                                                            <Label>{t('EditServer.Host.SelectHostServer')}</Label>
                                                                             <Select
                                                                               value={editHostServer?.toString()}
                                                                               onValueChange={(value) => {
@@ -1811,10 +1811,10 @@ export default function Servers() {
                                                                               }}
                                                                             >
                                                                               <SelectTrigger>
-                                                                                <SelectValue placeholder={t('Servers.AddServer.Host.SelectHostServerPlaceholder')} />
+                                                                                <SelectValue placeholder={t('AddServer.Host.SelectHostServerPlaceholder')} />
                                                                               </SelectTrigger>
                                                                               <SelectContent>
-                                                                                <SelectItem value="0">{t('Servers.AddServer.Host.NoHostServer')}</SelectItem>
+                                                                                <SelectItem value="0">{t('AddServer.Host.NoHostServer')}</SelectItem>
                                                                                 {hostServers
                                                                                   .filter(
                                                                                     (server) => server.id !== editId,
@@ -1835,7 +1835,7 @@ export default function Servers() {
                                                               </AlertDialogHeader>
                                                               <AlertDialogFooter>
                                                                 <AlertDialogCancel>{t('Common.cancel')}</AlertDialogCancel>
-                                                                <Button onClick={edit}>{t('Servers.EditServer.Save')}</Button>
+                                                                <Button onClick={edit}>{t('EditServer.Save')}</Button>
                                                               </AlertDialogFooter>
                                                             </AlertDialogContent>
                                                           </AlertDialog>
@@ -1940,7 +1940,7 @@ export default function Servers() {
                                     </AlertDialogContent>
                                   </AlertDialog>
                                 </TooltipTrigger>
-                                <TooltipContent>{t('Servers.ServerCard.HostedVMs')} ({server.hostedVMs.length})</TooltipContent>
+                                <TooltipContent>{t('ServerCard.HostedVMs')} ({server.hostedVMs.length})</TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           )}
@@ -1956,7 +1956,7 @@ export default function Servers() {
                             </AlertDialogTrigger>
                             <AlertDialogContent className="max-w-[95vw] w-[600px] max-h-[90vh] overflow-y-auto">
                               <AlertDialogHeader>
-                                <AlertDialogTitle>{t('Servers.EditServer.Title', { name: server.name })}</AlertDialogTitle>
+                                <AlertDialogTitle>{t('EditServer.Title', { name: server.name })}</AlertDialogTitle>
                                 <AlertDialogDescription>
                                   <Tabs defaultValue="general" className="w-full">
                                     <TabsList className="w-full">
@@ -1969,14 +1969,14 @@ export default function Servers() {
                                       <div className="space-y-4 pt-4">
                                         <div className="flex items-center gap-2">
                                           <div className="grid w-[calc(100%-52px)] items-center gap-1.5">
-                                            <Label htmlFor="editIcon">{t('Servers.EditServer.General.Icon')}</Label>
+                                            <Label htmlFor="editIcon">{t('EditServer.General.Icon')}</Label>
                                             <div className="space-y-2">
                                               <Select
                                                 value={editIcon}
                                                 onValueChange={(value) => setEditIcon(value)}
                                               >
                                                 <SelectTrigger className="w-full">
-                                                  <SelectValue placeholder={t('Servers.AddServer.General.IconPlaceholder')}>
+                                                  <SelectValue placeholder={t('AddServer.General.IconPlaceholder')}>
                                                     {editIcon && (
                                                       <div className="flex items-center gap-2">
                                                         <DynamicIcon name={editIcon as any} size={18} />
@@ -1987,7 +1987,7 @@ export default function Servers() {
                                                 </SelectTrigger>
                                                 <SelectContent className="max-h-[300px]">
                                                   <Input
-                                                    placeholder={t('Servers.AddServer.General.IconSearchPlaceholder')}
+                                                    placeholder={t('AddServer.General.IconSearchPlaceholder')}
                                                     className="mb-2"
                                                     onChange={(e) => {
                                                       const iconElements = document.querySelectorAll(
@@ -2033,14 +2033,14 @@ export default function Servers() {
                                             </div>
                                           </div>
                                           <div className="grid w-[52px] items-center gap-1.5">
-                                            <Label htmlFor="editIcon">{t('Servers.AddServer.General.Preview')}</Label>
+                                            <Label htmlFor="editIcon">{t('AddServer.General.Preview')}</Label>
                                             <div className="flex items-center justify-center">
                                               {editIcon && <DynamicIcon name={editIcon as any} size={36} />}
                                             </div>
                                           </div>
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
-                                          <Label htmlFor="editName">{t('Servers.EditServer.General.Name')}</Label>
+                                          <Label htmlFor="editName">{t('EditServer.General.Name')}</Label>
                                           <Input
                                             id="editName"
                                             type="text"
@@ -2050,11 +2050,11 @@ export default function Servers() {
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
                                           <Label htmlFor="editOs">
-                                            {t('Servers.EditServer.General.OperatingSystem')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                            {t('EditServer.General.OperatingSystem')} <span className="text-stone-600">({t('Common.optional')})</span>
                                           </Label>
                                           <Select value={editOs} onValueChange={(value) => setEditOs(value)}>
                                             <SelectTrigger className="w-full">
-                                              <SelectValue placeholder={t('Servers.AddServer.General.OperatingSystemPlaceholder')} />
+                                              <SelectValue placeholder={t('AddServer.General.OperatingSystemPlaceholder')} />
                                             </SelectTrigger>
                                             <SelectContent>
                                               <SelectItem value="Windows">Windows</SelectItem>
@@ -2065,7 +2065,7 @@ export default function Servers() {
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
                                           <Label htmlFor="editIp">
-                                            {t('Servers.EditServer.General.IPAddress')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                            {t('EditServer.General.IPAddress')} <span className="text-stone-600">({t('Common.optional')})</span>
                                           </Label>
                                           <Input
                                             id="editIp"
@@ -2076,7 +2076,7 @@ export default function Servers() {
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
                                           <Label htmlFor="editUrl">
-                                            {t('Servers.EditServer.General.ManagementURL')} <span className="text-stone-600">({t('Common.optional')})</span>
+                                            {t('EditServer.General.ManagementURL')} <span className="text-stone-600">({t('Common.optional')})</span>
                                           </Label>
                                           <Input
                                             id="editUrl"
@@ -2090,7 +2090,7 @@ export default function Servers() {
                                     <TabsContent value="hardware">
                                       <div className="space-y-4 pt-4">
                                         <div className="grid w-full items-center gap-1.5">
-                                          <Label htmlFor="editCpu">{t('Servers.EditServer.Hardware.CPU')}</Label>
+                                          <Label htmlFor="editCpu">{t('EditServer.Hardware.CPU')}</Label>
                                           <Input
                                             id="editCpu"
                                             value={editCpu}
@@ -2098,7 +2098,7 @@ export default function Servers() {
                                           />
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
-                                          <Label htmlFor="editGpu">{t('Servers.EditServer.Hardware.GPU')}</Label>
+                                          <Label htmlFor="editGpu">{t('EditServer.Hardware.GPU')}</Label>
                                           <Input
                                             id="editGpu"
                                             value={editGpu}
@@ -2106,7 +2106,7 @@ export default function Servers() {
                                           />
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
-                                          <Label htmlFor="editRam">{t('Servers.EditServer.Hardware.RAM')}</Label>
+                                          <Label htmlFor="editRam">{t('EditServer.Hardware.RAM')}</Label>
                                           <Input
                                             id="editRam"
                                             value={editRam}
@@ -2114,7 +2114,7 @@ export default function Servers() {
                                           />
                                         </div>
                                         <div className="grid w-full items-center gap-1.5">
-                                          <Label htmlFor="editDisk">{t('Servers.EditServer.Hardware.Disk')}</Label>
+                                          <Label htmlFor="editDisk">{t('EditServer.Hardware.Disk')}</Label>
                                           <Input
                                             id="editDisk"
                                             value={editDisk}
@@ -2133,11 +2133,11 @@ export default function Servers() {
                                               setEditHost(checked === true)
                                             }
                                           />
-                                          <Label htmlFor="editHostCheckbox">{t('Servers.EditServer.Host.MarkAsHostServer')}</Label>
+                                          <Label htmlFor="editHostCheckbox">{t('EditServer.Host.MarkAsHostServer')}</Label>
                                         </div>
                                         {!editHost && (
                                           <div className="grid w-full items-center gap-1.5">
-                                            <Label>{t('Servers.EditServer.Host.SelectHostServer')}</Label>
+                                            <Label>{t('EditServer.Host.SelectHostServer')}</Label>
                                             <Select
                                               value={editHostServer?.toString()}
                                               onValueChange={(value) => {
@@ -2149,10 +2149,10 @@ export default function Servers() {
                                               }}
                                             >
                                               <SelectTrigger>
-                                                <SelectValue placeholder={t('Servers.AddServer.Host.SelectHostServerPlaceholder')} />
+                                                <SelectValue placeholder={t('AddServer.Host.SelectHostServerPlaceholder')} />
                                               </SelectTrigger>
                                               <SelectContent>
-                                                <SelectItem value="0">{t('Servers.AddServer.Host.NoHostServer')}</SelectItem>
+                                                <SelectItem value="0">{t('AddServer.Host.NoHostServer')}</SelectItem>
                                                 {hostServers
                                                   .filter(
                                                     (server) => server.id !== editId,
@@ -2176,12 +2176,12 @@ export default function Servers() {
                                             checked={editMonitoring}
                                             onCheckedChange={(checked) => setEditMonitoring(checked === true)}
                                           />
-                                          <Label htmlFor="editMonitoringCheckbox">{t('Servers.EditServer.Monitoring.Enable')}</Label>
+                                          <Label htmlFor="editMonitoringCheckbox">{t('EditServer.Monitoring.Enable')}</Label>
                                         </div>
                                         {editMonitoring && (
                                           <>
                                             <div className="grid w-full items-center gap-1.5">
-                                              <Label htmlFor="editMonitoringURL">{t('Servers.EditServer.Monitoring.URL')}</Label>
+                                              <Label htmlFor="editMonitoringURL">{t('EditServer.Monitoring.URL')}</Label>
                                               <Input
                                                 id="editMonitoringURL"
                                                 type="text"
@@ -2191,9 +2191,9 @@ export default function Servers() {
                                               />
                                             </div>
                                             <div className="mt-4 p-4 border rounded-lg bg-muted">
-                                              <h4 className="text-sm font-semibold mb-2">{t('Servers.EditServer.Monitoring.SetupTitle')}</h4>
+                                              <h4 className="text-sm font-semibold mb-2">{t('EditServer.Monitoring.SetupTitle')}</h4>
                                               <p className="text-sm text-muted-foreground mb-3">
-                                                {t('Servers.EditServer.Monitoring.SetupDescription')}
+                                                {t('EditServer.Monitoring.SetupDescription')}
                                               </p>
                                               <pre className="bg-background p-4 rounded-md text-sm">
                                               <code>{`services:
@@ -2219,7 +2219,7 @@ export default function Servers() {
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>{t('Common.cancel')}</AlertDialogCancel>
-                                <Button onClick={edit}>{t('Servers.EditServer.Save')}</Button>
+                                <Button onClick={edit}>{t('EditServer.Save')}</Button>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -2235,24 +2235,24 @@ export default function Servers() {
                                   </AlertDialogTrigger>
                                   <AlertDialogContent>
                                     <AlertDialogHeader>
-                                      <AlertDialogTitle>{t('Servers.ServerCard.DeleteConfirmation.Title', { name: server.name })}</AlertDialogTitle>
+                                      <AlertDialogTitle>{t('ServerCard.DeleteConfirmation.Title', { name: server.name })}</AlertDialogTitle>
                                       <AlertDialogDescription>
-                                        {t('Servers.ServerCard.DeleteConfirmation.Description')}
+                                        {t('ServerCard.DeleteConfirmation.Description')}
                                       </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                      <AlertDialogCancel>{t('Servers.ServerCard.DeleteConfirmation.Cancel')}</AlertDialogCancel>
+                                      <AlertDialogCancel>{t('ServerCard.DeleteConfirmation.Cancel')}</AlertDialogCancel>
                                       <AlertDialogAction 
                                         className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                                         onClick={() => deleteApplication(server.id)}
                                       >
-                                        {t('Servers.ServerCard.DeleteConfirmation.Delete')}
+                                        {t('ServerCard.DeleteConfirmation.Delete')}
                                       </AlertDialogAction>
                                     </AlertDialogFooter>
                                   </AlertDialogContent>
                                 </AlertDialog>
                               </TooltipTrigger>
-                              <TooltipContent>{t('Servers.ServerCard.DeleteServer')}</TooltipContent>
+                              <TooltipContent>{t('ServerCard.DeleteServer')}</TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
                         </div>
@@ -2293,12 +2293,12 @@ export default function Servers() {
             <div className="flex justify-between items-center mb-2">
               <div className="text-sm text-muted-foreground">
                 {totalItems > 0 
-                  ? t('Servers.Pagination.Showing', { 
+                  ? t('Pagination.Showing', { 
                       start: ((currentPage - 1) * itemsPerPage) + 1,
                       end: Math.min(currentPage * itemsPerPage, totalItems),
                       total: totalItems
                     })
-                  : t('Servers.Pagination.NoServers')}
+                  : t('Pagination.NoServers')}
               </div>
             </div>
             <Pagination>
